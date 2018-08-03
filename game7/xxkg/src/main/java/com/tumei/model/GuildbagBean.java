@@ -5,7 +5,7 @@ import com.tumei.common.DaoGame;
 import com.tumei.common.Readonly;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
-import com.tumei.model.beans.guildbag.GuildbagStruct;
+import com.tumei.model.beans.GuildbagStruct;
 import com.tumei.modelconf.GuildbagConf;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * 公会红包
  */
 @Data
-@Document(collection = "Role.Guildbag")
+@Document(collection = "Role.GuildBag")
 public class GuildbagBean {
     public GuildbagBean() {
     }
@@ -40,11 +40,11 @@ public class GuildbagBean {
     /**
      * 未开启的所有红包
      **/
-    private List<GuildbagStruct> waitOpen;
+    private volatile List<GuildbagStruct> waitOpen;
     /**
      * 开启后可领取的所有红包
      **/
-    private List<GuildbagStruct> waitReceive;
+    private volatile List<GuildbagStruct> waitReceive;
 
     /**
      * 根据用户捐献类型，随机生成红包
@@ -71,12 +71,12 @@ public class GuildbagBean {
 
         if (random <= probability[mode - 1]) {
             // 已生成过的未开启红包类型
-            List<Integer> existKey = waitOpen.stream().map(w -> w.key).collect(Collectors.toList());
+            // List<Integer> existKey = waitOpen.stream().map(w -> w.key).collect(Collectors.toList());
             List<Integer> existMode = waitOpen.stream().map(w -> w.mode).distinct().collect(Collectors.toList());
             // 所有可生成的未开启红包类型
             List<GuildbagConf> gbcs = Readonly.getInstance().getGuildbagConfs();
             // 去除已生成类型后，可生成的未开启 红包类型
-            List<GuildbagConf> newList = gbcs.stream().filter(g -> (!existKey.contains(g.key) && !existMode.contains(g.mode) && g.mode == 4 - mode))
+            List<GuildbagConf> newList = gbcs.stream().filter(g -> (!existMode.contains(g.mode) && g.mode == 4 - mode))
                     .collect(Collectors.toList());
 
             random = RandomUtil.getBetween(0, newList.size() - 1);

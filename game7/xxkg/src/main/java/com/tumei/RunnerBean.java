@@ -93,8 +93,8 @@ public class RunnerBean implements ExitCodeGenerator {
 				("RequestRdshopCancel"),
 
 				// 公会红包
-				("RequestGuildbagOpen"),
-				("RequestGuildbagReceive")
+				//("RequestGuildbagOpen"),
+				//("RequestGuildbagReceive")
 		};
 
 		for (String n : ps) {

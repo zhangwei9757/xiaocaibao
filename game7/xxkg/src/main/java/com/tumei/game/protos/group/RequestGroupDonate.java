@@ -1,22 +1,16 @@
 package com.tumei.game.protos.group;
 
 import com.google.common.base.Strings;
-import com.tumei.common.DaoGame;
 import com.tumei.common.Readonly;
 import com.tumei.common.RemoteService;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.model.GroupBean;
-import com.tumei.model.GuildbagBean;
 import com.tumei.model.PackBean;
-import com.tumei.model.beans.guildbag.GuildbagStruct;
 import com.tumei.modelconf.DonateConf;
 import com.tumei.websocket.BaseProtocol;
 import com.tumei.websocket.WebSocketUser;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.tumei.common.utils.Defs.公会贡献;
 
@@ -37,14 +31,6 @@ public class RequestGroupDonate extends BaseProtocol {
     class ReturnGroupDonate extends BaseProtocol {
         public int seq;
         public String result = "";
-        /**
-         * 未开启的所有红包
-         **/
-        private List<GuildbagStruct> waitOpen;
-        /**
-         * 开启后可领取的所有红包
-         **/
-        private List<GuildbagStruct> waitReceive;
     }
 
     @Override
@@ -95,18 +81,8 @@ public class RequestGroupDonate extends BaseProtocol {
             user.addItem(公会贡献, dc.reward[2], false, "捐献");
             user.payItem(dc.cost[0], dc.cost[1], "捐献");
 
-
-            // 捐献成功随机概率生成红包，仅限本公会成员领取，1人仅限1次，领取上限为10个
-            GuildbagBean gbb = DaoGame.getInstance().findGuildbagBean(user.getUid());
-            // 未开启红包,最多可生成的个数
-            int modes = Readonly.getInstance().getGuildbagConfs().stream().distinct().map(s -> s.mode).collect(Collectors.toList()).size();
-            if (gbb.getWaitOpen().size() < modes) {
-                gbb.flush(user, dc.key);
-            } else {
-                gbb.flush(user, -1);
-            }
-            rci.waitOpen = gbb.getWaitOpen();
-            rci.waitReceive = gbb.getWaitReceive();
+            // 捐献成功,通知group服务器随机概率生成红包，仅限本公会成员领取，1人仅限1次，领取上限为10个
+            RemoteService.getInstance().askDonateSuccess(gb.getGid(),user.getUid(),mode);
         }
 
         user.send(rci);

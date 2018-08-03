@@ -10,7 +10,6 @@ import com.tumei.common.group.GroupRoleMessage;
 import com.tumei.common.utils.*;
 import com.tumei.dto.arena.ArenaRoleDto;
 import com.tumei.game.protos.notifys.NotifyCharge;
-import com.tumei.game.protos.notifys.NotifyGuildbag;
 import com.tumei.game.protos.notifys.NotifySceneEvent;
 import com.tumei.game.protos.notifys.NotifyUserInfo;
 import com.tumei.game.protos.structs.RaidRankStruct;
@@ -24,7 +23,6 @@ import com.tumei.model.*;
 import com.tumei.model.beans.AwardBean;
 import com.tumei.model.beans.EquipBean;
 import com.tumei.model.beans.HeroBean;
-import com.tumei.model.beans.guildbag.GuildbagStruct;
 import com.tumei.model.festival.FestivalBean;
 import com.tumei.modelconf.*;
 import com.tumei.websocket.BaseProtocol;
@@ -45,7 +43,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.tumei.common.utils.Defs.*;
 
@@ -911,22 +908,18 @@ public class GameUser extends WebSocketUser {
 			rankService.putCharge(this.uid, rmb);
 
 			// 玩家充值开启公会红包
-			long id = DaoGame.getInstance().findByName(this.name);
-			GuildbagBean gbb = DaoGame.getInstance().findGuildbagBean(id);
-			if (gbb.getWaitOpen().size() > 0) {
-				List<Integer> rechares = Arrays.asList(198, 328, 648);
-				int index = rechares.indexOf(rmb);
-				List<GuildbagStruct> lists = gbb.getWaitOpen().stream().filter(s -> s.money == rechares.get(index))
-						.collect(Collectors.toList());
-				// 充值金额匹配,且存在公会对应未开启红包
-				if (index != -1 && lists.size() != 0) {
-					gbb.open(this, lists.get(0).key);
-				}
-				NotifyGuildbag rci2 = new NotifyGuildbag();
-				rci2.waitOpen = gbb.getWaitOpen();
-				rci2.waitReceive = gbb.getWaitReceive();
-				send(rci2);
-			}
+//			long id = DaoGame.getInstance().findByName(this.name);
+//			GuildbagBean gbb = DaoGame.getInstance().findGuildbagBean(id);
+//			if (gbb.getWaitOpen().size() > 0) {
+//				List<Integer> rechares = Arrays.asList(198, 328, 648);
+//				int index = rechares.indexOf(rmb);
+//				List<GuildbagStruct> lists = gbb.getWaitOpen().stream().filter(s -> s.money == rechares.get(index))
+//						.collect(Collectors.toList());
+//				// 充值金额匹配,且存在公会对应未开启红包
+//				if (index != -1 && lists.size() != 0) {
+//					gbb.open(this, lists.get(0).key);
+//				}
+//			}
 		} catch (Exception ex) {
 			log.error("本地充值异常:" + ex.getMessage());
 		}

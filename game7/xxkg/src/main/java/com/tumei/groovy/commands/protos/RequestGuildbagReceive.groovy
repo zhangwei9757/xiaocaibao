@@ -7,6 +7,7 @@ import com.tumei.model.GuildbagBean
 import com.tumei.model.beans.guildbag.GuildbagStruct
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
+import org.springframework.stereotype.Component
 
 import java.util.stream.Collectors
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors
  * 公会红包
  *
  */
+@Component
 class RequestGuildbagReceive extends BaseProtocol {
     public int seq
     /**
