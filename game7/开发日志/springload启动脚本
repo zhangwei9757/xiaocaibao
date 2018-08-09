@@ -1,0 +1,1 @@
+-XX:+UseG1GC -Xmx300m -javaagent:C:/Users/niannian/.m2/repository/org/springframework/springloaded/1.2.6.RELEASE/springloaded-1.2.6.RELEASE.jar -noverify

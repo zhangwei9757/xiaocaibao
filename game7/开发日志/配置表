@@ -1,0 +1,28 @@
+{
+"access_delay":1000,
+"write_delay":1000,
+
+"scene_fast_recover": 60,
+"scene_fast_time": 7200,
+
+"friend_count":30,
+"friend_ready_count":30,
+"friend_send":30,
+"friend_recv":30,
+
+"user_chagnename_gem":500,
+"user_spirit_max":30,
+
+"sp_recover_interval":1800,
+"treasure_dig_limit":53,
+
+"mine_open": true,
+"mine_energy_max":100,
+"mine_energy_recover":1,
+"mine_energy_recover_count":1,
+"mine_consume":3,
+"mine_view":8,
+"mine_buyenergy_cost":[50,50,50,100,100,100,200,200,200,400,400,400,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600],
+"mine_buyenergy_count":50
+
+}
