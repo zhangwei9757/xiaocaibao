@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: xxkg
+    cloud:
+        config:
+            profile: ${profile}
+            label: master
+            uri: http://leon:noel@115.159.149.238:11112
