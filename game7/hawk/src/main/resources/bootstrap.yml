@@ -1,9 +1,0 @@
-spring:
-    application:
-        name: center
-    cloud:
-        config:
-            profile: ${profile}
-            label: master
-            uri: http://leon:noel@115.159.149.238:11112
-            #uri: http://localhost:11111
