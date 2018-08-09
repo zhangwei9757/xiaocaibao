@@ -1,8 +1,0 @@
-app=guild
-zone=1
-
-mkdir -p ./pub/${app}${zone}
-cp ${app}/${app}-1.0.jar ./pub/${app}${zone}/${app}.jar
-cd ./pub/${app}${zone}
-
-/home/ubuntu/.sdkman/candidates/java/current/bin/java -XX:+UseG1GC -Xmx300m -jar ${app}.jar --zone=${zone} --profile=p007 --script=../commands

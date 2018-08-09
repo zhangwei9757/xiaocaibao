@@ -1,3 +1,0 @@
-docker build -t guild .
-docker rm guild
-docker run -p 20011:20011 -it --name guild guild:latest java -Dthin.root=. -jar guild.jar --profile=test

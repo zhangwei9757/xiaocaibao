@@ -1,6 +1,0 @@
-#! /bin/bash
-git pull origin pub
-./mvnw clean
-./mvnw package
-
-

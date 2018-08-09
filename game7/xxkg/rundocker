@@ -1,4 +1,0 @@
-zone=2
-docker build -t xxkg .
-docker rm xxkg${zone}
-docker run -p 500${zone}:500${zone} -it --name xxkg${zone} xxkg:latest java -Dthin.root=. -jar xxkg.jar --zone=${zone} --profile=test
