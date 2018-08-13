@@ -45,7 +45,7 @@ class GroovyBattle implements IBattle {
      */
     SimStruct sim = new SimStruct()
 
-    private int weak = 0;
+    private int weak = 0
 
     private int[][] relics = new RelicStruct[2][];
 
@@ -431,19 +431,19 @@ class GroovyBattle implements IBattle {
                     // 查看这个圣物对哪些英雄有影响
                     for (int i = 0; i < holyConf.addhero.size(); ++i) {
                         int ah = holyConf.addhero[i]
-                        his.stream().filter({ roler ->
+                        for (Roler roler in his) {
                             if (roler.id == ah) {
                                 // 包含三个属性,需要知道每个属性的提高的次数
                                 int[] addatt = holyConf.addatt[i]
                                 for (int j = 0; j < 3; ++j) {
-                                    int idx = i * 4 + j
+                                    int idx = i * 3 + j
                                     int cc = relic.attrs[idx] // 提高的次数
                                     int k = addatt[j * 2]
-                                    int v = addatt[j * 2 + 1] * cc
+                                    int v = (addatt[j * 2 + 1] / holyConf.addlimit) * cc
                                     deal(roler, k, v)
                                 }
                             }
-                        })
+                        }
                     }
                 }
             }

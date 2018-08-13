@@ -48,6 +48,8 @@ public class RdshopBean {
      */
     private int count;
 
+    private boolean oldPlayer;
+
     private RdshopStruct rs;
 
     /**
@@ -55,16 +57,6 @@ public class RdshopBean {
      * @returns: 返回旧的事件或者新生成的一个事件
      */
     public RdshopStruct flush(GameUser user) {
-        long current = System.currentTimeMillis() / 1000;
-        if (last > current) {
-            last = current;
-        }
-        if (count < 0) {
-            count = 0;
-        }
-        if (last == 0) {
-            last = current;
-        }
         long diff = System.currentTimeMillis() / 1000 - last;
         // 应生成事件数量
         long need = diff / 3600;
@@ -72,25 +64,31 @@ public class RdshopBean {
         if (count > 12) {
             count = 12;
         }
+        if (!oldPlayer) {
+            oldPlayer = true;
+            count = 6;
 
+        }
         if (rs == null && count > 0) {
             // 随机一个事件类型
-            int type = user.getLevel() >= 20 ? RandomUtil.getBetween(1, 2) : 1;
+            int type = RandomUtil.getBetween(1, 2);
             // 配置表匹配的信息
             List<RdshopConf> newlist = Readonly.getInstance().getRdshop().stream().filter(f -> (f.type == type && user.getLevel() >= f.level)).collect(Collectors.toList());
             // 生成的一个事件
             RdshopConf rc = newlist.get(RandomUtil.getBetween(0, newlist.size() - 1));
             rs = new RdshopStruct();
-            // rs.rewards = rc.rewards;
             rs.key = rc.key;
-            // rs.cost = rc.cost;
 
             if (rc.type == 1) {
                 HerosBean hsb = DaoGame.getInstance().findHeros(user.getUid());
-                rs.power = (long) (1.0 + rc.limit / 10000.0) * user.calcPower(hsb);
+                float add = (float) (rc.limit / 10000.0) * user.calcPower(hsb);
+                rs.power = user.calcPower(hsb) + (add > 1 ? (int)add : 1);
             }
 
             --count;
+            if (!oldPlayer) {
+                oldPlayer = true;
+            }
             last = System.currentTimeMillis() / 1000;
             rs.begin = System.currentTimeMillis() / 1000;
         }

@@ -22,8 +22,8 @@ public class ServiceRouter {
 	 * @return
 	 */
 	public int chooseArena(long uid) {
-		int zone = chooseZone(uid) - 1;
-
-		return (zone / 20) + 1;
+		return 1;
+//		int zone = chooseZone(uid) - 1;
+//		return (zone / 20) + 1;
 	}
 }

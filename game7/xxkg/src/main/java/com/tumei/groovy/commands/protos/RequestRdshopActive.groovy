@@ -34,8 +34,15 @@ class RequestRdshopActive extends BaseProtocol {
         long current = System.currentTimeMillis() / 1000
 
         if (rb.rs != null) {
+            if (rb.rs.complete != 0) {
+                r.result = "当前事件已激活"
+                r.rs = rb.rs
+                user.send(r)
+                return
+            }
             long diff = (current - rb.rs.begin)
             if (diff >= 3600) {
+                r.result = "当前事件已过期"
                 rb.rs == null
                 rb.rs = rb.flush(user)
             }
@@ -43,6 +50,7 @@ class RequestRdshopActive extends BaseProtocol {
             r.rs = rb.rs
         } else {
             r.result = "当前无可激活事件"
+            r.rs = rb.rs
         }
 
         user.send(r)

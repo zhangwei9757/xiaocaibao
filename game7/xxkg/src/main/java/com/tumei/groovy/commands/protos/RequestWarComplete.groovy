@@ -65,19 +65,19 @@ class RequestWarComplete extends BaseProtocol {
 
         MissionConf mc = Readonly.instance.findMission(wt.task)
         if (mc.reward1.length > 0) {
-            rci.awards.addAll(user.addRangeItems(mc.reward1, true, "战争学院奖励1"))
+            rci.awards.addAll(user.addRangeItems(mc.reward1, false, "战争学院奖励1"))
         }
         if (mc.reward2.length > 0) {
-            rci.awards.addAll(user.addRangeItems(mc.reward2, true, "战争学院奖励2"))
+            rci.awards.addAll(user.addRangeItems(mc.reward2, false, "战争学院奖励2"))
         }
         if (mc.reward3.length > 0) {
-            rci.awards.addAll(user.addRangeItems(mc.reward3, true, "战争学院奖励3"))
+            rci.awards.addAll(user.addRangeItems(mc.reward3, false, "战争学院奖励3"))
         }
         if (mc.reward4.length > 0) {
             int[] a4 = mc.reward4;
             if (RandomUtil.getBetween(1, 100) < a4[0]) {
                 int c = RandomUtil.getBetween(a4[2], a4[3]);
-                rci.awards.addAll(user.addItem(a4[1], c, true, "战争学院奖励4"))
+                rci.awards.addAll(user.addItem(a4[1], c, false, "战争学院奖励4"))
             }
         }
 

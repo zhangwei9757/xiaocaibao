@@ -119,9 +119,9 @@ class ArenaService implements IArenaSystem {
         synchronized (this) {
             // save all changed ranks
             try {
-                arenaData.saveChanges();
+                arenaData.saveChanges()
             } catch (Exception ex) {
-                log.error("跨服竞技场服务器，保存失败.", ex);
+                log.error("跨服竞技场服务器，保存失败.", ex)
             }
         }
     }
@@ -306,8 +306,8 @@ class ArenaService implements IArenaSystem {
         ArenaFightResult result = new ArenaFightResult()
 
         long pid = -1
-        HerosStruct hss = null;
-        HerosStruct oss = null;
+        HerosStruct hss = null
+        HerosStruct oss = null
 
         synchronized (this) {
             ArenaRoleBean self = arenaData.findUser(uid)
@@ -476,7 +476,7 @@ class ArenaService implements IArenaSystem {
 
     @Override
     List<LadderVideoDto> getVideos(long uid) {
-        List<LadderVideoDto> dtos = new ArrayList<>();
+        List<LadderVideoDto> dtos = new ArrayList<>()
         synchronized (this) {
             ArenaRoleBean arb = arenaData.findUser(uid)
             if (arb != null) {
@@ -507,8 +507,8 @@ class ArenaService implements IArenaSystem {
             int selfGroup = 6
             long groupTime = 0
 
-            HerosStruct hss = null;
-            HerosStruct oss = null;
+            HerosStruct hss = null
+            HerosStruct oss = null
 
             synchronized (this) {
                 ArenaRoleBean self = arenaData.findUser(uid)
@@ -537,7 +537,7 @@ class ArenaService implements IArenaSystem {
                 }
 
                 hss = self.info.clone()
-                oss = self.info.clone()
+                oss = peer.info.clone()
                 groupTime = peer.groupTime
             }
 
@@ -549,6 +549,9 @@ class ArenaService implements IArenaSystem {
                     hss.buffs.merge(strc.attadd[i], strc.attadd[i+1], {a, b -> a + b})
                 }
             }
+
+            int weak = 0
+
             // 2. 对方的
             if (trc != null) {
                 // 3. 对方的衰弱
@@ -557,15 +560,15 @@ class ArenaService implements IArenaSystem {
                     // 间隔多少秒
                     int diff = (now - groupTime - trc.time[0]) / trc.time[1] as int
                     if (diff > 0) {
-                        oss.weak = diff * 2
-                        if (oss.weak > 20) {
-                            oss.weak = 20
+                        weak = diff * 2
+                        if (weak > 20) {
+                            weak = 20
                         }
                     }
                 }
             }
 
-            FightResult r = getBattle().doBattle(hss, oss)
+            FightResult r = getBattle().doBattle(hss, oss, weak)
             result.data = r.data
             if (r.win == 1) { // 胜利
                 result.win = true
@@ -584,8 +587,8 @@ class ArenaService implements IArenaSystem {
             }
 
         } else {
-            int selfGroup = 6;
-            HerosStruct hss = null;
+            int selfGroup = 6
+            HerosStruct hss = null
             synchronized (this) {
                 ArenaRoleBean self = arenaData.findUser(uid)
                 if (self == null) {

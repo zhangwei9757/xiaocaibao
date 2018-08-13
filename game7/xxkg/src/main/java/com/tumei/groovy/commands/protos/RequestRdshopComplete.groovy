@@ -46,9 +46,6 @@ class RequestRdshopComplete extends BaseProtocol {
         }
         if (rb.rs != null) {
             long current = System.currentTimeMillis() / 1000
-            if (rb.rs.complete > current) {
-                rb.rs.complete = 0
-            }
 
             // 事件超时，直接进入下一个事件
             if (current >= rb.rs.complete && rb.rs.complete != 0) {
@@ -62,7 +59,6 @@ class RequestRdshopComplete extends BaseProtocol {
 
             // 战力值达标类型  1：战力值 2：商品购买
             if (rsc.type == 1) {
-                // RdshopConf rc = Readonly.instance.getRdshop().get(rb.rs.key)
                 HerosBean hsb = DaoGame.instance.findHeros(user.uid)
                 long newPower = (long) (1.0 + rsc.limit / 10000.0) * user.calcPower(hsb)
                 if (rb.rs.power > newPower) {
@@ -70,7 +66,7 @@ class RequestRdshopComplete extends BaseProtocol {
                     user.send(r)
                     return
                 }
-                user.addItems(rsc.rewards, true, "完成神秘商店战力值达标事件")
+                user.addItems(rsc.rewards, false, "完成神秘商店战力值达标事件")
             } else {
                 // 购买商品类型  1：战力值 2：商品购买
                 PackBean pb = DaoGame.instance.findPack(user.getUid())

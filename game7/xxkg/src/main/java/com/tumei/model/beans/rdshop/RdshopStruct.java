@@ -8,11 +8,6 @@ public class RdshopStruct {
      * 配置表的key
      * */
     public int key;
-//    public int type;
-//    public int limit;
-//    public int level;
-//    public int[] rewards;
-//    public int cost;
 
     /**
      * 战力值

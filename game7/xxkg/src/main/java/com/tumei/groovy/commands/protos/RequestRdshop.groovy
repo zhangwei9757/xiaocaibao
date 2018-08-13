@@ -35,10 +35,14 @@ class RequestRdshop extends BaseProtocol {
         RdshopBean rb = DaoGame.instance.findRdshopBean(user.getUid())
         r.rs = rb.flush(user)
         r.count = rb.count
-        if (r.rs == null ) {
-            r.result = "当前无可参加的事件"
+
+        if (r.rs != null) {
+            ++r.count
         }
 
+        if (r.rs == null) {
+            r.result = "当前无可参加的事件"
+        }
         user.send(r)
     }
 }

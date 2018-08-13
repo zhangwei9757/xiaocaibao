@@ -61,7 +61,7 @@ class RequestLogin extends BaseProtocol {
         // 矿区行动力
         public int mineEnergy
 
-        public int gid
+        public long gid
 
         // 今日已经使用钻石进行注灵的次数
         public int relicCount
@@ -161,7 +161,7 @@ class RequestLogin extends BaseProtocol {
             rl.role.sex = rb.getSex()
             rl.role.vip = rb.getVip()
             rl.role.vipexp = rb.getVipexp()
-            rl.role.create = rb.getCreatetime().getTime() / 1000
+            rl.role.create = (long) (rb.getCreatetime().getTime() / 1000)
             rl.role.gm = user.getGmlevel()
 
             if (TimeUtil.getDay(rb.getCreatetime()) == today) { // new guy
