@@ -55,7 +55,8 @@ public class MongoTemplateConfig {
 		}
 
 		MongoClientOptions options = MongoClientOptions.builder()
-													   .connectionsPerHost(3)
+                .localThreshold(100)
+//													   .connectionsPerHost(3)
 													   .socketTimeout(3000).build();
 		ServerAddress sa = new ServerAddress(addr);
 		return new MongoClient(sa, mcs, options);

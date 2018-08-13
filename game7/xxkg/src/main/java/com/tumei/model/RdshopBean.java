@@ -57,17 +57,23 @@ public class RdshopBean {
      * @returns: 返回旧的事件或者新生成的一个事件
      */
     public RdshopStruct flush(GameUser user) {
-        long diff = System.currentTimeMillis() / 1000 - last;
+        long now = System.currentTimeMillis() / 1000;
+        long diff = now - last;
         // 应生成事件数量
         long need = diff / 3600;
         count += need;
-        if (count > 12) {
-            count = 12;
+
+        if (count >= 12) {
+            if (rs != null) {
+                count = 11;
+            } else {
+                count = 12;
+            }
         }
+
         if (!oldPlayer) {
             oldPlayer = true;
             count = 6;
-
         }
         if (rs == null && count > 0) {
             // 随机一个事件类型
@@ -89,9 +95,10 @@ public class RdshopBean {
             if (!oldPlayer) {
                 oldPlayer = true;
             }
-            last = System.currentTimeMillis() / 1000;
-            rs.begin = System.currentTimeMillis() / 1000;
+            rs.begin = now;
         }
+        last = now - (diff % 3600);
+
         return rs;
     }
 
