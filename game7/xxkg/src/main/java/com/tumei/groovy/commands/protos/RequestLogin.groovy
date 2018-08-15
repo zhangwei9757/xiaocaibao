@@ -12,6 +12,8 @@ import com.tumei.game.services.FriendService
 import com.tumei.game.services.LocalService
 import com.tumei.game.services.RobService
 import com.tumei.model.*
+import com.tumei.model.beans.EquipBean
+import com.tumei.model.beans.HeroBean
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
 /**
@@ -92,14 +94,14 @@ class RequestLogin extends BaseProtocol {
 
         rb.setLogtime(new Date())
 
-        boolean isRec = false;
+        boolean isRec = false
         int today = TimeUtil.getToday()
         if (today != rb.getLogDay()) {
             rb.setLogDay(today)
             rb.setLogdays(rb.getLogdays() + 1)
 
             // 记录玩家的基础数据
-            isRec = true;
+            isRec = true
             GameServer.getInstance().info("玩家(" + user.getUid() + ")(" + rb.getNickname() + ")vip:" + rb.getVip() + ",level:" + rb.getLevel());
         }
 
@@ -119,19 +121,92 @@ class RequestLogin extends BaseProtocol {
             user.calcPower(hsb)
 
             if (isRec) {
-                GameServer.getInstance().info(hsb.logInfos());
+                GameServer.getInstance().info(hsb.logInfos())
             }
 
             PackBean pb = user.getDao().findPack(uid)
             rl.pack = pb
             if (isRec) {
-                GameServer.getInstance().info(pb.logInfos());
+                GameServer.getInstance().info(pb.logInfos())
             }
+
+            /***
+             * 增加一个检测，英雄hid，装备eid，当前最大值如果比已经有的装备小，则更新这个最大值
+             */
+
+            /**
+             * 记录一下英雄和对应的装备是否有重复的，如果有就+1
+             */
+//            HashSet<Integer> hids = new HashSet<>()
+//            HashSet<Integer> eids = new HashSet<>()
+//
+//            int max_eid = 0
+//            for (int key : pb.equips.keySet()) {
+//                if (key > max_eid) {
+//                    max_eid = key
+//                }
+//                eids.add(key)
+//            }
+//
+//            int max_hid = 0
+//            for (int key : pb.heros.keySet()) {
+//                if (key > max_hid) {
+//                    max_hid = key
+//                }
+//                hids.add(key)
+//            }
+//
+//            for (HeroBean hb : hsb.heros) {
+//                if (hb != null) {
+//                    if (hb.hid > max_hid) {
+//                        max_hid = hb.hid
+//                    }
+//
+//                    for (EquipBean eb : hb.equips) {
+//                        if (eb != null) {
+//                            if (eb.eid > max_eid) {
+//                                max_eid = eb.eid
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if (max_hid > pb.maxhid) {
+//                pb.maxhid = max_hid
+//            }
+//            if (max_eid > pb.maxeid) {
+//                pb.maxeid = max_eid
+//            }
+//
+//            // 得到最大值后，再来看hids, eids,会不会在英雄装备的时候发生重复， 此时修改对应的值即可
+//            for (HeroBean hb : hsb.heros) {
+//                if (hb != null) {
+//                    if (hids.contains(hb.hid)) {
+//                        hb.hid = ++pb.maxhid
+//                    }
+//
+//                    hids.add(hb.hid)
+//
+//                    for (EquipBean eb : hb.equips) {
+//                        if (eb != null) {
+//                            if (eids.contains(eb.eid)) {
+//                                eb.eid = ++pb.maxeid
+//                            }
+//                            eids.add(eb.eid)
+//                        }
+//                    }
+//                }
+//            }
+
+            /** -----------  检测修正结束 ----------- by leon **/
+
 
             // 读取一下矿区的进度
             RoleMineBean rmb = user.getDao().findRoleMap(uid)
             rmb.flushEnergy(now)
             rl.mineEnergy = rmb.getEnergy()
+
+
 
 //			user.info("************** 返回的等级:" + rl.role.level + " exp:" + rl.role.exp + " coin:" + rl.pack.getCoin())
 

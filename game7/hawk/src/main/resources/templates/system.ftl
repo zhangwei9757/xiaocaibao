@@ -189,8 +189,4 @@
     </el-input>
 </div>
 
-<div style="margin-top: 10px; margin-left: 0px;" v-if="logged">
-	<el-button size="mini" @click="makeOpenRmb">刷新所有第一次登录奖励(不会用就不要点，错误，概不负责)</el-button>
-
-</div>
 

@@ -90,9 +90,10 @@ public class RequestSceneFast extends BaseProtocol {
 		sb.harvest(user, GameConfig.getInstance().getSceneFastTime(), rl);
 		rl.energy = sb.updateEnergy(GameConfig.getInstance().getSceneFastRecover());
 
-
-		WarBean wb = DaoGame.getInstance().findWar(user.getUid());
-		wb.generateEmergy(user.getLevel());
+		if (rb.getLevel() >= 75) {
+			WarBean wb = DaoGame.getInstance().findWar(user.getUid());
+			wb.generateEmergy(user.getLevel());
+		}
 
 		user.send(rl);
 	}

@@ -445,7 +445,7 @@ class GroovyMineSystem implements IMineSystem {
                     mab.info = new MineRobInfo()
                     mab.info.name = mr.name
                     mab.info.grade = mr.grade
-                    mab.info.ts = System.currentTimeMillis() / 1000
+                    mab.info.ts = (long) (System.currentTimeMillis() / 1000)
                     mab.awards.clear()
                     mab.awards.addAll(awards)
                 }

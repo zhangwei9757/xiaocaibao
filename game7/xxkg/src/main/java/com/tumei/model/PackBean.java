@@ -69,7 +69,7 @@ public class PackBean {
 	 */
 	private int gem = 0;
 	/**
-	 * 拥有的所有英雄
+	 * 拥有的所有英雄 key: hid
 	 */
 	private HashMap<Integer, HeroBean> heros = new HashMap<>();
 	/**

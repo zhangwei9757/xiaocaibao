@@ -10,6 +10,7 @@ import com.tumei.common.utils.HttpUtils
 import com.tumei.common.utils.JsonUtil
 import com.tumei.common.utils.JwtUtil
 import com.tumei.common.utils.MD5Util
+import io.jsonwebtoken.Claims
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
@@ -110,6 +111,32 @@ class SessionController {
             return true
         }).collect(Collectors.toList())
     }
+
+
+    @ApiOperation(value = "登录")
+    @RequestMapping(value = "/flushServers", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "token", value = "登录后获取的秘钥", required = true, dataType = "String", paramType = "query"),
+    ])
+    @ResponseBody
+    List<ServerBean> flushServers(HttpServletRequest request) {
+        try {
+            String token = request.getParameter("token")
+            Claims claims = JwtUtil.verify(token)
+            long uid = (long) (Long.parseLong(claims.getId()) / 1000)
+
+            AccountBean ub = accountBeanRepository.findById(uid)
+            if (ub != null) {
+                boolean isGM = (ub.getRole().indexOf("ADMIN") != -1)
+                return getServers(isGM, 1)
+            }
+        } catch (Exception ex) {
+            log.error("刷新服务器列表失败，无法获取token信息:" + ex.message)
+        }
+
+        return null
+    }
+
 
     @ApiOperation(value = "登录")
     @RequestMapping(value = "/logon", method = RequestMethod.GET)

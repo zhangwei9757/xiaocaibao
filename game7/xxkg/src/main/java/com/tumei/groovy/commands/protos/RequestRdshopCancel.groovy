@@ -39,6 +39,9 @@ class RequestRdshopCancel extends BaseProtocol {
             r.result = "当前无可取消的事件"
         }
 
+        if (r.rs != null) {
+            ++r.count
+        }
         user.send(r)
     }
 }

@@ -91,7 +91,7 @@ public class RequestEquipDown extends BaseProtocol {
 			}
 
 			// 3 返还精炼过程中使用的金币
-			int count = 0;//eb.getGradeexp();
+			int count = eb.getGradeexp();
 			for (int i = 0; i < eb.getGrade(); ++i) {
 				EquiprefcostConf ecc = Readonly.getInstance().findEquipRefCost(i);
 

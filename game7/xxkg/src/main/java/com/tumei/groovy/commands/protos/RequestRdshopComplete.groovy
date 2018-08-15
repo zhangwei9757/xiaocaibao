@@ -84,6 +84,9 @@ class RequestRdshopComplete extends BaseProtocol {
             r.result = "当前事件提交失败"
         }
 
+        if (r.rs != null) {
+            ++r.count
+        }
         user.send(r)
     }
 }

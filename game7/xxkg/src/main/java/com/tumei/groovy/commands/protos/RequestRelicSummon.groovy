@@ -62,7 +62,7 @@ class RequestRelicSummon extends BaseProtocol {
                     int total = 0
                     int r = RandomUtil.getBetween(1, 100)
                     for (GlorychestConf gc : gcs) {
-                        total += gc.rate1
+                        total += gc.rate2
                         if (r <= total) {
                             reward = gc.rewards
                             break
