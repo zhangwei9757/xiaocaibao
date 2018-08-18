@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/arena/arena.iml" filepath="$PROJECT_DIR$/arena/arena.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game7.iml" filepath="$PROJECT_DIR$/game7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guild/guild.iml" filepath="$PROJECT_DIR$/guild/guild.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hawk/hawk.iml" filepath="$PROJECT_DIR$/hawk/hawk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xxkg/xxkg.iml" filepath="$PROJECT_DIR$/xxkg/xxkg.iml" />
+    </modules>
+  </component>
+</project>
