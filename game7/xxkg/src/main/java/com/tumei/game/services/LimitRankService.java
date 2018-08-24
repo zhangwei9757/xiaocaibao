@@ -94,6 +94,8 @@ public class LimitRankService {
 			return 1;
 		});
 
+		System.out.println("11111");
+		
 		lrbs.forEach((orb) ->
 		{
 			users.put(orb.getId(), orb);
