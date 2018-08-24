@@ -11,6 +11,8 @@ import com.tumei.model.limit.LimitRankBean
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
 
+import java.rmi.server.UID
+
 /**
  * Created by Administrator on 2017/3/13 0013.
  *
@@ -40,11 +42,13 @@ class RequestLimitTasks extends BaseProtocol {
         public List<NameValue> ranks = new ArrayList<>()
 
         // 活动开始时间 秒
-        public int begin
+        public int begins
         // 活动结束时间 秒
-        public int end
+        public int ends
         // 活动次数达标后的奖励，客户端可以不用再查表了
-        public int[][] rewards
+        public int[] rewards
+        // 对应位置是否领取 0：未领取 1：已领取
+        public int[] receive = new int[5]
 
         public String result = ""
     }
@@ -62,13 +66,12 @@ class RequestLimitTasks extends BaseProtocol {
             rci.result = ErrCode.限时活动暂未开启
         } else {
 
-            rci.begin = lrs.begin
-            rci.end = lrs.end
-            rci.rewards = lrs.rewards
-
+            rci.begins = lrs.begin
+            rci.ends = lrs.end
+            //rci.rewards = lrs.rewards
+            rci.receive = lrs.getRewardFlag(user.uid)
             rci.ranks = lrs.getRanks(user.uid)
         }
-
 
         user.send(rci)
     }

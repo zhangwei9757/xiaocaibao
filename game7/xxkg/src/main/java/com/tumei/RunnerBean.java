@@ -101,8 +101,8 @@ public class RunnerBean implements ExitCodeGenerator {
 			groovyLoader.registerProtocol("xxkg", n);
 		}
 
-		groovyLoader.registerService("common", "GroovyBattle", 1000L);
-		groovyLoader.registerService("xxkg", "GroovyMineSystem", 5000L);
+		groovyLoader.registerService("common", "GroovyBattle", 1000L, false);
+		groovyLoader.registerService("xxkg", "GroovyMineSystem", 5000L, true);
 		groovyLoader.registerController("xxkg", "RoleController");
 
 		log.info(this.getClass().getName() + " init.");

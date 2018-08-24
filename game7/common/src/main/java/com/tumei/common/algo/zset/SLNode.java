@@ -13,7 +13,7 @@ public class SLNode<K extends Comparable<K>, V extends Comparable<V>> implements
         this.score = score;
         this.member = member;
 
-        for(int i = 0; i < level; ++i) {
+        for (int i = 0; i < level; ++i) {
             this.levels.add(new SLNodeLevel<K, V>());
         }
     }
@@ -56,8 +56,8 @@ public class SLNode<K extends Comparable<K>, V extends Comparable<V>> implements
     }
 
     public int compareTo(V score, K member) {
-        int result = this.score.compareTo(score);
-        if(result == 0) {
+        int result = -this.score.compareTo(score);
+        if (result == 0) {
             return this.member.compareTo(member);
         } else {
             return result;

@@ -7,10 +7,12 @@ import com.tumei.common.utils.Defs
 import com.tumei.common.utils.ErrCode
 import com.tumei.common.utils.RandomUtil
 import com.tumei.game.GameUser
+import com.tumei.game.services.LimitRankService
 import com.tumei.model.ActivityBean
 import com.tumei.model.HerosBean
 import com.tumei.model.PackBean
 import com.tumei.model.beans.RelicBean
+import com.tumei.model.limit.LimitRankBean
 import com.tumei.modelconf.HolyConf
 import com.tumei.modelconf.VipConf
 import com.tumei.websocket.BaseProtocol
@@ -96,6 +98,9 @@ class RequestRelicActivate extends BaseProtocol {
                         rci.result = ErrCode.钻石不足
                     } else {
                         user.payItem(Defs.钻石, need, "钻石炼化")
+
+                        // 钻石注灵，记录一次次数
+                        LimitRankService.instance.put(user.uid,user.name,1)
                     }
                 }
             }

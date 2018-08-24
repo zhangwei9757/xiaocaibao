@@ -8,6 +8,7 @@ import com.tumei.model.*;
 import com.tumei.common.Readonly;
 import com.tumei.modelconf.RobotConf;
 import com.tumei.modelconf.RobotConfRepository;
+import lombok.Data;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.*;
  * 这个bean是保存数据用的，他不带任何业务相关的锁, 在开始的时候从数据库拉取数据，在结束的时候保存一次数据
  *
  */
+@Data
 @Component
 public class ArenaData {
 	private static final Log log = LogFactory.getLog(ArenaData.class);
@@ -79,6 +81,11 @@ public class ArenaData {
 	@Autowired
 	private Readonly readonly;
 
+	// 上次发送奖励的时间，避免重复发送奖励,重启的时候虽然会清空，但是发送奖励是那一秒的事情，过了时间就当天就不会再发送，所以不用保存到数据库
+	public int lastSendDayAward;
+
+	public int lastSendWeekAward;
+
 	public IBattle getBattle() {
 		return ctx.getBean(IBattle.class);
 	}
@@ -103,7 +110,7 @@ public class ArenaData {
 			int start = 0;
 			for (RobotConf rc : rcs) {
 				for (int i = start; i < rc.rank; ++i) {
-					ArenaRoleBean rb = new ArenaRoleBean(i, i);
+					ArenaRoleBean rb = new ArenaRoleBean(i + 1, i);
 					rb.setName(readonly.randomName());
 					List<Integer> heros = readonly.randHerosByList(6, rc.quality);
 					rb.setIcon(heros.get(0));
@@ -137,6 +144,15 @@ public class ArenaData {
 			fillRobots();
 			rk = arenaRoleBeanRepository.findAll(new Sort("rank"));
 		}
+
+		for (int i = 0; i < rk.size(); ++i) {
+		    ArenaRoleBean arb = rk.get(i);
+		    if (arb.getRank() != i) {
+		    	arb.setRank(i);
+		    	arenaRoleBeanRepository.save(arb);
+			}
+		}
+
 
 		ranks.addAll(rk);
 		for (ArenaRoleBean rb : rk) {
@@ -251,15 +267,17 @@ public class ArenaData {
 	public void saveChanges() {
 		for (Long index : changes) {
 			ArenaRoleBean rb = users.get(index);
-			arenaRoleBeanRepository.save(rb);
+		    try {
+				arenaRoleBeanRepository.save(rb);
+			} catch (Exception ex) {
+		        log.error("save key " + rb.getId() + " error:" + ex.getMessage());
+			}
 		}
 		changes.clear();
 
 		for (int index : slotChanges) {
 			slots.stream().filter(asb -> asb.getSlot() == index).findFirst().ifPresent(slot -> {
-				if (slot != null) {
 					arenaSlotBeanRepository.save(slot);
-				}
 			});
 		}
 

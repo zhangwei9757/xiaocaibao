@@ -129,9 +129,9 @@ public class GroovyLoader {
 
 		try {
 			if (!this.isEditor) { // 真实环境
-				registerGroovy(mod, name, scriptPath + "/" + location + ".groovy", 5000L, true);
+				registerGroovy(mod, name, scriptPath + "/" + location + ".groovy", 5000L, true, false);
 			} else { // 编辑器模式
-				registerGroovy(mod, name, scriptPath + "/" + location + ".groovy", 1000L, true);
+				registerGroovy(mod, name, scriptPath + "/" + location + ".groovy", 1000L, true, false);
 			}
 		} catch (Exception ex) {
 			logger.error("注册协议mod(" + mod + ") (" + name + ")失败:" + ex.getMessage());
@@ -143,9 +143,9 @@ public class GroovyLoader {
 	 * @param mod
 	 * @param name
 	 */
-	public void registerService(String mod, String name, long delayCheck) {
+	public void registerService(String mod, String name, long delayCheck, boolean isSingleton) {
 		try {
-			registerGroovy(mod, name, scriptPath + "/" + name + ".groovy", delayCheck, false);
+			registerGroovy(mod, name, scriptPath + "/" + name + ".groovy", delayCheck, false, isSingleton);
 		} catch (Exception ex) {
 			logger.error("注册服务mod(" + mod + ") (" + name + ")失败:" + ex.getMessage());
 		}
@@ -157,7 +157,7 @@ public class GroovyLoader {
 	 * @param beanName       名字
 	 * @param scriptLocation 位置
 	 */
-	public void registerGroovy(String module, String beanName, String scriptLocation, long delayCheck, boolean proxy) {
+	public void registerGroovy(String module, String beanName, String scriptLocation, long delayCheck, boolean proxy, boolean isSingleton) {
 		scriptLocation = String.format(scriptLocation, module);
 
 		GenericBeanDefinition bd = new GenericBeanDefinition();
@@ -170,7 +170,11 @@ public class GroovyLoader {
 		// 设置调用代理
 		bd.setAttribute(ScriptFactoryPostProcessor.PROXY_TARGET_CLASS_ATTRIBUTE, proxy);
 		// 对应每个groovy文件,创建一个对应都GroovyFactory来管理,所以这里一定是prototype
-		bd.setScope("prototype");
+		if (isSingleton) {
+			bd.setScope("singleton");
+		} else {
+			bd.setScope("prototype");
+		}
 
 		ConstructorArgumentValues cav = bd.getConstructorArgumentValues();
 		cav.addIndexedArgumentValue(0, scriptLocation);

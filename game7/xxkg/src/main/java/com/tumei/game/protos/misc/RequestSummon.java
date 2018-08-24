@@ -1,5 +1,6 @@
 package com.tumei.game.protos.misc;
 
+import com.tumei.game.services.LimitRankService;
 import com.tumei.model.beans.AwardBean;
 import com.tumei.websocket.WebSocketUser;
 import com.tumei.game.GameUser;
@@ -309,6 +310,11 @@ public class RequestSummon extends BaseProtocol {
 				rs.awards.add(new AwardBean(hero, cc, 0));
 				sb.setAdvanceCount(sb.getAdvanceCount() + 1);
 				user.pushDailyTask(1, 1);
+
+				// 召唤成功，英雄狂欢活动累计次数
+				//SummonRankBean srb = LimitRankService.getInstance().summonRankBeanRepository.findById(uid);
+				//srb.setCount(1);
+
 				break;
 			}
 			case 5: // 十次高级召唤
@@ -375,6 +381,10 @@ public class RequestSummon extends BaseProtocol {
 					sb.setAdvanceCount(sb.getAdvanceCount() + 1);
 				}
 				user.pushDailyTask(1, 10);
+
+				// 召唤成功，英雄狂欢活动累计次数
+				//LimitRankService.getInstance().put(user.getUid(),user.getName(),10);
+
 				break;
 			}
 			case 6:

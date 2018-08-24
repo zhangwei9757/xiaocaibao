@@ -315,7 +315,7 @@ public class PackBean {
 		hb.setEid(++maxeid);
 		equips.put(maxeid, hb);
 
-		GameServer.getInstance().pushSta(this.id, "addequip|" + equip + "|" + 1 + "|" + reason);
+		GameServer.getInstance().pushSta(this.id, "addequip|" + equip + "|" + hb.getEid() + "|" + reason);
 
 		return hb;
 	}

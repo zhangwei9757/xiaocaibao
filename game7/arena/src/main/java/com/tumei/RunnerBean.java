@@ -22,8 +22,8 @@ public class RunnerBean {
     public void init() {
         loader.setReload(true);
 
-        loader.registerService("common", "GroovyBattle", 5000L);
-        loader.registerService("arena", "ArenaService", 5000L);
+        loader.registerService("common", "GroovyBattle", 5000L, false);
+        loader.registerService("arena", "ArenaService", 5000L, true);
         loader.registerController("arena", "ArenaController");
 
         log.info(this.getClass().getName() + " init.");

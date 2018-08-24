@@ -3,6 +3,7 @@ package com.tumei.groovy.commands
 import com.tumei.ArenaData
 import com.tumei.common.Readonly
 import com.tumei.common.service.ServiceRouter
+import com.tumei.common.utils.TimeUtil
 import com.tumei.dto.battle.FightResult
 import com.tumei.common.utils.RandomUtil
 import com.tumei.configs.RemoteService
@@ -31,6 +32,8 @@ import org.springframework.scheduling.annotation.Scheduled
 class ArenaService implements IArenaSystem {
     private static final Log log = LogFactory.getLog(ArenaService.class)
 
+    private static final Object monitor = new Object();
+
     @Autowired
     private Readonly readonly
 
@@ -54,8 +57,27 @@ class ArenaService implements IArenaSystem {
     @Override
     @Scheduled(cron = "0 0 21 * * ?")
     void arenaSchedule() {
+        int today = TimeUtil.getToday()
+        synchronized (monitor) {
+            if (today <= arenaData.lastSendDayAward) {
+                log.error("已经发送过当日的竞技场奖励，重复发送，有错误:" + this.hashCode())
+                return
+            }
+            arenaData.lastSendDayAward = today
+        }
+
+        sendDayAwards(-1)
+    }
+
+    /**
+     *
+     * 发送日奖励
+     *
+     * @param targetZone -1 表示全部发送，否则发送指定的服务器
+     */
+    void sendDayAwards(int targetZone) {
         Map<Integer, List<Long>[]> rk = new HashMap<>()
-        synchronized (this) {
+        synchronized (monitor) {
             int key = 1
             SarenarewardConf trc = readonly.findArenalistConf(key)
             for (ArenaRoleBean arb : arenaData.ranks) {
@@ -67,6 +89,11 @@ class ArenaService implements IArenaSystem {
                 int zone = 1
                 if (arb.id > 10000) {
                     zone = sr.chooseZone(arb.id)
+                }
+
+                // 指向目标服务器的发送，抛弃所有不是指定的服务器的奖励
+                if (targetZone >= 0 && targetZone != zone) {
+                    continue
                 }
 
                 List<Long>[] ls = rk[zone]
@@ -113,10 +140,12 @@ class ArenaService implements IArenaSystem {
         })
     }
 
+
+
     // 1000毫秒刷新一次, 正式环境 30分钟一次
     @Scheduled(fixedRate = 1800_000L)
     void update() {
-        synchronized (this) {
+        synchronized (monitor) {
             // save all changed ranks
             try {
                 arenaData.saveChanges()
@@ -131,7 +160,13 @@ class ArenaService implements IArenaSystem {
     @Scheduled(cron = "1 0 0 ? * MON")
     void schedule() {
         try {
-            synchronized (this) {
+            int today = TimeUtil.getToday()
+            synchronized (monitor) {
+                if (today <= arenaData.lastSendWeekAward) {
+                    log.error("跨服周奖励今日已经发送，本周不会再发送.")
+                    return
+                }
+                arenaData.lastSendWeekAward = today
                 int count = readonly.findTopRankConf(1).newslot[arenaData.getZone() - 1]
                 for (int i = 0; i < count; ++i) {
                     arenaData.createSlot(i)
@@ -168,7 +203,7 @@ class ArenaService implements IArenaSystem {
      */
     ArenaInfo getInfo(long id) {
         ArenaInfo ai = new ArenaInfo()
-        synchronized (this) {
+        synchronized (monitor) {
             ArenaRoleBean rb = arenaData.findUser(id)
             if (rb == null) {
                 return null
@@ -210,10 +245,12 @@ class ArenaService implements IArenaSystem {
      * @param uid
      * @return
      */
-    synchronized int getPeekRank(long uid) {
-        ArenaRoleBean rb = arenaData.findUser(uid)
-        if (rb != null) {
-            return rb.getPeek()
+    int getPeekRank(long uid) {
+        synchronized (monitor) {
+            ArenaRoleBean rb = arenaData.findUser(uid)
+            if (rb != null) {
+                return rb.getPeek()
+            }
         }
         return 99998
     }
@@ -233,7 +270,7 @@ class ArenaService implements IArenaSystem {
         String pname = null
         int selfGrade = 0
 
-        synchronized (this) {
+        synchronized (monitor) {
             ArenaRoleBean other = arenaData.findUser(id)
             if (other.getRank() != rank) {
                 return -1
@@ -282,7 +319,7 @@ class ArenaService implements IArenaSystem {
     @Override
     void submitInfo(ArenaRoleDto ard) {
         ArenaRoleBean rb
-        synchronized (this) {
+        synchronized (monitor) {
             rb = arenaData.findUser(ard.uid)
             if (rb == null) {
                 rb = new ArenaRoleBean(ard.uid, arenaData.rankSize())
@@ -309,7 +346,7 @@ class ArenaService implements IArenaSystem {
         HerosStruct hss = null
         HerosStruct oss = null
 
-        synchronized (this) {
+        synchronized (monitor) {
             ArenaRoleBean self = arenaData.findUser(uid)
             if (self == null) {
                 result.reason = "参数错误"
@@ -347,7 +384,6 @@ class ArenaService implements IArenaSystem {
             // 1. 交换2个人的排名
             int rtn = exchange(uid, pid, peerRank)
             if (rtn < 0) {
-                log.warn("排名发生变化")
                 result.reason = "对方排名发生变化"
             } else if (rtn > 0) {
                 result.rank = peerRank
@@ -368,55 +404,57 @@ class ArenaService implements IArenaSystem {
      * @param uid
      * @return
      */
-    synchronized LadderInfoDto enterLadder(long uid) {
-        ArenaRoleBean arb = arenaData.findUser(uid)
-        if (arb == null) {
-            return null
-        }
-
-        LadderInfoDto dto = new LadderInfoDto()
-        dto.rank = arb.getRank()
-        dto.slot = arb.getSlot()
-        dto.maxSlot = arenaData.slotsSize()
-        // 没有选择slot没有继续计算的必要
-        if (dto.slot < 0 || dto.slot >= dto.maxSlot) {
-            if (dto.slot > 0) {
-                arb.setSlot(-1)
-                arb.setGroup(6)
-                arb.setGindex(0)
-                arb.setRewardTime(0)
-                arb.setGroupTime(0)
-                arb.videos.clear()
-                arenaData.dirty(arb.id)
+    LadderInfoDto enterLadder(long uid) {
+        synchronized (monitor) {
+            ArenaRoleBean arb = arenaData.findUser(uid)
+            if (arb == null) {
+                return null
             }
+
+            LadderInfoDto dto = new LadderInfoDto()
+            dto.rank = arb.getRank()
+            dto.slot = arb.getSlot()
+            dto.maxSlot = arenaData.slotsSize()
+            // 没有选择slot没有继续计算的必要
+            if (dto.slot < 0 || dto.slot >= dto.maxSlot) {
+                if (dto.slot > 0) {
+                    arb.setSlot(-1)
+                    arb.setGroup(6)
+                    arb.setGindex(0)
+                    arb.setRewardTime(0)
+                    arb.setGroupTime(0)
+                    arb.videos.clear()
+                    arenaData.dirty(arb.id)
+                }
+                return dto
+            }
+
+            dto.honor = arb.flushHonor(true)
+            if (dto.honor > 0) {
+                arenaData.dirty(uid)
+            }
+            dto.next = arb.getRewardTime()
+
+            // 创建分组
+            dto.group = arb.getGroup()
+            dto.gindex = arb.getGindex()
+
+            ArenaSlotBean asb = arenaData.getSlot(dto.slot)
+            for (LadderGroup lg : asb.groups) {
+                lg.roles.stream().forEach({rid ->
+                    if (rid < 10000) { // 机器人填充
+                        TrmonsterConf tc = readonly.findMonsterConf(rid as int)
+                        dto.roles.add(tc.createSimpleDto())
+                    } else { // 玩家查询填充
+                        ArenaRoleBean sarb = arenaData.findUser(rid)
+                        dto.roles.add(sarb.createSimpleDto())
+                    }
+                })
+            }
+
+            // 返回所有组的信息
             return dto
         }
-
-        dto.honor = arb.flushHonor(true)
-        if (dto.honor > 0) {
-            arenaData.dirty(uid)
-        }
-        dto.next = arb.getRewardTime()
-
-        // 创建分组
-        dto.group = arb.getGroup()
-        dto.gindex = arb.getGindex()
-
-        ArenaSlotBean asb = arenaData.getSlot(dto.slot)
-        for (LadderGroup lg : asb.groups) {
-            lg.roles.stream().forEach({rid ->
-                if (rid < 10000) { // 机器人填充
-                    TrmonsterConf tc = readonly.findMonsterConf(rid as int)
-                    dto.roles.add(tc.createSimpleDto())
-                } else { // 玩家查询填充
-                    ArenaRoleBean sarb = arenaData.findUser(rid)
-                    dto.roles.add(sarb.createSimpleDto())
-                }
-            })
-        }
-
-        // 返回所有组的信息
-        return dto
     }
 
     /**
@@ -428,56 +466,67 @@ class ArenaService implements IArenaSystem {
      * < 0 表示失败
      * slot = 10 表示随机, 一个天梯分组不会到10个
      */
-    synchronized int chooseSlot(long uid, int slot) {
-        ArenaRoleBean arb = arenaData.findUser(uid)
-        if (arb == null || arb.slot != -1) {
-            return -1
+    int chooseSlot(long uid, int slot) {
+        synchronized (monitor) {
+            ArenaRoleBean arb = arenaData.findUser(uid)
+            if (arb == null || arb.slot != -1) {
+                return -1
+            }
+
+            boolean rnd = false
+            // 随机分组
+            if (slot == 10) {
+                slot = RandomUtil.getRandom() % arenaData.slotsSize()
+                rnd = true
+            }
+
+            // 参数错误
+            if (slot < 0 || slot > 6) {
+                return -2
+            }
+
+            arb.setSlot(slot)
+            arb.setRandSlot(rnd)
+            // 下次奖励时间
+            arb.setRewardTime((System.currentTimeMillis() / 1000 + Readonly.reward_interval) as long)
+
+            arb.setGroup(6)
+            // 0表示不衰减
+            arb.setGroupTime(0)
+
+            arenaData.dirty(uid)
+
+            return slot
         }
-
-        boolean rnd = false
-        // 随机分组
-        if (slot == 10) {
-            slot = RandomUtil.getRandom() % arenaData.slotsSize()
-            rnd = true
-        }
-
-        // 参数错误
-        if (slot < 0 || slot > 6) {
-            return -2
-        }
-
-        arb.setSlot(slot)
-        arb.setRandSlot(rnd)
-        // 下次奖励时间
-        arb.setRewardTime((System.currentTimeMillis() / 1000 + Readonly.reward_interval) as long)
-
-        arb.setGroup(6)
-        // 0表示不衰减
-        arb.setGroupTime(0)
-
-        arenaData.dirty(uid)
-
-        return slot
     }
 
-    synchronized LadderHonorDto getHonor(long uid) {
-        ArenaRoleBean arb = arenaData.findUser(uid)
-        if (arb == null) {
-            return null
+    /**
+     *
+     * 获取某个玩家的荣誉
+     *
+     * @param uid
+     * @return
+     */
+    LadderHonorDto getHonor(long uid) {
+        synchronized (monitor) {
+            ArenaRoleBean arb = arenaData.findUser(uid)
+            if (arb == null) {
+                return null
+            }
+            LadderHonorDto dto = new LadderHonorDto()
+            dto.honor = arb.flushHonor(true)
+            if (dto.honor > 0) {
+                arenaData.dirty(uid)
+            }
+            dto.next = arb.getRewardTime()
+            return dto
         }
-        LadderHonorDto dto = new LadderHonorDto()
-        dto.honor = arb.flushHonor(true)
-        if (dto.honor > 0) {
-            arenaData.dirty(uid)
-        }
-        dto.next = arb.getRewardTime()
-        return dto
     }
 
     @Override
     List<LadderVideoDto> getVideos(long uid) {
         List<LadderVideoDto> dtos = new ArrayList<>()
-        synchronized (this) {
+        synchronized (monitor) {
             ArenaRoleBean arb = arenaData.findUser(uid)
             if (arb != null) {
                 arb.getVideos().forEach({ lv -> dtos.add(lv.createDto())})
@@ -510,7 +559,7 @@ class ArenaService implements IArenaSystem {
             HerosStruct hss = null
             HerosStruct oss = null
 
-            synchronized (this) {
+            synchronized (monitor) {
                 ArenaRoleBean self = arenaData.findUser(uid)
                 if (self == null) {
                     result.reason = "参数错误"
@@ -556,7 +605,7 @@ class ArenaService implements IArenaSystem {
             if (trc != null) {
                 // 3. 对方的衰弱
                 if (groupTime != 0) {
-                    long now = System.currentTimeMillis() / 1000
+                    long now = (long) (System.currentTimeMillis() / 1000)
                     // 间隔多少秒
                     int diff = (now - groupTime - trc.time[0]) / trc.time[1] as int
                     if (diff > 0) {
@@ -577,7 +626,7 @@ class ArenaService implements IArenaSystem {
             }
 
             // 挑战成功后需要给被挑战者增加失败视频记录
-            synchronized (this) {
+            synchronized (monitor) {
                 ArenaRoleBean peer = arenaData.findUser(pid)
                 if (peer != null) {
                     int z = sr.chooseZone(uid)
@@ -589,7 +638,7 @@ class ArenaService implements IArenaSystem {
         } else {
             int selfGroup = 6
             HerosStruct hss = null
-            synchronized (this) {
+            synchronized (monitor) {
                 ArenaRoleBean self = arenaData.findUser(uid)
                 if (self == null) {
                     result.reason = "参数错误"
@@ -630,7 +679,7 @@ class ArenaService implements IArenaSystem {
         }
 
         if (result.win) { // 胜利
-            synchronized (this) {
+            synchronized (monitor) {
                 ArenaRoleBean self = arenaData.findUser(uid)
 
                 if (pid > 10000) {
@@ -662,7 +711,7 @@ class ArenaService implements IArenaSystem {
                         arenaData.setSlotGroupRole(self.slot, group, index, self.id)
                         self.group = group
                         self.gindex = index
-                        self.groupTime = System.currentTimeMillis() / 1000
+                        self.groupTime = (long) (System.currentTimeMillis() / 1000)
                         arenaData.dirty(self.id)
 
                         if (oldGroup < 6) { // 只有不是青铜守卫的情况才需要交换怪物的位置
@@ -709,7 +758,7 @@ class ArenaService implements IArenaSystem {
         peer.gindex = ai
 
         // 分组变化后需要重新计算衰弱时间
-        long now = System.currentTimeMillis() / 1000
+        long now = (long) (System.currentTimeMillis() / 1000)
         self.groupTime = now
         peer.groupTime = now
 

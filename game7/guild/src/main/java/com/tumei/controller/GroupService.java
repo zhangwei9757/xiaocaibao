@@ -56,9 +56,6 @@ public class GroupService {
     @Autowired
     private ApplicationContext context;
 
-    @Autowired
-    private GuildbagBeanRepository guildbagBeanRepository;
-
     public HashMap<Long, GroupBean> groups = new HashMap<>();
 
     /**
@@ -122,16 +119,6 @@ public class GroupService {
                     return -1;
                 }
 
-                return 0;
-            });
-
-            guildbagBeans = guildbagBeanRepository.findAll();
-            guildbagBeans.sort((o1, o2) -> {
-                if (o1.getId() < o2.getId()) {
-                    return 1;
-                } else if (o1.getId() > o2.getId()) {
-                    return -1;
-                }
                 return 0;
             });
 
@@ -497,16 +484,10 @@ public class GroupService {
         return context.getBean(IBattle.class);
     }
 
-    public synchronized GuildbagBean findGuildbag(long id) {
-        GuildbagBean gbb = null;
+    public synchronized GuildbagBean findGuildbag(long gid) {
         try {
-            for (int i = 0; i < guildbagBeans.size(); i++) {
-                if (guildbagBeans.get(i).getId() == id) {
-                    gbb = guildbagBeans.get(i);
-                    break;
-                }
-            }
-            return gbb;
+            GroupBean gb = this.groups.getOrDefault(gid, null);
+            return gb.getGbb();
         } catch (Exception e) {
             log.error("获取公会红包信息错误:", e);
         }

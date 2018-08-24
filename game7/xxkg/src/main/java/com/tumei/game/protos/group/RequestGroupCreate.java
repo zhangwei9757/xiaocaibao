@@ -59,7 +59,11 @@ public class RequestGroupCreate extends BaseProtocol {
 		if (Strings.isNullOrEmpty(rtn.result)) {
 			gb.setGid(rtn.group);
 			user.payItem(公会卡, 1, "创建公会");
-		}
+        } else if (rtn.result.startsWith("other")){
+            long gid = Long.parseLong(rtn.result.substring(6));
+            gb.setGid(gid);
+            rtn.result = "玩家已经在其他公会，请刷新公会界面";
+        }
 
 		rci.result = rtn.result;
 		user.send(rci);

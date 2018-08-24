@@ -1,7 +1,10 @@
 package com.tumei.groovy.commands.protos
 
 import com.google.common.base.Strings
+import com.google.common.eventbus.DeadEvent
 import com.tumei.common.RemoteService
+import com.tumei.dto.guild.GuildbagDetailDto
+import com.tumei.dto.guild.GuildbagRoleDto
 import com.tumei.game.GameUser
 import com.tumei.model.GroupBean
 import com.tumei.websocket.BaseProtocol
@@ -25,6 +28,12 @@ class RequestGuildbagReceive extends BaseProtocol {
         public int seq
         // 返回结果
         public String result = ""
+        // 红包列表
+        public HashMap<Long,GuildbagRoleDto> ids
+        // 领取的数量
+        public int count
+        // 红包还可领取的人数
+        public int remaining
     }
 
     @Override
@@ -51,13 +60,16 @@ class RequestGuildbagReceive extends BaseProtocol {
 
         // 远程请求领取红包
         GroupBean gb = user.getDao().findGroup(user.getUid())
-        int[] result = RemoteService.instance.askGuildBagReceive(gb.gid, user.uid, user.name, bagId)
+        GuildbagDetailDto detail = RemoteService.instance.askGuildBagReceive(gb.gid, user.uid, user.name, bagId)
 
-        if (result != null) {
+        if (detail != null) {
             // 获取红包的奖励
-            user.addItem(result[0], result[1], true, "领取公会红包")
-        } else {
-            r.result = "领取红包失败"
+            if (detail.count > 0) {
+                user.addItem(detail.id, detail.count, false, "领取公会红包")
+            }
+            r.ids = detail.ids
+            r.count = detail.count
+            r.remaining = detail.remaining
         }
 
         user.send(r)

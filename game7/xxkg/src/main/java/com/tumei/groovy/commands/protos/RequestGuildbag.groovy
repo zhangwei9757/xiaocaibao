@@ -1,10 +1,9 @@
 package com.tumei.groovy.commands.protos
 
 import com.tumei.common.RemoteService
-import com.tumei.dto.guildbag.GuildBagDtos
+import com.tumei.dto.guild.GuildbagBasicDto
 import com.tumei.game.GameUser
 import com.tumei.model.GroupBean
-import com.tumei.model.beans.guildbag.GuildbagStruct
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
 import org.springframework.stereotype.Component
@@ -26,7 +25,7 @@ class RequestGuildbag extends BaseProtocol {
         /**
          * 公会所有红包
          **/
-        public List<GuildbagStruct> gbs = new  ArrayList<>()
+        public List<GuildbagBasicDto> gbs = new  ArrayList<>()
     }
 
     @Override
@@ -38,13 +37,11 @@ class RequestGuildbag extends BaseProtocol {
 
         // 远程拉取玩家所在公会的红包
         GroupBean gb = user.getDao().findGroup(user.getUid())
-        GuildBagDtos gbss = RemoteService.instance.askGuildBagList(user.uid, gb.gid)
-        if (gbss != null) {
-            r.gbs = gbss.guildBags
+        if (gb != null) {
+            r.gbs = RemoteService.instance.askGuildBagList(gb.gid,user.uid)
         } else {
-            r.result = "获取公会红包信息失败"
+            r.result = "请先加入一个公会"
         }
-
         user.send(r)
     }
 }

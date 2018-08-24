@@ -31,6 +31,11 @@ public class RequestGroupDonate extends BaseProtocol {
     class ReturnGroupDonate extends BaseProtocol {
         public int seq;
         public String result = "";
+        /**
+         * 捐献一定机率生成红包
+         * key > 0 表示生成成功
+         * **/
+        public int key;
     }
 
     @Override
@@ -82,7 +87,7 @@ public class RequestGroupDonate extends BaseProtocol {
             user.payItem(dc.cost[0], dc.cost[1], "捐献");
 
             // 捐献成功,通知group服务器随机概率生成红包，仅限本公会成员领取，1人仅限1次，领取上限为10个
-            //RemoteService.getInstance().askDonateSuccessGenerateGuildBag(gb.getGid(),user.getUid(),mode);
+            rci.key = RemoteService.getInstance().askDonateSuccessGenerateGuildBag(gb.getGid(),user.getUid(),4 - mode);
         }
 
         user.send(rci);

@@ -3,15 +3,12 @@ package com.tumei.game;
 import com.tumei.GameConfig;
 import com.tumei.common.DaoGame;
 import com.tumei.common.RemoteService;
-import com.tumei.common.utils.JsonUtil;
 import com.tumei.game.protos.notifys.NotifyRedPoint;
 import com.tumei.game.protos.notifys.NotifyServerMessage;
 import com.tumei.game.services.RobService;
 import com.tumei.groovy.contract.IBattle;
 import com.tumei.groovy.contract.IMineSystem;
 import com.tumei.model.MailsBean;
-import com.tumei.websocket.BaseProtocol;
-import com.tumei.websocket.NotifyError;
 import com.tumei.websocket.WebSocketServer;
 import com.tumei.websocket.WebSocketUser;
 import org.apache.commons.logging.Log;
@@ -24,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by leon on 2016/12/31.

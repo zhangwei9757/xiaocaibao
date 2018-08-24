@@ -74,7 +74,7 @@ public class Defs {
 	public static final int 占星台等级 = 40;
 	public static final int Boss战等级 = 45;
 	public static final int 神秘宝藏等级 = 62;
-	public static final int 跨服竞技等级 = 68;
+	public static final int 跨服竞技等级 = 52;
 	public static final int 符文副本等级 = 70;
 
 	public static final String 绿色字段 = "<color=#20ff2d>%s</color>";

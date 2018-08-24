@@ -7,7 +7,6 @@ import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
 import com.tumei.model.beans.rdshop.RdshopStruct;
 import com.tumei.modelconf.RdshopConf;
-import com.tumei.modelconf.happy.SoulConf;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -58,6 +57,19 @@ public class RdshopBean {
      */
     public RdshopStruct flush(GameUser user) {
         long now = System.currentTimeMillis() / 1000;
+
+        // 存在事件,判断是否超时
+        if (rs != null) {
+            // 1 未激活，激活时间超时，删除
+            if (now - rs.begin >= 3600) {
+                rs = null;
+            }
+            // 2 已激活且完成时间超时，删除
+            if (rs != null && rs.complete != 0 && now >= rs.complete) {
+                rs = null;
+            }
+        }
+
         long diff = now - last;
         // 应生成事件数量
         long need = diff / 3600;
@@ -88,7 +100,7 @@ public class RdshopBean {
             if (rc.type == 1) {
                 HerosBean hsb = DaoGame.getInstance().findHeros(user.getUid());
                 float add = (float) (rc.limit / 10000.0) * user.calcPower(hsb);
-                rs.power = user.calcPower(hsb) + (add > 1 ? (int)add : 1);
+                rs.power = user.calcPower(hsb) + (add > 1 ? (int) add : 1);
             }
 
             --count;

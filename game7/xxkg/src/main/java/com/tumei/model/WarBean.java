@@ -70,7 +70,6 @@ public class WarBean {
 	 */
 	private HashMap<Integer, WarTask> tasks = new HashMap<>();
 
-
 	public WarBean() {}
 
 	public WarBean(long _id) {
@@ -166,7 +165,7 @@ public class WarBean {
 	/**
 	 * 刷新常驻任务
 	 */
-	public void flushConstTasks(int level, boolean nextDay) {
+	public WarTask flushConstTasks(int level, boolean nextDay) {
 	    if (nextDay) { // 跨天, 所有常驻任务中没有开始的，都要重新刷新为新的日常任务
 	        List<Integer> deletes = new ArrayList<>();
             for (int tid : tasks.keySet()) {
@@ -184,7 +183,7 @@ public class WarBean {
 
 		}
 
-		generateConstTasks(level);
+		return generateConstTasks(level);
 	}
 
 	/**
@@ -192,7 +191,8 @@ public class WarBean {
 	 * 超过4个常驻任务数量就不会生成
 	 *
 	 */
-	private void generateConstTasks(int level) {
+	private WarTask generateConstTasks(int level) {
+		WarTask wt = null;
 	    // 如果常驻任务个数小于4个，才会继续生成
 		long n = 4 - tasks.values().stream().filter(t -> t.mode <= 2).count();
 		if (n > 0) {
@@ -216,6 +216,7 @@ public class WarBean {
 					task.task = mc.key;
 					task.mode = mc.mode;
 					tasks.put(task.tid, task);
+					wt = task;
 				}
 				dailyCount -= a;
 			}
@@ -230,8 +231,10 @@ public class WarBean {
 					task.task = mc.key;
 					task.mode = mc.mode;
 					tasks.put(task.tid, task);
+					wt = task;
 				}
 			}
 		}
+		return wt;
 	}
 }

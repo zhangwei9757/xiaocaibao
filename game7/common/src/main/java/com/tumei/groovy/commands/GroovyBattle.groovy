@@ -110,7 +110,6 @@ class GroovyBattle implements IBattle {
 
     @PostConstruct
     void init() {
-        log.info("创建GroovyBattle 战斗服务.")
         round = 1
         round_index = 0
 

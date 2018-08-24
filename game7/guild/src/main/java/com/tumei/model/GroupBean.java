@@ -144,6 +144,11 @@ public class GroupBean {
 	 */
 	private List<String> notifys = new ArrayList<>();
 
+	/**
+	 * 公会红包
+	 * **/
+	private GuildbagBean gbb = new GuildbagBean();
+
 	public GroupBean() {
 
 	}
@@ -336,6 +341,14 @@ public class GroupBean {
 		this.notifys = notifys;
 	}
 
+	public GuildbagBean getGbb() {
+		return gbb;
+	}
+
+	public void setGbb(GuildbagBean gbb) {
+		this.gbb = gbb;
+	}
+
 	public static GroupBean create(long id, int zone) {
 		GroupBean gb = new GroupBean();
 		gb.id = id;
@@ -371,6 +384,11 @@ public class GroupBean {
 	}
 
 	public synchronized String join(GroupRoleMessage grm) {
+		long other = GroupService.getInstance().tryGroup(grm.id, id);
+		if (other != 0) {
+			return "other:" + other;
+		}
+
 		GroupConf gc = Readonly.getInstance().findGroup(level);
 		if (roles.size() >= gc.num) {
 			return "公会成员已满";
@@ -397,11 +415,6 @@ public class GroupBean {
 				return (rr.id == grm.id);
 			}).count() > 0) {
 				return "已经加入该公会";
-			}
-
-			long other = GroupService.getInstance().tryGroup(grm.id, id);
-			if (other != 0) {
-				return "other:" + other;
 			}
 
 			GroupRole gr = new GroupRole(grm);

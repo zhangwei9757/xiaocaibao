@@ -52,9 +52,12 @@ class ArenaController {
 
     @ApiOperation(value = "强制发送每天奖励")
     @RequestMapping(value = "/ladderDayAward", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "zone", value = "补发的服务器, -1全部补发", required = true, dataType = "int", paramType = "query")])
     @ResponseBody
-    String LadderDayAward() {
-        arenaSystem.arenaSchedule()
+    String LadderDayAward(HttpServletRequest request) {
+        int zone = Integer.parseInt(request.getParameter("zone"))
+        arenaSystem.sendDayAwards(zone)
         return "发送天梯赛日奖励"
     }
 

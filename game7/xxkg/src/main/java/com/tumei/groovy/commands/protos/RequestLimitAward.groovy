@@ -19,11 +19,15 @@ import com.tumei.websocket.WebSocketUser
  */
 class RequestLimitAward extends BaseProtocol {
     public int seq
+    /**
+     * 箱子位置[0...4]
+     * **/
+    public int index
 
     class Return extends BaseProtocol {
         public int seq
 
-        public List<AwardBean> awards = new ArrayList<>()
+        public int[] awards = new int[2]
 
         public String result = ""
     }
@@ -40,11 +44,21 @@ class RequestLimitAward extends BaseProtocol {
         if (!lrs.isActive()) {
             rci.result = ErrCode.限时活动暂未开启
         } else {
-            List<Long> awds = lrs.requireAward(user.uid)
-            if (awds == null || awds.size() <= 0) {
-                rci.result = "条件未达成，无法领取奖励"
+            // 判断参数是否合法
+            if (index < 0 || index > 4) {
+                rci.result = ErrCode.未知参数
             } else {
-                rci.awards.addAll(user.addItems(awds, true, "限时活动"))
+                // 获取指定奖励,左id ,右count
+                int[] awds = lrs.requireAward(user.uid, index)
+
+                if (awds[0] == 0) {
+                    rci.result = "条件未达成，无法领取奖励"
+                } else if (awds[0] == -1) {
+                    rci.result = "已领取过奖励"
+                } else {
+                    user.addItems(awds, false, "限时活动")
+                    rci.awards = awds
+                }
             }
         }
 

@@ -30,4 +30,5 @@ public interface IArenaSystem {
 	void update();
 	void schedule();
 	void arenaSchedule();
+	void sendDayAwards(int zone);
 }

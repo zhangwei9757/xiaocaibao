@@ -30,8 +30,8 @@ public class RunnerBean {
     public void init() {
         String mod = "guild";
 
-        loader.registerService("common", "GroovyBattle", 5000L);
-        loader.registerService(mod, "BossService", 5000L);
+        loader.registerService("common", "GroovyBattle", 5000L, false);
+        loader.registerService(mod, "BossService", 5000L, true);
         loader.registerController(mod, "BossController");
 
 

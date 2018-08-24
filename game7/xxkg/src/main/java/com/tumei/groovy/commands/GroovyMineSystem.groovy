@@ -610,12 +610,13 @@ class GroovyMineSystem implements IMineSystem {
         }
 
         HexNode hn = neighbour(mr.node, dir)
-        if (hn == null) {
+        if (hn == null || mapData.path.contains(hn.id)) {
             return -2
         }
 
+
         // 检查移动过去的点是否是传送点, 强制的.
-        int new_pos = transporter.getOrDefault(hn.id, -1);
+        int new_pos = transporter.getOrDefault(hn.id, -1)
         if (new_pos < 0) {
             mr.move(hn, dir)
             return hn.id
@@ -1183,7 +1184,7 @@ class GroovyMineSystem implements IMineSystem {
 
                         if (pos == -1) {
                             rl.result = "角色已经离开地图，请重新进入"
-                        } else if (pos == -1) {
+                        } else if (pos == -2) {
                             rl.result = "无法移动到那个位置"
                         } else if (pos == -3) {
                             rl.result = "占领矿脉中，无法移动"
@@ -1593,6 +1594,11 @@ class MineRole {
      */
     void reset(int mode) {
         RoleMineBean rmb = DaoGame.getInstance().findRoleMap(user.getUid())
+
+        // 修复
+        if (rmb.getPosition() == -2) {
+            rmb.setPosition(service.mapData.birth[0])
+        }
 
         HexNode local = service.getNode(rmb.getPosition())
 

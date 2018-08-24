@@ -76,8 +76,9 @@ public class RemoteService extends BaseRemoteService {
 			dto.roles = roles;
 			HttpEntity<ArenaAwardDto> entity = new HttpEntity<>(dto, headers);
 			restTemplate.exchange(url, HttpMethod.POST, entity, Integer.class, zone);
+			log.info("奖励，分区(" + zone + ") 发送成功，玩家(" + roles + ")");
 		} catch (Exception ex) {
-			log.error("十点奖励，分区(" + zone + ") 未发送成功，玩家(" + roles + "), mode(" + awds + "):" + ex.getMessage());
+			log.error("奖励，分区(" + zone + ") 未发送成功，玩家(" + roles + "), mode(" + awds.length + "):" + ex.getMessage());
 		}
 	}
 

@@ -31,28 +31,26 @@ class RequestRdshopActive extends BaseProtocol {
         r.seq = seq
 
         RdshopBean rb = DaoGame.instance.findRdshopBean(user.getUid())
-        long current = System.currentTimeMillis() / 1000
 
-        if (rb.rs != null) {
-            if (rb.rs.complete != 0) {
-                r.result = "当前事件已激活"
-                r.rs = rb.rs
-                user.send(r)
-                return
+        if (rb != null) {
+            // 先刷新事件再激活
+            rb.flush(user)
+
+            if (rb.rs != null) {
+                // 未激活，则激活
+                if (rb.rs.complete == 0) {
+                    long current = System.currentTimeMillis() / 1000
+                    rb.rs.complete = current + 3600
+                } else {
+                    r.result = "当前事件已激活"
+                }
+            } else {
+                r.result = "当前无可激活事件"
             }
-            long diff = (current - rb.rs.begin)
-            if (diff >= 3600) {
-                r.result = "当前事件已过期"
-                rb.rs == null
-                rb.rs = rb.flush(user)
-            }
-            rb.rs.complete = current + 3600
-            r.rs = rb.rs
         } else {
             r.result = "当前无可激活事件"
-            r.rs = rb.rs
         }
-
+        r.rs = rb.rs
         user.send(r)
     }
 }

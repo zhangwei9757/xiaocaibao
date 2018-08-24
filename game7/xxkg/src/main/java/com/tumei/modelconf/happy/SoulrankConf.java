@@ -12,7 +12,12 @@ public class SoulrankConf {
 	public String id;
 
 	public int key;
+	// 排名奖励1
 	public int[] reward1;
 	public int limit;
+	// 累计奖励2
 	public int[] reward2;
+	public int limit3;
+	// 累计奖励3
+	public int[] reward3;
 }

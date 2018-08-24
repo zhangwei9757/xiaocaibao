@@ -2,6 +2,7 @@ package com.tumei.game.protos.scene;
 
 import com.tumei.GameConfig;
 import com.tumei.common.DaoGame;
+import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
 import com.tumei.model.RoleBean;
 import com.tumei.model.WarBean;
@@ -92,7 +93,11 @@ public class RequestSceneFast extends BaseProtocol {
 
 		if (rb.getLevel() >= 75) {
 			WarBean wb = DaoGame.getInstance().findWar(user.getUid());
-			wb.generateEmergy(user.getLevel());
+			int random = RandomUtil.getBetween(1,100);
+			if (random >= 50){
+				wb.generateEmergy(user.getLevel());
+			}
+
 		}
 
 		user.send(rl);

@@ -11,6 +11,7 @@ import com.tumei.modelconf.MissionConf
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
 
+
 /**
  * Created by Administrator on 2017/3/13 0013.
  *
@@ -83,7 +84,7 @@ class RequestWarComplete extends BaseProtocol {
 
         if (wt.mode <= 2) {
             // 完成常驻任务，会自动刷新一条
-            wb.flushConstTasks(user.level, false)
+            rci.task = wb.flushConstTasks(user.level, false)
         }
 
         user.send(rci)
