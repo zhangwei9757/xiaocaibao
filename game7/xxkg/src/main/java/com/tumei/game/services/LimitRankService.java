@@ -93,7 +93,7 @@ public class LimitRankService {
 			}
 			return 1;
 		});
-
+		
 		System.out.println("22222222");
 		System.out.println("33333333");
 		System.out.println("4444444444444");
