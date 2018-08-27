@@ -15,10 +15,7 @@ import com.tumei.game.protos.notifys.NotifyUserInfo;
 import com.tumei.game.protos.structs.RaidRankStruct;
 import com.tumei.game.protos.structs.RankStruct;
 import com.tumei.game.protos.structs.RobStruct;
-import com.tumei.game.services.FireRaidRankService;
-import com.tumei.game.services.LocalArenaService;
-import com.tumei.game.services.RankService;
-import com.tumei.game.services.RobService;
+import com.tumei.game.services.*;
 import com.tumei.model.*;
 import com.tumei.model.beans.AwardBean;
 import com.tumei.model.beans.EquipBean;
@@ -310,10 +307,12 @@ public class GameUser extends WebSocketUser {
         FestivalBean fb = DaoGame.getInstance().findFestival(uid);
         if (fb.getMode() > 0) {
             int[] b1 = fb.getB1();
-            int rr = RandomUtil.getBetween(1, 100);
-            if (b1.length > 0 && rr <= b1[0]) {
-                int c = RandomUtil.getBetween(b1[2], b1[3]);
-                nse.rewards.addAll(addItem(b1[1], c, false, "挂机节日"));
+            if (b1 != null) {
+                int rr = RandomUtil.getBetween(1, 100);
+                if (b1.length > 0 && rr <= b1[0]) {
+                    int c = RandomUtil.getBetween(b1[2], b1[3]);
+                    nse.rewards.addAll(addItem(b1[1], c, false, "挂机节日"));
+                }
             }
         }
         send(nse);
@@ -555,6 +554,10 @@ public class GameUser extends WebSocketUser {
         long consum = pb.payItem(key, val, reason);
         if (consum < 0) {
             return -1;
+        }
+        // 活力狂欢期间，每使用活力就记录次数
+        if (consum > 0 && key == Defs.活力) {
+            // LimitRankService.getInstance().put(uid, name, consum);
         }
 
         int v = (int) consum;
@@ -917,6 +920,7 @@ public class GameUser extends WebSocketUser {
 
         } catch (Exception ex) {
             log.error("本地充值异常:" + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

@@ -131,7 +131,7 @@ class BossService implements IBossSystem {
         def that = today.atStartOfDay().plusHours(19).plusMinutes(30 )
         def time = that.toEpochSecond(ZoneOffset.ofHours(8))
         if (time != startTime) {
-            log.info("+++++ 今日首领战启动时间为:" + that.toString());
+            log.info("+++++ 今日首领战启动时间为:" + that.toString())
             preRunning = false
             startTime = time
         }

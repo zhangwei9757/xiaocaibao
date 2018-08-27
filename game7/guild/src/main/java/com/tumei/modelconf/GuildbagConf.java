@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Guildbag")
 public class GuildbagConf {
     @Id
-    public String ObjectId;
+    public String objectId;
     /**
      * 配置表 key
      */

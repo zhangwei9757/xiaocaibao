@@ -6,6 +6,7 @@ import com.tumei.common.Readonly
 import com.tumei.common.RemoteService
 import com.tumei.common.utils.Defs
 import com.tumei.common.webio.BattleResultStruct
+import com.tumei.dto.battle.HerosStruct
 import com.tumei.game.GameUser
 import com.tumei.model.BossBean
 import com.tumei.model.HerosBean
@@ -59,27 +60,36 @@ class RequestBossFight extends BaseProtocol {
 
         HerosBean hsb = user.getDao().findHeros(user.getUid())
 
-        BattleResultStruct rtn = RemoteService.instance.askBossFight(hsb.createHerosStruct())
+        HerosStruct hss = hsb.createHerosStruct()
+
+        BossConf bc = Readonly.instance.getBossConf(boss.level)
+        for (int i = 0; i < boss.courageIdx; ++i) {
+            int idx = boss.courage[i]
+            int key = bc.upatt[idx*2]
+            int val = bc.upatt[idx*2+1]
+            hss.buffs.merge(key, val, {s -> s + val})
+        }
+
+        BattleResultStruct rtn = RemoteService.instance.askBossFight(hss)
         if (rtn == null) {
-            rci.result = "首领战维护中，请稍后再战.";
+            rci.result = "首领战维护中，请稍后再战."
         } else {
             if (!Strings.isNullOrEmpty(rtn.result)) {
-                rci.result = rtn.result;
+                rci.result = rtn.result
             } else {
                 rci.harm = rtn.harm
                 rci.kill = rtn.kill
 
                 --boss.count
                 boss.clearCourage()
-                boss.setNext((long)(System.currentTimeMillis()/1000) + 120)
-                BossConf bc = Readonly.instance.getBossConf(boss.level)
+                boss.setNext((long)(System.currentTimeMillis()/1000) + 110)
 
                 // 2. 发送攻击奖励
-                rci.awards.addAll(user.addItem(Defs.金币, bc.reward, false, "boss攻击"));
+                rci.awards.addAll(user.addItem(Defs.金币, bc.reward, false, "boss攻击"))
 
                 // 3. 判断并发送击杀奖励
                 if (rtn.kill > 0) {
-                    rci.awards.addAll(user.addItems(bc.reward3, false, "boss击杀"));
+                    rci.awards.addAll(user.addItems(bc.reward3, false, "boss击杀"))
                 }
             }
         }

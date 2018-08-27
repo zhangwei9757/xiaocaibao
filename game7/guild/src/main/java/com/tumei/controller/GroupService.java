@@ -461,10 +461,13 @@ public class GroupService {
      * 尝试 将玩家指定的一个公会，如果有另外一个公会也批准了他，则返回false
      *
      * @param role
-     * @param gid
      * @return
      */
-    public long tryGroup(long role, long gid) {
+    public long tryGroup(long role) {
+        return users.getOrDefault(role, 0L);
+    }
+
+    public long tryJoinGroup(long role, long gid) {
         Long old = users.putIfAbsent(role, gid);
         if (old == null) {
             return 0;
@@ -482,15 +485,5 @@ public class GroupService {
 
     public IBattle getBattle() {
         return context.getBean(IBattle.class);
-    }
-
-    public synchronized GuildbagBean findGuildbag(long gid) {
-        try {
-            GroupBean gb = this.groups.getOrDefault(gid, null);
-            return gb.getGbb();
-        } catch (Exception e) {
-            log.error("获取公会红包信息错误:", e);
-        }
-        return null;
     }
 }

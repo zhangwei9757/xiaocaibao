@@ -59,15 +59,15 @@ public class RdshopBean {
         long now = System.currentTimeMillis() / 1000;
 
         // 存在事件,判断是否超时
-        if (rs != null) {
-            // 1 未激活，激活时间超时，删除
-            if (now - rs.begin >= 3600) {
-                rs = null;
-            }
-            // 2 已激活且完成时间超时，删除
-            if (rs != null && rs.complete != 0 && now >= rs.complete) {
-                rs = null;
-            }
+
+        // 1 未激活，激活时间超时，删除
+        if (rs != null && rs.begin != 0 && (now - rs.begin >= 3600)) {
+            rs = null;
+        }
+
+        // 2 已激活且完成时间超时，删除
+        if (rs != null && rs.complete != 0 && now >= rs.complete) {
+            rs = null;
         }
 
         long diff = now - last;

@@ -1,6 +1,7 @@
 package com.tumei.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tumei.Guild;
 import com.tumei.common.Readonly;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.controller.GroupService;
@@ -52,42 +53,58 @@ public class GuildbagBean {
      * 1：已生成红包，未开启
      * 2：已开启红包，待领取
      * 3：已领取红包，只可读
+     *
+     * @return
+     *
+     * < 0 表示内部结构没有刷新
+     * = 0 表示有红包超时的事情发生
+     * > 0 表示生成了一个新的红包
+     *
      **/
-    public synchronized Integer flushBag(int mode, long gid) {
+    public synchronized boolean flush() {
+        boolean rtn = false;
         long currentTime = System.currentTimeMillis() / 1000;
         // 超时红包，直接删除
         for (int i = 0; i < guildBags.size(); ) {
             GuildbagStruct gbd = guildBags.get(i);
             if (gbd.openLast < currentTime && gbd.status == 1) {
                 guildBags.remove(i);
+                rtn = true;
             } else if (gbd.existLast < currentTime && gbd.status >= 2) {
                 guildBags.remove(i);
+                rtn = true;
             } else {
                 ++i;
             }
         }
-        if (mode <= 0) {
-            return -1;
-        }
+
+        return rtn;
+    }
+
+    /**
+     *
+     * 生成红包
+     *
+     * @param mode
+     * @param gid
+     * @return
+     */
+    public synchronized int buildBag(int mode, long gid) {
         // 所有可生成的类型
         List<Integer> modes = Readonly.getInstance().getGuildbagConfs().stream().map(s -> s.mode).distinct().collect(Collectors.toList());
         if (!modes.contains(mode)) {
-            return -1;
+            return 0;
         }
         // 本公会所有未开启的红包个数
         long max = guildBags.stream().filter(f -> f.status == 1).count();
         if (max == modes.size()) {
-            return -1;
+            return 0;
         }
-        // 已生成过的红包个数
-//        long count = guildBags.stream().filter(f -> (f.mode == mode && f.status == 1)).count();
-//        if (count == 1) {
-//            return -1;
-//        }
+
         // 配置表中的对应概率
         int[] probability = Readonly.getInstance().getGuildbagConfs().get(0).condition;
         int random = RandomUtil.getBetween(1, 100);
-        if (random <= probability[Math.abs(mode - 3)]) {
+        if (random <= probability[mode - 1]) {
             // 已生成过的未开启红包类型
             List<Integer> existMode = guildBags.stream().filter(m -> m.status == 1).map(s -> s.mode).distinct().collect(Collectors.toList());
             // 所有可生成的未开启红包类型
@@ -103,14 +120,15 @@ public class GuildbagBean {
             gbs.count = 10;
             gbs.openLast = System.currentTimeMillis() / 1000 + gbc.time[0];
             gbs.money = gbc.open;
-            gbs.bagId = String.format("%s-%d", System.currentTimeMillis() / 1000, mode);
+            gbs.bagId = String.format("%s-%d-%d", System.currentTimeMillis(), mode, gbc.open);
             gbs.status = 1;
             gbs.gid = gid;
             gbs.sources = gbc.reward;
             guildBags.add(gbs);
             return gbs.key;
         }
-        return -1;
+
+        return 0;
     }
 
     /**
@@ -119,14 +137,17 @@ public class GuildbagBean {
      * 1：已生成红包，未开启
      * 2：已开启红包，待领取
      * 3：已领取红包，只可读
+     *
+     *
+     * @return 返回true表示内部结构发生变化，需要setDirty
      **/
-    public synchronized void open(int mode, String userName, long gid) {
-        flushBag(-1, gid);
+    public synchronized boolean open(int mode, String userName, long gid) {
+        boolean rtn = false;
 
         List<GuildbagConf> gbcs = Readonly.getInstance().getGuildbagConfs();
         List<Integer> modes = gbcs.stream().map(s -> 4 - s.mode).distinct().collect(Collectors.toList());
         if (!modes.contains(mode)) {
-            return;
+            return rtn;
         }
         // 充值类型对应可开启红包
         List<GuildbagStruct> gbsList = guildBags.stream().filter(f -> (f.status == 1 && f.mode == mode)).collect(Collectors.toList());
@@ -140,8 +161,10 @@ public class GuildbagBean {
                 open.existLast = System.currentTimeMillis() / 1000 + gbc.time[1];
                 open.status = 2;
                 open.openName = userName;
+                rtn = true;
             }
         }
+        return rtn;
     }
 
     /**
@@ -152,50 +175,31 @@ public class GuildbagBean {
      * 3：已领取红包，只可读
      **/
     public synchronized GuildbagDetailDto receive(long uid, String name, String bagid, long gid) {
-        flushBag(-1, gid);
-        // 对应的可领取红包
         Optional<GuildbagStruct> opt = guildBags.stream().filter(f -> f.bagId.equalsIgnoreCase(bagid)).findFirst();
-        if (!opt.isPresent()) {
+        if (!opt.isPresent()) { // 判断红包是否存在, 可能超时被刷走了
             return null;
         }
-        GuildbagDetailDto detail = null;
+
         GuildbagStruct gs = opt.get();
-        // 领取上限，不可领取
-        if (gs.status != 2 || gs.count == 0) {
-            Optional<GuildbagStruct> first = guildBags.stream().filter(s -> s.bagId == bagid).findFirst();
-            if (first.isPresent()) {
-                GuildbagStruct guildbagStruct = first.get();
-                detail = guildbagStruct.createDetail();
-                detail.remaining = guildbagStruct.count;
-                return detail;
-            }
+
+        // 红包已经领取完毕，或者当前红包的状态不是待领取的，返回红包当前的状态
+        if (gs.status != 2 || gs.count == 0 || gs.ids.containsKey(uid)) {
+            return gs.createDetail();
         }
 
-        // 领取过红包不可领取
-        if (gs.ids.containsKey(uid)) {
-            Optional<GuildbagStruct> first = guildBags.stream().filter(s -> s.bagId.equalsIgnoreCase(bagid)).findFirst();
-            if (first.isPresent()) {
-                GuildbagStruct guildbagStruct = first.get();
-                detail = guildbagStruct.createDetail();
-                detail.remaining = guildbagStruct.count;
-                return detail;
-            }
-        }
-        List<GuildbagConf> gbcs = Readonly.getInstance().getGuildbagConfs();
-        GuildbagConf gbc = gbcs.stream().filter(s -> s.key == gs.key).collect(Collectors.toList()).get(0);
-        double receive = 0;
+
+        GuildbagConf gbc = Readonly.getInstance().findGuildbagConf(gs.key);
+
+        double receive;
         if (gs.count > 1) {
-            // 非第10个红包
-            // receive = RandomUtil.getBetween(1, (gbc.reward[1] - gs.reward - gs.count));
             receive = Math.floor(gs.resouce[10 - gs.count] * gbc.reward[1]);
             if (receive < 1) {
                 receive = 1;
             }
             gs.reward += receive;
-        } else {
-            // 第10个红包
+        } else { // 第10个红包
             receive = gbc.reward[1] - gs.reward;
-            if (receive <= 0) {
+            if (receive < 1) {
                 receive = 1;
             }
         }
@@ -205,14 +209,14 @@ public class GuildbagBean {
         if (gs.count == 0) {
             gs.status = 3;
         }
-        Optional<GuildbagStruct> optional = guildBags.stream().filter(s -> s.bagId.equalsIgnoreCase(bagid)).findFirst();
-        if (optional.isPresent() && receive > 0) {
-            GuildbagStruct guildbagStruct = optional.get();
-            detail = guildbagStruct.createDetail();
+
+        if (receive > 0) {
+            GuildbagDetailDto detail = gs.createDetail();
             detail.count = (int) receive;
             detail.id = gbc.reward[0];
-            detail.remaining = guildbagStruct.count;
+            return detail;
         }
-        return detail;
+
+        return null;
     }
 }

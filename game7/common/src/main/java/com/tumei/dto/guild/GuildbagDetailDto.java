@@ -1,9 +1,6 @@
 package com.tumei.dto.guild;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zw on 2018/08/22

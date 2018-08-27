@@ -40,6 +40,7 @@ class RequestRdshopActive extends BaseProtocol {
                 // 未激活，则激活
                 if (rb.rs.complete == 0) {
                     long current = System.currentTimeMillis() / 1000
+                    rb.rs.begin = 0
                     rb.rs.complete = current + 3600
                 } else {
                     r.result = "当前事件已激活"

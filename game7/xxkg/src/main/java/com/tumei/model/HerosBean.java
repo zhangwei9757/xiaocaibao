@@ -409,6 +409,10 @@ public class HerosBean {
 		this.skins.forEach((k, v) -> hss.skins.put(k, v.level));
 		hss.buffs.putAll(this.buffs);
 
+		for (int i = 0; i < lineups.length; ++i) {
+			hss.lineups[i] = this.lineups[i];
+		}
+
 		for (int i = 0; i < 6; ++i) {
 			HeroBean hb = heros[i];
 			if (hb != null) {

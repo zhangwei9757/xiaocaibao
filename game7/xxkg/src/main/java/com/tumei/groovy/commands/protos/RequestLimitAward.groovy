@@ -26,8 +26,8 @@ class RequestLimitAward extends BaseProtocol {
 
     class Return extends BaseProtocol {
         public int seq
-
-        public int[] awards = new int[2]
+        // 领取成功的奖励
+        public AwardBean awards
 
         public String result = ""
     }
@@ -57,7 +57,7 @@ class RequestLimitAward extends BaseProtocol {
                     rci.result = "已领取过奖励"
                 } else {
                     user.addItems(awds, false, "限时活动")
-                    rci.awards = awds
+                    rci.awards = new AwardBean(awds[0],awds[1],-1)
                 }
             }
         }

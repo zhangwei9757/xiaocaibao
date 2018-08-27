@@ -218,7 +218,7 @@ class GroovyBattle implements IBattle {
                             }
                         }
 
-                        if (relic.hwlvl > 0) {
+                        if (wuz && relic.hwlvl > 0) {
                             for (int ii = 0; ii < lh.wakeff.length; ii += 2) {
                                 int[] tmp = new int[2]
                                 tmp[0] = lh.wakeff[ii]
@@ -2878,7 +2878,7 @@ class Roler {
 
         // +++ 阵型增强
         if (lineup != 0) {
-            LineupConf lc = battle.readonly.findLineup(idx + 1)
+            LineupConf lc = battle.readonly.findLineup(idx)
             if (lc != null) {
                 battle.deal(this, lc.lineatt[0], lc.lineatt[1] * lineup)
             }

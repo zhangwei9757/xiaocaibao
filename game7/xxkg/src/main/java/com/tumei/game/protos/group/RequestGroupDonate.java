@@ -75,19 +75,30 @@ public class RequestGroupDonate extends BaseProtocol {
         }
 
         // 远程拉取公会推荐信息
+        int rtn = 0;
         try {
-            rci.result = RemoteService.getInstance().askGroupDonate(gb.getGid(), user.getUid(), dc.reward[0], dc.reward[1], dc.reward[2]);
+            rtn = RemoteService.getInstance().askGroupDonate(gb.getGid(), user.getUid(), dc.reward[0], dc.reward[1], dc.reward[2]);
         } catch (Exception ex) {
             rci.result = "公会服务维护中";
         }
 
-        if (Strings.isNullOrEmpty(rci.result)) {
+        if (rtn < 0) {
+            switch (rtn) {
+                case -98:
+                    rci.result = "公会服务维护中";
+                    break;
+                case -999:
+                    rci.result = "今日捐献已经达到上限";
+                    break;
+                default:
+                    rci.result = "公会捐献错误";
+                    break;
+            }
+        } else {
             gb.setDonate(mode);
             user.addItem(公会贡献, dc.reward[2], false, "捐献");
             user.payItem(dc.cost[0], dc.cost[1], "捐献");
-
-            // 捐献成功,通知group服务器随机概率生成红包，仅限本公会成员领取，1人仅限1次，领取上限为10个
-            rci.key = RemoteService.getInstance().askDonateSuccessGenerateGuildBag(gb.getGid(),user.getUid(),4 - mode);
+            rci.key = rtn; // 如果能刷出红包，返回的大于0的一个值
         }
 
         user.send(rci);

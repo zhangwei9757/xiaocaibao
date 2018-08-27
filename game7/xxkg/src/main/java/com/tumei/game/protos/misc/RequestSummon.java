@@ -311,9 +311,8 @@ public class RequestSummon extends BaseProtocol {
 				sb.setAdvanceCount(sb.getAdvanceCount() + 1);
 				user.pushDailyTask(1, 1);
 
-				// 召唤成功，英雄狂欢活动累计次数
-				//SummonRankBean srb = LimitRankService.getInstance().summonRankBeanRepository.findById(uid);
-				//srb.setCount(1);
+				// 单次召唤成功，英雄狂欢活动累计次数 +1
+				//LimitRankService.getInstance().put(user.getUid(),user.getName(),1);
 
 				break;
 			}
@@ -382,7 +381,7 @@ public class RequestSummon extends BaseProtocol {
 				}
 				user.pushDailyTask(1, 10);
 
-				// 召唤成功，英雄狂欢活动累计次数
+				// 10次召唤成功，英雄狂欢活动累计次数 +10
 				//LimitRankService.getInstance().put(user.getUid(),user.getName(),10);
 
 				break;

@@ -305,10 +305,12 @@ public class SceneBean {
 				FestivalBean fb = DaoGame.getInstance().findFestival(this.id);
 				if (fb.getMode() > 0 && fb.getFlag() == 0) {
 					int[] b1 = fb.getB1();
-					int rr = RandomUtil.getBetween(1, 100);
-					if (b1.length > 0 && rr <= b1[0]) {
-						int c = RandomUtil.getBetween(b1[2], b1[3]);
-						bean.awards.addAll(user.addItem(b1[1], c, false, "挂机节日"));
+					if (b1 != null) {
+						int rr = RandomUtil.getBetween(1, 100);
+						if (b1.length > 0 && rr <= b1[0]) {
+							int c = RandomUtil.getBetween(b1[2], b1[3]);
+							bean.awards.addAll(user.addItem(b1[1], c, false, "挂机节日"));
+						}
 					}
 				}
 			}
@@ -346,10 +348,12 @@ public class SceneBean {
 				diff -= rb.cd;
 				if (fb.getMode() > 0 && fb.getFlag() == 0) {
 					int[] b1 = fb.getB1();
-					int rr = RandomUtil.getBetween(1, 100);
-					if (b1.length > 0 && rr <= b1[0]) {
-						int c = RandomUtil.getBetween(b1[2], b1[3]);
-						sf.awards.addAll(user.addItem(b1[1], c, false, "快速节日"));
+					if (b1 != null) {
+						int rr = RandomUtil.getBetween(1, 100);
+						if (b1.length > 0 && rr <= b1[0]) {
+							int c = RandomUtil.getBetween(b1[2], b1[3]);
+							sf.awards.addAll(user.addItem(b1[1], c, false, "快速节日"));
+						}
 					}
 				}
 

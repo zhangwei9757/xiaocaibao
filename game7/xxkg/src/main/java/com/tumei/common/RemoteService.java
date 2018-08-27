@@ -251,14 +251,14 @@ public class RemoteService extends BaseRemoteService {
         return null;
     }
 
-    public String askGroupDonate(long gid, long role, int progress, int exp, int contrib) {
+    public int askGroupDonate(long gid, long role, int progress, int exp, int contrib) {
         try {
             String url = guild_prefix + "/donate?role=" + role + "&gid=" + gid + "&pg=" + progress + "&exp=" + exp + "&cb=" + contrib;
-            return restTemplate.getForObject(url, String.class);
+            return restTemplate.getForObject(url, Integer.class);
         } catch (Exception ex) {
             log.error("askGroupDonate error:" + ex.getMessage());
         }
-        return "公会服务维护中";
+        return -98;
     }
 
     public Integer askDonateSuccessGenerateGuildBag(long gid, long role, int mode) {

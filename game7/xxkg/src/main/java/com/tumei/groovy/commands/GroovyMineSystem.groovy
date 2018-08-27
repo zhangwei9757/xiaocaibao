@@ -1371,11 +1371,13 @@ class GroovyMineSystem implements IMineSystem {
                                 // 节日活动期间可以有新的东西出现
                                 FestivalBean fb = DaoGame.getInstance().findFestival(user.uid);
                                 if (fb.getMode() > 0 && fb.getFlag() == 0) {
-                                    int[] b2 = fb.getB2();
-                                    int rr = RandomUtil.getBetween(1, 100);
-                                    if (b2.length > 0 && rr <= b2[0]) {
-                                        int c = RandomUtil.getBetween(b2[2], b2[3]);
-                                        rl.awards.addAll(user.addItem(b2[1], c, false, "矿区打怪节日"));
+                                    int[] b2 = fb.getB2()
+                                    if (b2 != null) {
+                                        int rr = RandomUtil.getBetween(1, 100)
+                                        if (b2.length > 0 && rr <= b2[0]) {
+                                            int c = RandomUtil.getBetween(b2[2], b2[3]);
+                                            rl.awards.addAll(user.addItem(b2[1], c, false, "矿区打怪节日"));
+                                        }
                                     }
                                 }
 
@@ -1426,11 +1428,13 @@ class GroovyMineSystem implements IMineSystem {
                                     // 节日活动期间可以有新的东西出现
                                     FestivalBean fb = DaoGame.getInstance().findFestival(user.uid);
                                     if (fb.getMode() > 0 && fb.getFlag() == 0) {
-                                        int[] b2 = fb.getB2();
-                                        int rr = RandomUtil.getBetween(1, 100);
-                                        if (b2.length > 0 && rr <= b2[0]) {
-                                            int c = RandomUtil.getBetween(b2[2], b2[3]);
-                                            rl.awards.addAll(user.addItem(b2[1], c, false, "矿区打怪节日"));
+                                        int[] b2 = fb.getB2()
+                                        if (b2 != null) {
+                                            int rr = RandomUtil.getBetween(1, 100)
+                                            if (b2.length > 0 && rr <= b2[0]) {
+                                                int c = RandomUtil.getBetween(b2[2], b2[3])
+                                                rl.awards.addAll(user.addItem(b2[1], c, false, "矿区打怪节日"))
+                                            }
                                         }
                                     }
                                 }

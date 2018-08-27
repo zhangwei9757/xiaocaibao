@@ -120,6 +120,8 @@ public class GuildbagStruct {
             GuildbagRoleDto r = new GuildbagRoleDto(_ids.uid,_ids.name,_ids.count,_ids.source);
             gdd.ids.put(r.uid,r);
         });
+
+        gdd.remaining = this.count;
         return gdd;
     }
 }

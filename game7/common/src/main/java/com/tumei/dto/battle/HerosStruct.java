@@ -39,6 +39,10 @@ public class HerosStruct {
 		hss.skins.putAll(this.skins);
 		hss.buffs.putAll(this.buffs);
 
+		for (int i = 0; i < lineups.length; ++i) {
+			hss.lineups[i] = this.lineups[i];
+		}
+
 		hss.relics.addAll(relics);
 
 		for (int i = 0; i < 6; ++i) {

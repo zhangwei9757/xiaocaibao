@@ -49,10 +49,12 @@ public class RequestGroupInfo extends BaseProtocol {
 				gb.setGid(0);
 				gb.setName("");
 				rci.info = null;
+				rci.result = "您已经不在该公会中，请重新加入公会";
 			}
 			else {
-				user.guildLevel = rci.info.level;
+				gb.setGid(rci.info.gid); // 可能返回的不是当前表示gid
 				gb.setName(rci.info.name);
+				user.guildLevel = rci.info.level;
 			}
 		} catch (Exception ex) {
 			rci.result = "公会服务维护中";

@@ -86,8 +86,6 @@ public class LimitRankService {
     synchronized void init() {
         _instance = this;
 
-        flushLimitTask();
-
         List<LimitRankBean> lrbs = limitRankBeanRepository.findAll();
         // 先根据排名进行一次排序，然后再插入，否则相同分数的先后顺序可能会被毁掉
         lrbs.sort((a, b) -> {
@@ -102,6 +100,11 @@ public class LimitRankService {
             users.put(orb.getId(), orb);
             addScore(orb.getId(), orb.getCount());
         });
+        /**
+         * 必须先排序且初始化users，再进行刷新活动识别，否则users集合无数据，
+         * 无法对【当前无活动】且【有过期活动奖励未发送】，进行发送奖励
+         */
+        flushLimitTask();
 
         inited = true;
     }
@@ -116,6 +119,7 @@ public class LimitRankService {
         LimitRankBean lrb = users.getOrDefault(uid, null);
         if (lrb != null) {
             long old = lrb.getCount();
+            // 初始化情况下分数未有变化，要直接插入
             if (old == score && inited) {
                 return;
             }
@@ -170,12 +174,15 @@ public class LimitRankService {
         int lastKey = localService.getLimitday();
         for (CrazylistConf fest : vcs) {
             if (today >= fest.start && today <= fest.last) {
-                flag = fest.flag;
+                // 开启时间超过10天可进行对应活动
                 long tmp = localService.getOpenDate().getTime();
                 tmp = LocalDateTime.ofEpochSecond(tmp / 1000, 0, ZoneOffset.ofHours(8)).toEpochSecond(ZoneOffset.ofHours(8));
                 long least = tmp + 10 * 1000 * 24 * 3600;
                 if (System.currentTimeMillis() >= least) {
                     thisFc = fest;
+                    // 如果存在活动就记录类型
+                    flag = fest.flag;
+                    break;
                 }
             }
         }
@@ -216,14 +223,15 @@ public class LimitRankService {
      * @param lastKey 对应的任务配置表中的key
      */
     public synchronized void sendTaskAwards(int lastKey) {
-        if (flag <= 0) {
-            return;
+        int key = -1;
+        CrazylistConf cc = readonly.findCrazylistConf(lastKey);
+        if (cc != null) {
+            key = cc.flag;
         }
         String title = "注灵狂欢";
-
-        if (flag == 2) {
+        List<Long> uids = range(1, 10);
+        if (key == 2) {
             List<SoulrankConf> srs = readonly.getSoulrankConfs();
-            List<Long> uids = range(1, 10);
             int i = 1;
             for (long uid : uids) {
                 LimitRankBean orb = users.getOrDefault(uid, null);
@@ -234,8 +242,8 @@ public class LimitRankService {
                     sb.append(sr.reward1[0]);
                     sb.append(",");
                     sb.append(sr.reward1[1]);
-
-                    if (orb.getCount() >= sr.limit) {
+                    // 排名达标，且次数达标，确实有奖励可拿，才可领取额外奖励
+                    if (sr.limit > 0 && orb.getCount() >= sr.limit) {
                         sb.append(sr.reward2[0]);
                         sb.append(",");
                         sb.append(sr.reward2[1]);
@@ -244,11 +252,10 @@ public class LimitRankService {
                 }
                 ++i;
             }
-        } else if (flag == 3) {
+        } else if (key == 3) {
             title = "活力狂欢";
 
             List<VigorrankConf> vcs = readonly.getVigorranks();
-            List<Long> uids = range(1, 10);
             int i = 1;
             for (long uid : uids) {
                 LimitRankBean vlrb = users.getOrDefault(uid, null);
@@ -260,7 +267,7 @@ public class LimitRankService {
                     sb.append(",");
                     sb.append(vc.reward1[1]);
 
-                    if (vlrb.getCount() >= vc.limit) {
+                    if (vc.limit > 0 && vlrb.getCount() >= vc.limit) {
                         sb.append(vc.reward2[0]);
                         sb.append(",");
                         sb.append(vc.reward2[1]);
@@ -269,11 +276,10 @@ public class LimitRankService {
                 }
                 ++i;
             }
-        } else if (flag == 4) {
+        } else if (key == 4) {
             title = "英雄狂欢";
 
             List<SummonrankConf> scs = readonly.getSummonranks();
-            List<Long> uids = range(1, 10);
             int i = 1;
             for (long uid : uids) {
                 LimitRankBean srb = users.getOrDefault(uid, null);
@@ -285,7 +291,7 @@ public class LimitRankService {
                     sb.append(",");
                     sb.append(sc.reward1[1]);
 
-                    if (srb.getCount() >= sc.limit) {
+                    if (sc.limit > 0 && srb.getCount() >= sc.limit) {
                         sb.append(sc.reward2[0]);
                         sb.append(",");
                         sb.append(sc.reward2[1]);
@@ -294,6 +300,11 @@ public class LimitRankService {
                 }
                 ++i;
             }
+        }
+
+        if (key > 0) {
+            // 发送完奖励，活动类型标识还原
+            flag = -1;
         }
     }
 
@@ -341,7 +352,7 @@ public class LimitRankService {
      * @param name
      * @param val
      */
-    public synchronized void put(long uid, String name, int val) {
+    public synchronized void put(long uid, String name, long val) {
         long now = System.currentTimeMillis() / 1000;
         if (now < begin || now > end) {
             return;
@@ -417,7 +428,7 @@ public class LimitRankService {
     }
 
     /**
-     * 请求领取下一个奖励
+     * 请求领取对应次数的奖励
      *
      * @param uid,index
      * @return
@@ -428,18 +439,7 @@ public class LimitRankService {
         if (lrb == null || flag < 0) {
             return rtn;
         }
-
-        // 从getAwd开始查询是否满足当前次数
-//        for (int i = lrb.getAwd() * 3; i < rewards.length; i += 3) {
-//            int count = rewards[0];
-//            if (lrb.getCount() >= count) { // 如果 满足，则发奖，并且增加一个台阶
-//                rtn.add(rewards[1]);
-//                rtn.add(rewards[2]);
-//                lrb.setAwd(lrb.getAwd() + 1);
-//                changes.add(uid);
-//            }
-//        }
-
+        // 奖励领取过直接返回
         if (lrb.getAwd()[index] == 1) {
             return new int[]{-1, -1};
         }

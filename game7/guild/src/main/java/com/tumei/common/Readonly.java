@@ -157,4 +157,8 @@ public class Readonly extends IReadonly {
     public List<GuildbagConf> getGuildbagConfs() {
         return conf.guildbagConfs;
     }
+
+    public GuildbagConf findGuildbagConf(int key) {
+        return conf.guildbagConfs.get(key - 1);
+    }
 }

@@ -149,7 +149,22 @@ public class GroupController {
                 gb.flush();
                 GroupMessage gm = gb.createBody();
                 if (!gb.getRoles().containsKey(role)) {
-                    gm.gid = 0; // 表示该成员不在此公会中了.
+                    // step 1. 玩家列表中没有他，表示记录的gid,role信息可能错误，尝试删除role->gid的配置对，以下函数只有role对应gid才删除
+                    groupService.leaveGroup(role, gid);
+
+                    // step 2. 查看该玩家可能属于哪个公会,也可能没有在公会中
+                    gm.gid = groupService.tryGroup(role);
+
+                    // step 3. 如果在公会中，是另外一个公会，则重新加载公会信息
+                    if (gm.gid != 0) {
+                        gid = gm.gid;
+                        gb = groupService.find(gid);
+                        gm = gb.createBody();
+                    }
+                } else {
+                    // 线上发现一个问题，玩家知道自己在gid公会中，公会中也有玩家信息，但是groupServers.users里没有这个玩家，导致除了能查看公会
+                    // 其它什么事情都不能做，所以当第一次访问公会的时候，检查玩家是否在users中，不在则补充玩家信息
+                    groupService.tryJoinGroup(role, gid);
                 }
                 return gm;
             }
@@ -187,7 +202,7 @@ public class GroupController {
     public
     @ResponseBody
     String join(@RequestBody GroupRoleMessage role, long gid) {
-        String result = "";
+        String result;
         try {
             GroupBean gb = groupService.find(gid);
             if (gb == null) {
@@ -546,58 +561,26 @@ public class GroupController {
     })
     public
     @ResponseBody
-    String donate(long gid, long role, int pg, int exp, int cb) {
-        String rtn;
+    Integer donate(long gid, long role, int pg, int exp, int cb) {
+        int rtn;
         try {
             GroupBean gb = groupService.find(gid);
             if (gb == null) {
-                return "公会不存在";
+                return -1;
+            }
+
+            if (!groupService.isInGroup(role, gid)) {
+                return -1;
             }
 
             rtn = gb.donate(role, pg, exp, cb);
 
-            if (Strings.isNullOrEmpty(rtn)) {
-                gb.setDirty(true);
-            }
-
-
         } catch (Exception ex) {
-            log.error("修改通知错误:", ex);
-            rtn = "异常错误:" + ex.getMessage();
+            rtn = -2;
         }
+
         return rtn;
     }
-
-    @ApiOperation(value = "捐献成功，随机生成红包")
-    @RequestMapping(value = "/donateSuccessGenerateGuildBag", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "gid", value = "公会id", required = true, dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "role", value = "操作者", required = true, dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "mode", value = "捐献类型", required = true, dataType = "int", paramType = "query")
-    })
-    public Integer DonateSuccessGenerateGuildBag(long gid, long role, int mode) {
-        try {
-            GroupBean gb = groupService.find(gid);
-            if (gb == null) {
-                return -1;
-            }
-            if (!groupService.isInGroup(role, gid)) {
-                return -1;
-            }
-            // 调用flushBag,刷新状态并生成红包
-            GuildbagBean gbb = groupService.findGuildbag(gid);
-            if (gbb != null) {
-                if (gbb.guildBags.size() > 0) {
-                    gb.setDirty(true);
-                }
-                return gbb.flushBag(mode, gid);
-            }
-        } catch (Exception ex) {
-            log.error("修改通知错误:", ex);
-        }
-        return -1;
-    }
-
 
     @ApiOperation(value = "支付验证")
     @RequestMapping(value = "/paymentValidation", method = RequestMethod.GET)
@@ -607,7 +590,7 @@ public class GroupController {
             @ApiImplicitParam(name = "mode", value = "充值金额对应类型", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "userName", value = "昵称", required = true, dataType = "String", paramType = "query")
     })
-    public void PaymentValidation(long gid, long role, int mode, String userName) {
+    public void paymentValidation(long gid, long role, int mode, String userName) {
         try {
             GroupBean gb = groupService.find(gid);
             if (gb == null) {
@@ -616,16 +599,10 @@ public class GroupController {
             if (!groupService.isInGroup(role, gid)) {
                 return;
             }
-            // 刷新状态,判断充值是否符合开启对应充值金额红包
-            GuildbagBean gbb = groupService.findGuildbag(gid);
-            if (gbb == null) {
-                return;
-            }
 
-            gbb.open(mode, userName, gid);
-            if (gbb.guildBags.size() > 0) {
-                gb.setDirty(true);
-            }
+            // 刷新状态,判断充值是否符合开启对应充值金额红包
+            gb.validatePayment(mode, userName);
+
         } catch (Exception ex) {
             log.error("开启充值金额对应类型红包错误:", ex);
         }
@@ -639,7 +616,7 @@ public class GroupController {
     })
     public
     @ResponseBody
-    List<GuildbagBasicDto> GuildBagList(long gid, long role) {
+    List<GuildbagBasicDto> guildBagList(long gid, long role) {
         List<GuildbagBasicDto> gbds = new ArrayList<>();
         try {
             GroupBean gb = groupService.find(gid);
@@ -649,24 +626,8 @@ public class GroupController {
             if (!groupService.isInGroup(role, gid)) {
                 return null;
             }
-            GuildbagBean gbb = groupService.findGuildbag(gid);
-            if (gbb != null) {
-                gbb.flushBag(-1, gid);
-                List<GuildbagStruct> gbss = gbb.guildBags;
 
-                // 转化为数据传输DTO模式
-                for (GuildbagStruct gbd : gbss) {
-                    GuildbagBasicDto basic = gbd.createBasic();
-                    gbds.add(basic);
-                    if (gbd.ids.containsKey(role)) {
-                        basic.flag = true;
-                    }
-                }
-                if (gbds.size() > 0) {
-                    gb.setDirty(true);
-                }
-            }
-            return gbds;
+            return gb.getBagInfos(role);
         } catch (Exception ex) {
             log.error("获取公会红包列表错误:", ex);
         }
@@ -685,7 +646,6 @@ public class GroupController {
     @ResponseBody
     GuildbagDetailDto GuildBagReceive(long gid, long role, String name, String bagId) {
         try {
-            GuildbagDetailDto gdd = null;
             GroupBean gb = groupService.find(gid);
             if (gb == null) {
                 return null;
@@ -693,15 +653,8 @@ public class GroupController {
             if (!groupService.isInGroup(role, gid)) {
                 return null;
             }
-            GuildbagBean gbb = groupService.findGuildbag(gid);
 
-            if (gbb != null) {
-                gdd = gbb.receive(role, name, bagId, gid);
-                if (gdd != null && gdd.count > 0) {
-                    gb.setDirty(true);
-                }
-                return gdd;
-            }
+            return gb.getBagDetail(role, name, bagId);
         } catch (Exception ex) {
             log.error("公会红包领取错误:", ex);
         }
