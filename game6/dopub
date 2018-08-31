@@ -1,0 +1,6 @@
+#! /bin/bash
+git pull keray master
+./mvnw clean
+./mvnw package
+
+

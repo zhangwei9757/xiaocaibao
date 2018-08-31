@@ -1,0 +1,8 @@
+#! /usr/bin/expect
+spawn git pull origin master
+set timeout 30
+expect "Password"
+send "fuckyou\r\n"
+interact
+
+

@@ -1,0 +1,121 @@
+{
+  "items": [
+    {
+      "name": "RoleStruct",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "long", "key":"", "value": ""},
+        {"name": "name", "type": "String", "key":"", "value": ""},
+        {"name": "icon", "type": "int", "key":"", "value": ""},
+        {"name": "skin", "type": "int", "key":"", "value": ""},
+        {"name": "level", "type": "int", "key":"", "value": ""},
+        {"name": "exp", "type": "int", "key":"", "value": ""},
+        {"name": "newbie", "type": "int", "key":"", "value": ""},
+        {"name": "vip", "type": "int", "key":"", "value": ""},
+        {"name": "vipexp", "type": "int", "key":"", "value": ""}
+      ]
+    },
+    {
+      "name": "HerosBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "long", "key":"", "value": ""},
+        {"name": "heros", "type": "list", "key":"", "value": "HeroBean"},
+        {"name": "assists", "type": "list", "key":"", "value": "HeroBean"},
+        {"name": "chain", "type": "int", "key":"", "value": ""},
+        {"name": "chainattr", "type": "int", "key":"", "value": ""}
+      ]
+    },
+    {
+      "name": "HeroBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "int", "key":"", "value": ""},
+        {"name": "hid", "type": "int", "key":"", "value": ""},
+        {"name": "level", "type": "int", "key":"", "value": ""},
+        {"name": "grade", "type": "int", "key":"", "value": ""},
+        {"name": "fate", "type": "int", "key":"", "value": ""},
+        {"name": "fateexp", "type": "int", "key":"", "value": ""},
+        {"name": "gift", "type": "int", "key":"", "value": ""},
+        {"name": "giftrunes", "type": "list", "key":"", "value": "int"},
+        {"name": "equips", "type": "list", "key":"", "value": "EquipBean"}
+      ]
+    },
+    {
+      "name": "EquipBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "int"},
+        {"name": "eid", "type": "int"},
+        {"name": "level", "type": "int"},
+        {"name": "grade", "type": "int"}
+      ]
+    },
+    {
+      "name": "PackBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "long"},
+        {"name": "herolimit", "type": "int"},
+        {"name": "equiplimit", "type": "int"},
+        {"name": "heros", "type": "map", "key": "int", "value": "HeroBean"},
+        {"name": "equips", "type": "map", "key": "int", "value": "EquipBean"},
+        {"name": "items", "type": "map", "key": "int", "value": "int"},
+      ]
+    },
+    {
+      "name": "OfflineAwardBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "period", "type": "int"},
+        {"name": "gold", "type": "int"},
+        {"name": "exp", "type": "int"},
+        {"name": "events", "type": "int"},
+        {"name": "boss", "type": "int"},
+        {"name": "awards", "type": "list", "value": "AwardBean"}
+      ]
+    },
+    {
+      "name": "AwardBean",
+      "isProtocol": false,
+      "items":[
+        {"name": "id", "type": "int"},
+        {"name": "count", "type": "int"},
+        {"name": "hid", "type": "int"}
+      ]
+    },
+
+    {
+      "name": "RequestLogin",
+      "isProtocol": true,
+      "items":[
+        {"name": "seq", "type": "int", "key":"", "value": ""}
+      ]
+    },
+    {
+      "name": "ReturnLogin",
+      "isProtocol": true,
+      "items":[
+        {"name": "seq", "type": "int", "key":"", "value": ""},
+        {"name": "result", "type": "String", "key":"", "value": ""},
+        {"name": "role", "type": "RoleStruct", "key":"", "value": ""},
+        {"name": "heros", "type": "HerosBean", "key":"", "value": ""},
+        {"name": "pack", "type": "PackBean", "key":"", "value": ""},
+        {"name": "scene", "type": "int", "key":"", "value": ""},
+        {"name": "energy", "type": "int", "key":"", "value": ""},
+        {"name": "offawards", "type": "OfflineAwardBean", "key":"", "value": ""},
+        {"name": "timestamp", "type": "long", "key":"", "value": ""}
+      ]
+    },
+
+    {
+      "name": "RequestCharge",
+      "isProtocol": true,
+      "items":[
+        {"name": "seq", "type": "int", "key":"", "value": ""},
+        {"name": "rmb", "type": "int", "key":"", "value": ""},
+        {"name": "test1", "type": "list", "key": "", "value": "int"}
+      ]
+    }
+  ]
+}

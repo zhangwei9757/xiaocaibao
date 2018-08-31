@@ -1,0 +1,1779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestTreasureUp.java" line="195" />
+    <bookmark url="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/RemoteService.java" />
+    <bookmark url="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineLook.java" />
+    <bookmark url="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/Hawk.java" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="52d80243-6f6c-4e97-8382-d58636bfdad9" name="Default" comment="k">
+      <change afterPath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyAccessDecisionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/ApiAuthConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/ApiAuthConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/GameThreadConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/GameThreadConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/MongoTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/MongoTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/RedisTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/RedisTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" afterDir="false" />
+    </list>
+    <ignored path="game6.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/common/target/" />
+    <ignored path="$PROJECT_DIR$/runner/target/" />
+    <ignored path="$PROJECT_DIR$/center/target/" />
+    <ignored path="$PROJECT_DIR$/xxkg/target/" />
+    <ignored path="$PROJECT_DIR$/simfight/target/" />
+    <ignored path="$PROJECT_DIR$/guild/target/" />
+    <ignored path="$PROJECT_DIR$/extra/target/" />
+    <ignored path="$PROJECT_DIR$/hawk/target/" />
+    <ignored path="$PROJECT_DIR$/arena/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/game6$Xxkg.coverage" NAME="Xxkg Coverage Results" MODIFIED="1507522088808" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.tumei.xxkg.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/gam6$Hawk.coverage" NAME="Hawk Coverage Results" MODIFIED="1513821317876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.tumei.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/game6$Guild.coverage" NAME="Guild Coverage Results" MODIFIED="1495703951020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.tumei.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/game6$Hawk.coverage" NAME="Hawk Coverage Results" MODIFIED="1509326400841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.tumei.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/game6$SimFight.coverage" NAME="SimFight Coverage Results" MODIFIED="1509479732796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.tumei.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="game6" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="491">
+              <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="45" selection-end-line="160" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/resources/bootstrap.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyAccessDecisionManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyAccessDecisionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="31" column="68" selection-start-line="31" selection-start-column="68" selection-end-line="31" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyFilterInvocationSecurityMetadataSource.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AntPathMatcher.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/4.3.8.RELEASE/spring-core-4.3.8.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2826">
+              <caret line="190" selection-start-line="190" selection-end-line="190" />
+              <folding>
+                <element signature="e#6174#6175#0" expanded="true" />
+                <element signature="e#6222#6223#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Xxkg.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebSecurityConf.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebSecurityController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1548">
+              <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>private DaoService</find>
+      <find>% 1000</find>
+      <find>小事件</find>
+      <find>split</find>
+      <find>getBetweenInc</find>
+      <find>updateLatestServer</find>
+      <find>更新最近</find>
+      <find>RefreshScop</find>
+      <find>RefreshScope</find>
+      <find>refresh</find>
+      <find>Simple</find>
+      <find>EnableSwagg</find>
+      <find>GameServer.zone</find>
+      <find>幸运</find>
+      <find>zone</find>
+      <find>Zone</find>
+      <find>gameserver.zone</find>
+      <find>Scheduled</find>
+      <find>RestTemp</find>
+      <find>fixedDelay</find>
+      <find>认证错误</find>
+      <find>migrate</find>
+      <find>arrangeZoneRoles</find>
+      <find>申请未</find>
+      <find>broadcast</find>
+      <find>bossrankConfs</find>
+      <find>qualityHeros</find>
+      <find>MongoTemplate</find>
+      <find>centerTemplate</find>
+      <find>campaignactConfs</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>HeroStruct</replace>
+      <replace>public</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/common/RemoteService.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/RunnerBean.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/MobBean.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/UserBean.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/MobController.groovy" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/TestController.groovy" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/MobService.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/AibeiController.groovy" />
+        <option value="$PROJECT_DIR$/simfight/src/main/java/com/tumei/groovy/commands/GroovyFightSystem.groovy" />
+        <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/common/RemoteService.java" />
+        <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/groovy/commands/BossService.groovy" />
+        <option value="$PROJECT_DIR$/run_xxkg1.bat" />
+        <option value="$PROJECT_DIR$/do" />
+        <option value="$PROJECT_DIR$/dopub" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/CmdController.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/MongoTemplateConfig.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/ChargeBean.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupScene.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/GroupBean.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupRole.java" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupPreRole.java" />
+        <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java" />
+        <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/controller/struct/GroupRole.java" />
+        <option value="$PROJECT_DIR$/run_guild.bat" />
+        <option value="$PROJECT_DIR$/run_simfight.bat" />
+        <option value="$PROJECT_DIR$/flushScripts.sh" />
+        <option value="$PROJECT_DIR$/run_xxkg.bat" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/RunnerBean.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/ConsulConfig.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/CacheIt.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoService.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestLogin.groovy" />
+        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/controller/GroovyController.java" />
+        <option value="$PROJECT_DIR$/xxkg/pom.xml" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/ApiAuthConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/tumei/configs/MongoTemplateConfig.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/security/SecurityConfRepository.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/security/SecurityConf.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/SecurityController.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyWebAppInitializer.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MySecurityService.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/Readonly.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyInvocationSecurityMetadataSourceService.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyAccessDecisionManager.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="printErrorStackTraces" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="common" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="hawk" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="#JAVA_INTERNAL" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="978" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Android &gt; Lint &gt; Correctness</id>
+          </State>
+          <State>
+            <id>Android &gt; Lint &gt; Performance</id>
+          </State>
+          <State>
+            <id>CorrectnessLintAndroid</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>Kotlin</id>
+          </State>
+          <State>
+            <id>LintAndroid</id>
+          </State>
+          <State>
+            <id>Maven</id>
+          </State>
+          <State>
+            <id>Plugin DevKit</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+        </expanded-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="configs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="configs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="modelconf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="hawk" type="cbb8eebc:String" user="hawk" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com/tumei" type="cbb8eebc:String" user="com/tumei" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="GO_FMT" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/gitboy/gam6/hawk/src/main/java/com/tumei/configs/MongoTemplateConfig.java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15275909" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\game6\common\src\main\java\com\tumei\configs" />
+      <recent name="D:\gitboy\gam6\hawk\src\main\resources\static" />
+      <recent name="D:\gitboy\gam6\common\src\main\java\com\tumei\common\utils" />
+      <recent name="D:\gitboy\game6\common\src\main\java\com\tumei\common\utils" />
+      <recent name="D:\gitboy\game6\hawk\src\main\resources\static" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="com.tumei.groovy" />
+      <recent name="com.tumei.groovy.contract" />
+      <recent name="com.tumei" />
+      <recent name="com.tumei.game.protos.notifys" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.tumei.model.structs" />
+      <recent name="com.tumei.model" />
+      <recent name="com.tumei.centermodel" />
+      <recent name="com.tumei.groovy.commands.controller" />
+      <recent name="com.tumei.game.protos.group" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs" />
+      <recent name="D:\gitboy\gam6\hawk\src\main\resources\templates" />
+      <recent name="D:\gitboy\gam6\hawk\src\main\resources\static" />
+      <recent name="D:\gitboy\game6" />
+      <recent name="D:\gitboy\game6\guild\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Xxkg">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+    </configuration>
+    <configuration name="Arena" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.tumei.Arena" />
+      <module name="arena" />
+      <option name="PROGRAM_PARAMETERS" value="--zone=1 --profile=test --editor=1 --groovy.bean=null" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC -Xmx200m -Xms8m" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tumei.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="Guild" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tumei.Guild" />
+      <module name="guild" />
+      <option name="PROGRAM_PARAMETERS" value="--profile=test --groovy.bean=null --editor=1" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC -Xmx200m" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tumei.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="Hawk" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tumei.Hawk" />
+      <module name="hawk" />
+      <option name="PROGRAM_PARAMETERS" value="--zone=1 --profile=test --editor=1 --groovy.bean=null " />
+      <option name="VM_PARAMETERS" value="-javaagent:$MAVEN_REPOSITORY$/org/springframework/springloaded/1.2.6.RELEASE/springloaded-1.2.6.RELEASE.jar -noverify  -XX:+UseG1GC -Xmx300m " />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tumei.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="SimFight" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tumei.SimFight" />
+      <module name="simfight" />
+      <option name="PROGRAM_PARAMETERS" value="--zone=2 --profile=test --editor=1 --groovy.bean=null" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC -Xmx200m -Xms8m" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tumei.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="Xxkg" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tumei.Xxkg" />
+      <module name="xxkg" />
+      <option name="PROGRAM_PARAMETERS" value="--port=6001 --zone=2 --db=1 --profile=test --groovy.bean=null --editor=1" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC -Xmx200m" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tumei.xxkg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="game6" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+    </configuration>
+    <configuration name="远程调试" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="192.168.1.222" />
+      <option name="PORT" value="55890" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="55890" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <method />
+    </configuration>
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoRunFileConfiguration" factoryName="Go Single File">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Arena" />
+      <item itemvalue="Remote.远程调试" />
+      <item itemvalue="Application.Xxkg" />
+      <item itemvalue="Application.SimFight" />
+      <item itemvalue="Application.Hawk" />
+      <item itemvalue="Application.Guild" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Xxkg" />
+        <item itemvalue="Application.Hawk" />
+        <item itemvalue="Application.Guild" />
+        <item itemvalue="Application.SimFight" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="52d80243-6f6c-4e97-8382-d58636bfdad9" name="Default" comment="" />
+      <created>1493777670169</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1493777670169</updated>
+    </task>
+    <task id="LOCAL-00016" summary="神秘宝藏发送奖励更新">
+      <created>1500863821022</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1500863821022</updated>
+    </task>
+    <task id="LOCAL-00017" summary="神秘宝藏发送奖励更新">
+      <created>1500883706701</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1500883706701</updated>
+    </task>
+    <task id="LOCAL-00018" summary="神秘宝藏排名错误更新。">
+      <created>1500885790765</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1500885790765</updated>
+    </task>
+    <task id="LOCAL-00019" summary="矿区地图">
+      <created>1501149843996</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1501149843996</updated>
+    </task>
+    <task id="LOCAL-00020" summary="矿区地图">
+      <created>1501220749834</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1501220749834</updated>
+    </task>
+    <task id="LOCAL-00021" summary="矿区地图">
+      <created>1501223289945</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1501223289945</updated>
+    </task>
+    <task id="LOCAL-00022" summary="矿区地图">
+      <created>1501223295644</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1501223295644</updated>
+    </task>
+    <task id="LOCAL-00023" summary="矿区地图">
+      <created>1501225107367</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1501225107367</updated>
+    </task>
+    <task id="LOCAL-00024" summary="矿区地图">
+      <created>1501667969690</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1501667969690</updated>
+    </task>
+    <task id="LOCAL-00025" summary="矿区地图">
+      <created>1501667980837</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1501667980837</updated>
+    </task>
+    <task id="LOCAL-00026" summary="矿区地图k">
+      <created>1502345309025</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1502345309025</updated>
+    </task>
+    <task id="LOCAL-00027" summary="矿区地图k">
+      <created>1502345431859</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1502345431859</updated>
+    </task>
+    <task id="LOCAL-00028" summary="矿区地图k">
+      <created>1502345589182</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1502345589182</updated>
+    </task>
+    <task id="LOCAL-00029" summary="矿区地图">
+      <created>1502445988401</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1502445988401</updated>
+    </task>
+    <task id="LOCAL-00030" summary="矿区地图">
+      <created>1502678849401</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1502678849401</updated>
+    </task>
+    <task id="LOCAL-00031" summary="矿区地图">
+      <created>1502682480677</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1502682480677</updated>
+    </task>
+    <task id="LOCAL-00032" summary="矿区地图">
+      <created>1502683225043</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1502683225043</updated>
+    </task>
+    <task id="LOCAL-00033" summary="矿区地图">
+      <created>1502683959291</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1502683959291</updated>
+    </task>
+    <task id="LOCAL-00034" summary="矿区地图">
+      <created>1502684126777</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1502684126777</updated>
+    </task>
+    <task id="LOCAL-00035" summary="矿区地图">
+      <created>1502690592312</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1502690592312</updated>
+    </task>
+    <task id="LOCAL-00036" summary="矿区地图">
+      <created>1502690803322</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1502690803322</updated>
+    </task>
+    <task id="LOCAL-00037" summary="矿区地图">
+      <created>1502769045131</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1502769045131</updated>
+    </task>
+    <task id="LOCAL-00038" summary="矿区地图">
+      <created>1502788348198</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1502788348198</updated>
+    </task>
+    <task id="LOCAL-00039" summary="矿区地图">
+      <created>1502791617156</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1502791617156</updated>
+    </task>
+    <task id="LOCAL-00040" summary="矿区地图">
+      <created>1502844547635</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1502844547635</updated>
+    </task>
+    <task id="LOCAL-00041" summary="矿区地图">
+      <created>1502844656236</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1502844656236</updated>
+    </task>
+    <task id="LOCAL-00042" summary="矿区地图">
+      <created>1502845880375</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1502845880375</updated>
+    </task>
+    <task id="LOCAL-00043" summary="矿区地图">
+      <created>1502873046004</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1502873046004</updated>
+    </task>
+    <task id="LOCAL-00044" summary="矿区地图">
+      <created>1502873807030</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1502873807030</updated>
+    </task>
+    <task id="LOCAL-00045" summary="矿区地图">
+      <created>1502874976936</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1502874976936</updated>
+    </task>
+    <task id="LOCAL-00046" summary="矿区地图">
+      <created>1502876538283</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1502876538283</updated>
+    </task>
+    <task id="LOCAL-00047" summary="矿区地图">
+      <created>1502876779680</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1502876779680</updated>
+    </task>
+    <task id="LOCAL-00048" summary="矿区地图">
+      <created>1502937739497</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1502937739498</updated>
+    </task>
+    <task id="LOCAL-00049" summary="矿区地图">
+      <created>1502937920161</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1502937920161</updated>
+    </task>
+    <task id="LOCAL-00050" summary="矿区地图">
+      <created>1502938074204</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1502938074208</updated>
+    </task>
+    <task id="LOCAL-00051" summary="矿区地图">
+      <created>1502938860470</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1502938860470</updated>
+    </task>
+    <task id="LOCAL-00052" summary="矿区地图">
+      <created>1502939769356</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1502939769356</updated>
+    </task>
+    <task id="LOCAL-00053" summary="矿区地图">
+      <created>1503027942810</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1503027942810</updated>
+    </task>
+    <task id="LOCAL-00054" summary="矿区地图">
+      <created>1503044606360</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1503044606360</updated>
+    </task>
+    <task id="LOCAL-00055" summary="fireraid rank bug fix">
+      <created>1503280129044</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1503280129044</updated>
+    </task>
+    <task id="LOCAL-00056" summary="1. 修改发光的宝物和粗糙的宝物的逻辑 成为道具可以叠加&#10;2. 修复服务器发送最大8192的限制 需要传递System.properites -Dorg.apache.tomcat.websocket.DEFAULT_BUFFER_SIZE=102400">
+      <created>1503309261712</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1503309261712</updated>
+    </task>
+    <task id="LOCAL-00057" summary="1">
+      <created>1503384040804</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1503384040804</updated>
+    </task>
+    <task id="LOCAL-00058" summary="1">
+      <created>1503385785783</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1503385785783</updated>
+    </task>
+    <task id="LOCAL-00059" summary="1">
+      <created>1503457295653</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1503457295654</updated>
+    </task>
+    <task id="LOCAL-00060" summary="1">
+      <created>1503461171828</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1503461171828</updated>
+    </task>
+    <task id="LOCAL-00061" summary="1">
+      <created>1503463959973</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1503463959973</updated>
+    </task>
+    <task id="LOCAL-00062" summary="1">
+      <created>1503466575636</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1503466575636</updated>
+    </task>
+    <task id="LOCAL-00063" summary="1">
+      <created>1503477970702</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1503477970704</updated>
+    </task>
+    <task id="LOCAL-00064" summary="1">
+      <created>1503541899711</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1503541899712</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3150838" />
+      <window_info id="Palette&#9;" order="6" />
+      <window_info id="Image Layers" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5425985" side_tool="true" weight="0.26901248" />
+      <window_info anchor="right" id="Maven Projects" order="3" sideWeight="0.70348835" weight="0.15191898" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3293348" />
+      <window_info anchor="bottom" x="-1165" y="386" width="1062" height="552" id="Run" order="2" sideWeight="0.68370605" weight="0.22004357" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="right" id="Designer" order="4" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4945227" visible="true" weight="0.10127932" />
+      <window_info anchor="bottom" id="Problems" order="11" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info id="Favorites" order="5" sideWeight="0.5054773" side_tool="true" weight="0.19669509" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.45740148" weight="0.38017428" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.5841321" weight="0.33115467" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" x="738" y="435" width="444" height="169" id="Documentation" order="7" type="FLOATING" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.46162048" weight="0.2383655" />
+      <window_info id="Nl-Palette" order="3" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="LuaJ" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Properties" order="5" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Tail" order="8" />
+      <window_info anchor="right" id="Coverage" order="9" sideWeight="0.29651162" side_tool="true" weight="0.146875" />
+    </layout>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ftl" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="提交代码。" />
+    <MESSAGE value="代码结构精炼。" />
+    <MESSAGE value="1. 远征每个章节之后的buff选择&#10;2. websocket相关代码添加到对应的module上&#10;3. 尝试可继承的bean" />
+    <MESSAGE value="1.  开始初步接入公会功能&#10;2. 抢夺碎片" />
+    <MESSAGE value="1. 时装&#10;2. 日常副本&#10;3. 阵形加强。" />
+    <MESSAGE value="1. 公会服务GroupService中需要记录一个全局线程安全的 userid -&gt; groupid的映射，用来控制和检索玩家是否加入多个公会。&#10;2. 一些协议，公会相关。" />
+    <MESSAGE value="1. 公会捐献&#10;2. 公会副本（未完成）&#10;" />
+    <MESSAGE value="活动。" />
+    <MESSAGE value="完成活动。" />
+    <MESSAGE value="中途断点。" />
+    <MESSAGE value="神秘宝藏更新" />
+    <MESSAGE value="神秘宝藏发送奖励更新" />
+    <MESSAGE value="神秘宝藏排名错误更新。" />
+    <MESSAGE value="矿区地图k" />
+    <MESSAGE value="矿区地图" />
+    <MESSAGE value="fireraid rank bug fix" />
+    <MESSAGE value="1. 修改发光的宝物和粗糙的宝物的逻辑 成为道具可以叠加&#10;2. 修复服务器发送最大8192的限制 需要传递System.properites -Dorg.apache.tomcat.websocket.DEFAULT_BUFFER_SIZE=102400" />
+    <MESSAGE value="1" />
+    <MESSAGE value="11" />
+    <option name="LAST_COMMIT_MESSAGE" value="11" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoService.java</url>
+          <line>638</line>
+          <properties />
+          <option name="timeStamp" value="255" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupDonateAward.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="881" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
+          <line>542</line>
+          <properties />
+          <option name="timeStamp" value="968" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
+          <line>245</line>
+          <properties />
+          <option name="timeStamp" value="970" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
+          <line>297</line>
+          <properties />
+          <option name="timeStamp" value="972" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/pub/hawk1/commands/controller/TestController.groovy</url>
+          <line>178</line>
+          <properties />
+          <option name="timeStamp" value="1038" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java</url>
+          <line>722</line>
+          <properties />
+          <option name="timeStamp" value="1446" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java</url>
+          <line>643</line>
+          <properties />
+          <option name="timeStamp" value="1448" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-defaults>
+        <breakpoint suspend="THREAD" type="java-line" />
+      </breakpoints-defaults>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="1546" />
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/controller/GroovyController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7848">
+          <caret line="555" column="36" selection-start-line="555" selection-start-column="36" selection-end-line="555" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/ApiAuthConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="44" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/MongoTemplateConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/RedisTemplateConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#1058#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/Swagger2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/ApiAuthConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/GameThreadConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#725#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE.jar!/org/springframework/stereotype/Component.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE.jar!/org/springframework/context/annotation/Configuration.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/ArenaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/PayController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1152">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/HelperController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="223" column="34" selection-start-line="223" selection-start-column="34" selection-end-line="223" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/AddtimeConf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="13" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/annotation/LimitAnnotation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/aspectj/aspectjweaver/1.8.10/aspectjweaver-1.8.10.jar!/org/aspectj/lang/reflect/MethodSignature.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/SecurityAspect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="25" column="16" lean-forward="true" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/TreasureRankBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/TreasureRankBeanRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="32" lean-forward="true" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/security/SecurityConfRepository.java" />
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/security/SecurityConf.java" />
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/SecurityController.java" />
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/MongoTemplateConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="74" column="48" lean-forward="true" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/DailyConf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/8.5.13/tomcat-embed-core-8.5.13.jar!/org/apache/catalina/loader/WebappClassLoaderBase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-config/4.1.4.RELEASE/spring-security-config-4.1.4.RELEASE.jar!/org/springframework/security/config/annotation/AbstractConfiguredSecurityBuilder.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="145" column="50" selection-start-line="145" selection-start-column="50" selection-end-line="145" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-config/4.1.4.RELEASE/spring-security-config-4.1.4.RELEASE.jar!/org/springframework/security/config/annotation/web/AbstractRequestMatcherRegistry.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/data/spring-data-mongodb/1.9.10.RELEASE/spring-data-mongodb-1.9.10.RELEASE.jar!/org/springframework/data/mongodb/core/MongoTemplate.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="684" column="16" selection-start-line="684" selection-start-column="16" selection-end-line="684" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-config/4.1.4.RELEASE/spring-security-config-4.1.4.RELEASE.jar!/org/springframework/security/config/annotation/web/configuration/WebSecurityConfigurerAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="135" selection-start-line="135" selection-end-line="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyWebAppInitializer.java" />
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MySecurityService.java" />
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/Readonly.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="859" column="46" lean-forward="true" selection-start-line="859" selection-start-column="46" selection-end-line="859" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/LocalService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2534">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-web/4.1.4.RELEASE/spring-security-web-4.1.4.RELEASE.jar!/org/springframework/security/web/util/matcher/AntPathRequestMatcher.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-core/4.1.4.RELEASE/spring-security-core-4.1.4.RELEASE.jar!/org/springframework/security/access/ConfigAttribute.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyInvocationSecurityMetadataSourceService.java" />
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-beans/4.3.8.RELEASE/spring-beans-4.3.8.RELEASE.jar!/org/springframework/beans/factory/support/SimpleInstantiationStrategy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-beans/4.3.8.RELEASE/spring-beans-4.3.8.RELEASE.jar!/org/springframework/beans/BeanUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-core/4.1.4.RELEASE/spring-security-core-4.1.4.RELEASE.jar!/org/springframework/security/access/SecurityConfig.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="730">
+          <caret line="56" column="25" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-web/4.1.4.RELEASE/spring-security-web-4.1.4.RELEASE.jar!/org/springframework/security/web/access/intercept/FilterSecurityInterceptor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="46" column="81" selection-start-line="46" selection-start-column="81" selection-end-line="46" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-core/4.1.4.RELEASE/spring-security-core-4.1.4.RELEASE.jar!/org/springframework/security/access/intercept/AbstractSecurityInterceptor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/4.3.8.RELEASE/spring-core-4.3.8.RELEASE.jar!/org/springframework/util/AntPathMatcher.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="67" column="19" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="23" column="62" lean-forward="true" selection-start-line="23" selection-start-column="62" selection-end-line="23" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/4.3.8.RELEASE/spring-core-4.3.8.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2826">
+          <caret line="190" selection-start-line="190" selection-end-line="190" />
+          <folding>
+            <element signature="e#6174#6175#0" expanded="true" />
+            <element signature="e#6222#6223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1548">
+          <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyAccessDecisionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="31" column="68" selection-start-line="31" selection-start-column="68" selection-end-line="31" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="45" selection-end-line="160" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>arena</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: org.springframework.cloud:spring-cloud-starter-config:1.2.3.RELEASE</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+  <component name="mavenExecuteGoalHistory">
+    <option value="" />
+  </component>
+</project>

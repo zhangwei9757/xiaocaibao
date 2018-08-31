@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="arena" />
+        <module name="common" />
+        <module name="guild" />
+        <module name="hawk" />
+        <module name="simfight" />
+        <module name="xxkg" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="arena" target="1.8" />
+      <module name="center" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="game6" target="1.8" />
+      <module name="guild" target="1.8" />
+      <module name="hawk" target="1.8" />
+      <module name="simfight" target="1.8" />
+      <module name="xxkg" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

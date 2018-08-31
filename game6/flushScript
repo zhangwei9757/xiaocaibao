@@ -1,0 +1,33 @@
+#! /bin/bash
+if [ $# -eq 0 ] 
+then
+	echo "用法: flushScript 模块(hawk,xxkg,simfight,arena)"
+else
+	if [ $1 == "xxkg" ]
+	then
+		echo "开始替换xxkg模块下的脚本..."
+		cp -i -u --preserve -fr scripts/xxkg/* pub/commands/
+	elif [ $1 == "hawk" ]
+	then
+		echo "开始替换hawk模块下的脚本..."
+		cp -i -u --preserve -fr scripts/hawk/* pub/commands/
+	elif [ $1 == "simfight" ]
+	then
+		echo "开始替换simfight模块下的脚本..."
+		cp -i -u --preserve -fr scripts/simfight/* pub/commands/
+	elif [ $1 == "arena" ]
+	then
+		echo "开始替换arena模块下的脚本..."
+		cp -i -u --preserve -fr scripts/arena/* pub/commands/
+	elif [ $1 == "all" ]
+	then
+		echo "开始替换hawk模块下的脚本..."
+		cp -i -u --preserve -fr scripts/hawk/* pub/commands/
+		echo "开始替换simfight模块下的脚本..."
+		cp -i -u --preserve -fr scripts/simfight/* pub/commands/
+		echo "开始替换arena模块下的脚本..."
+		cp -i -u --preserve -fr scripts/arena/* pub/commands/
+		echo "开始替换xxkg模块下的脚本..."
+		cp -i -u --preserve -fr scripts/xxkg/* pub/commands/
+	fi
+fi

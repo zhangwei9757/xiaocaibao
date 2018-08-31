@@ -1,0 +1,4 @@
+zone=1
+docker build -t simfight .
+docker rm simfight${zone}
+docker run -p 2000${zone}:2000${zone} -it --name simfight${zone} simfight:latest java -Dthin.root=. -jar simfight.jar --zone=${zone} --profile=test
