@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     @Qualifier("confTemplate")
-    private MongoTemplate confTemplate;
+    public MongoTemplate confTemplate;
 
     @Value("xxkg")
     public String mode;

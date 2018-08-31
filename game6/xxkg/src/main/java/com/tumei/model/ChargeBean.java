@@ -249,7 +249,7 @@ public class ChargeBean {
 					setYear(now + 3600 * 24 * 365);
 				}
 				else {
-					setYear(getYear() + 3600 * 24 * 30);
+					setYear(getYear() + 3600 * 24 * 365);
 				}
 				break;
 			}

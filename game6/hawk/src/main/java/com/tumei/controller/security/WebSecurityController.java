@@ -18,7 +18,7 @@ import java.util.List;
  * 动态配置Security配置
  */
 @RestController
-@RequestMapping(value = "/XxkgSecurity")
+@RequestMapping(value = "/HawdSecurity")
 public class WebSecurityController {
 
     @Autowired

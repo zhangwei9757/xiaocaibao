@@ -1,7 +1,6 @@
 package com.tumei.controller.security;
 
 import com.google.common.base.Strings;
-import com.tumei.GameConfig;
 import com.tumei.configs.security.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
@@ -19,8 +18,7 @@ import java.util.Map;
 
 @Component
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-    @Autowired
-    private GameConfig gameConfig;
+
     @Autowired
     private WebSecurityConfig webSecurityConfig;
 
@@ -42,19 +40,20 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     private void establishDatabase() {
         String mode = webSecurityConfig.mode;
         String[] ls = {
+                "/register", "ANONYMOUS", "ANONYMOUS",
+                "/logon", "ANONYMOUS", "ANONYMOUS",
+                "/logonYD", "ANONYMOUS", "ANONYMOUS",
+                "/html/**", "ANONYMOUS", "ANONYMOUS",
                 "/health", "ANONYMOUS", "ANONYMOUS",
-                "/notifyPay", "ANONYMOUS", "ANONYMOUS",
-                "/group/**", "ANONYMOUS", "ANONYMOUS",
-                "/ws/**", "USER", "USER",
-                "/arena/**", "ADMIN", "ADMIN",
-                "/*.html", "ADMIN", "ANONYMOUS",
-                "/cmd/**", "ADMIN", "ANONYMOUS",
-                "/user/**", "ADMIN", "ANONYMOUS",
-                "/helps/**", "ADMIN", "ANONYMOUS",
+                "/*.html", "ANONYMOUS", "ANONYMOUS",
+                "/service/**", "ANONYMOUS", "ANONYMOUS",
+                "/*.html", "ANONYMOUS", "ANONYMOUS",
+                "/abp/**", "ANONYMOUS", "ANONYMOUS",
+                "/ad/**", "ANONYMOUS", "ANONYMOUS",
                 "*", "ADMIN", "ANONYMOUS"
-                };
+        };
         for (int i = 0; i < ls.length; ++i) {
-            webSecurityConfig.confTemplate.save(new WebSecurityConf(ls[i], mode, ls[++i],ls[++i]));
+            webSecurityConfig.confTemplate.save(new WebSecurityConf(ls[i], mode, ls[++i], ls[++i]));
         }
     }
 
@@ -66,41 +65,24 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
             urlsByMode = webSecurityConfig.getUrlsByMode(webSecurityConfig.mode);
         }
         for (WebSecurityConf wsc : urlsByMode) {
-            // 0：表示开发 1：表示生产
-            if (gameConfig.getReal() == 0) {
-                // 开发环境赋值
-                if (!Strings.isNullOrEmpty(wsc.devRole)) {
 
-                    if (wsc.url.equalsIgnoreCase("*")) {
-                        common = "ROLE_" + wsc.devRole;
-                    } else {
-                        urlRoleMap.put(wsc.url, "ROLE_" + wsc.devRole);
-                    }
+            // 生产环境赋值
+            if (!Strings.isNullOrEmpty(wsc.role)) {
+
+                if (wsc.url.equalsIgnoreCase("*")) {
+                    common = "ROLE_" + wsc.role;
                 } else {
-                    if (wsc.url.equalsIgnoreCase("*")) {
-                        common = "ROLE_ANONYMOUS";
-                    } else {
-                        urlRoleMap.put(wsc.url, "ROLE_ANONYMOUS");
-                    }
+                    urlRoleMap.put(wsc.url, "ROLE_" + wsc.role);
                 }
             } else {
-                // 生产环境赋值
-                if (!Strings.isNullOrEmpty(wsc.role)) {
-
-                    if (wsc.url.equalsIgnoreCase("*")) {
-                        common = "ROLE_" + wsc.role;
-                    } else {
-                        urlRoleMap.put(wsc.url, "ROLE_" + wsc.role);
-                    }
+                if (wsc.url.equalsIgnoreCase("*")) {
+                    common = "ROLE_ANONYMOUS";
                 } else {
-                    if (wsc.url.equalsIgnoreCase("*")) {
-                        common = "ROLE_ANONYMOUS";
-                    } else {
-                        urlRoleMap.put(wsc.url, "ROLE_ANONYMOUS");
-                    }
+                    urlRoleMap.put(wsc.url, "ROLE_ANONYMOUS");
                 }
             }
         }
+
     }
 
     @Override
