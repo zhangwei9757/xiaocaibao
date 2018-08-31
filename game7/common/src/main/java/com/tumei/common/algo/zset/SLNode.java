@@ -58,7 +58,11 @@ public class SLNode<K extends Comparable<K>, V extends Comparable<V>> implements
     public int compareTo(V score, K member) {
         int result = -this.score.compareTo(score);
         if (result == 0) {
-            return this.member.compareTo(member);
+            result = this.member.compareTo(member);
+            if (result == 0) {
+                return 0;
+            }
+            return -1;
         } else {
             return result;
         }

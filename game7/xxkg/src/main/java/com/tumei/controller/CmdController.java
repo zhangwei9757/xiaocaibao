@@ -14,6 +14,7 @@ import com.tumei.dto.MessageDtos;
 import com.tumei.game.GameServer;
 import com.tumei.game.protos.notifys.NotifyMessage;
 import com.tumei.game.protos.notifys.NotifyRedPoint;
+import com.tumei.game.services.LimitRankService;
 import com.tumei.game.services.RankService;
 import com.tumei.game.services.RobService;
 import com.tumei.groovy.GroovyLoader;
@@ -31,10 +32,7 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.WriteResultChecking;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -429,4 +427,18 @@ public class CmdController {
 		return "迁移成功";
 	}
 
+	@ResponseBody
+	@ApiOperation(value = "狂欢活动强制发送邮件")
+	@RequestMapping(value = "/compulsoryFlush", method = RequestMethod.GET)
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "lastKey", value = "当前活动对应的Key", required = true, dataType = "int", paramType = "query"),
+	})
+	public String compulsoryFlush(int lastKey) {
+		try {
+			LimitRankService.getInstance().sendTaskAwards(lastKey);
+		} catch (Exception e) {
+			return "邮件发送失败";
+		}
+		return "邮件发送成功";
+	}
 }

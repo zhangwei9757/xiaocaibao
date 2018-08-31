@@ -14,13 +14,5 @@
         <module name="xxkg" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="arena" target="1.8" />
-      <module name="common" target="1.8" />
-      <module name="game7" target="1.8" />
-      <module name="guild" target="1.8" />
-      <module name="hawk" target="1.8" />
-      <module name="xxkg" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

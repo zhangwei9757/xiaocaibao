@@ -312,7 +312,7 @@ public class RequestSummon extends BaseProtocol {
 				user.pushDailyTask(1, 1);
 
 				// 单次召唤成功，英雄狂欢活动累计次数 +1
-				//LimitRankService.getInstance().put(user.getUid(),user.getName(),1);
+				LimitRankService.getInstance().put(user.getUid(),user.getName(),1,4);
 
 				break;
 			}
@@ -382,7 +382,7 @@ public class RequestSummon extends BaseProtocol {
 				user.pushDailyTask(1, 10);
 
 				// 10次召唤成功，英雄狂欢活动累计次数 +10
-				//LimitRankService.getInstance().put(user.getUid(),user.getName(),10);
+				LimitRankService.getInstance().put(user.getUid(),user.getName(),10,4);
 
 				break;
 			}

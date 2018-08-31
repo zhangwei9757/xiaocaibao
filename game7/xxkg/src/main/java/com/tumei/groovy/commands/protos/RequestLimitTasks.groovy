@@ -42,15 +42,17 @@ class RequestLimitTasks extends BaseProtocol {
         public List<NameValue> ranks = new ArrayList<>()
 
         // 活动开始时间 秒
-        public int begins
+        public long begins
         // 活动结束时间 秒
-        public int ends
+        public long ends
         // 活动次数达标后的奖励，客户端可以不用再查表了
         public int[] rewards
         // 对应位置是否领取 0：未领取 1：已领取
         public int[] receive = new int[5]
 
         public String result = ""
+        // 活动标识
+        public int flag
     }
 
     @Override
@@ -71,6 +73,7 @@ class RequestLimitTasks extends BaseProtocol {
             //rci.rewards = lrs.rewards
             rci.receive = lrs.getRewardFlag(user.uid)
             rci.ranks = lrs.getRanks(user.uid)
+            rci.flag = lrs.flag
         }
 
         user.send(rci)

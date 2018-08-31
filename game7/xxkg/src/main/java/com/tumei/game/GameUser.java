@@ -555,10 +555,6 @@ public class GameUser extends WebSocketUser {
         if (consum < 0) {
             return -1;
         }
-        // 活力狂欢期间，每使用活力就记录次数
-        if (consum > 0 && key == Defs.活力) {
-            // LimitRankService.getInstance().put(uid, name, consum);
-        }
 
         int v = (int) consum;
 

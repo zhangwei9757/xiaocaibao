@@ -77,7 +77,7 @@ public class LimitRankService {
     private boolean inited = false;
 
     // 活动标识序号，对应节日列表中的flag
-    private int flag = -1;
+    public int flag = -1;
 
     /**
      * 初始化
@@ -89,7 +89,7 @@ public class LimitRankService {
         List<LimitRankBean> lrbs = limitRankBeanRepository.findAll();
         // 先根据排名进行一次排序，然后再插入，否则相同分数的先后顺序可能会被毁掉
         lrbs.sort((a, b) -> {
-            if (a.getRank() < b.getRank()) {
+            if (a.getTs() < b.getTs()) {
                 return -1;
             }
             return 1;
@@ -244,6 +244,7 @@ public class LimitRankService {
                     sb.append(sr.reward1[1]);
                     // 排名达标，且次数达标，确实有奖励可拿，才可领取额外奖励
                     if (sr.limit > 0 && orb.getCount() >= sr.limit) {
+                        sb.append(",");
                         sb.append(sr.reward2[0]);
                         sb.append(",");
                         sb.append(sr.reward2[1]);
@@ -268,6 +269,7 @@ public class LimitRankService {
                     sb.append(vc.reward1[1]);
 
                     if (vc.limit > 0 && vlrb.getCount() >= vc.limit) {
+                        sb.append(",");
                         sb.append(vc.reward2[0]);
                         sb.append(",");
                         sb.append(vc.reward2[1]);
@@ -292,6 +294,7 @@ public class LimitRankService {
                     sb.append(sc.reward1[1]);
 
                     if (sc.limit > 0 && srb.getCount() >= sc.limit) {
+                        sb.append(",");
                         sb.append(sc.reward2[0]);
                         sb.append(",");
                         sb.append(sc.reward2[1]);
@@ -352,12 +355,15 @@ public class LimitRankService {
      * @param name
      * @param val
      */
-    public synchronized void put(long uid, String name, long val) {
+    public synchronized void put(long uid, String name, long val, int activity) {
         long now = System.currentTimeMillis() / 1000;
         if (now < begin || now > end) {
             return;
         }
-
+        // 活动标识与activity一致，参加对应活动
+        if (flag != activity) {
+            return;
+        }
         LimitRankBean orb = users.getOrDefault(uid, null);
         if (orb == null) {
             orb = new LimitRankBean(uid);
@@ -370,9 +376,8 @@ public class LimitRankService {
         }
 
         addScore(uid, orb.getCount() + val);
-        int r = rank(uid);
-
-        orb.setRank(r);
+        // 为了确保排位唯一性，使用时间戳
+        orb.setTs(System.currentTimeMillis());
         changes.add(uid);
     }
 

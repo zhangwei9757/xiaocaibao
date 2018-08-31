@@ -83,7 +83,9 @@ class RequestWarStart extends BaseProtocol {
         PackBean pb = DaoGame.instance.findPack(user.uid)
         int spirit = pb.flushSpirit(0)
         if (spirit >= mc.cost) {
-            user.payItem(Defs.活力, mc.cost, "开启战争学院任务")
+            // user.payItem(Defs.活力, mc.cost, "开启战争学院任务")
+            // 修改使用活力函数
+            pb.flushSpirit(-mc.cost)
             wt.complete = now + mc.timeneed
             rci.complete = wt.complete
         } else {

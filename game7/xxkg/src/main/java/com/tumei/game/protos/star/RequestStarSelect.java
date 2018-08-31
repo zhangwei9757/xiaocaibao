@@ -68,7 +68,9 @@ public class RequestStarSelect extends BaseProtocol {
 		StarConf sc = Readonly.getInstance().findStars().get(index - 1);
 		PackBean pb = user.getDao().findPack(user.getUid());
 		int spirit = sc.cost[mode][1];
-		if (!pb.contains(活力, spirit)) {
+
+		int currentSpirit = pb.flushSpirit(0);
+		if (currentSpirit < spirit) {
 			rsi.result = ErrCode.活力不足.name();
 			user.send(rsi);
 			return;
@@ -80,7 +82,9 @@ public class RequestStarSelect extends BaseProtocol {
 			return;
 		}
 
-		user.payItem(活力, spirit, "活力兑换");
+		//user.payItem(活力, spirit, "活力兑换");
+		// 修改使用活力函数
+		pb.flushSpirit(-spirit);
 		rsi.stars = sb.getStars();
 		rsi.sp = spirit;
 

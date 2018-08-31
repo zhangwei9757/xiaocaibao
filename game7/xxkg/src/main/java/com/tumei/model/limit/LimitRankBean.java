@@ -29,7 +29,7 @@ public class LimitRankBean {
     // 当前活动的总次数, 两种活动均可以使用这个字段进行记录
     private long count;
 
-    private int rank;
+    private long ts;
 
     /**
      * 已经领取的个人奖励次数标记

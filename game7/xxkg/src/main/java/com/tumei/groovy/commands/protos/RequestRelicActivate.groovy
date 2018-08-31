@@ -100,7 +100,7 @@ class RequestRelicActivate extends BaseProtocol {
                         user.payItem(Defs.钻石, need, "钻石炼化")
 
                         // 钻石注灵，记录一次次数
-                        LimitRankService.instance.put(user.uid,user.name,1)
+                        LimitRankService.instance.put(user.uid,user.name,1,2)
                     }
                 }
             }

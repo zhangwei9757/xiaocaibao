@@ -6,6 +6,7 @@ import com.tumei.common.DaoGame;
 import com.tumei.common.Readonly;
 import com.tumei.common.utils.Defs;
 import com.tumei.game.GameServer;
+import com.tumei.game.services.LimitRankService;
 import com.tumei.game.services.RankService;
 import com.tumei.game.services.RobService;
 import com.tumei.model.beans.EquipBean;
@@ -149,6 +150,11 @@ public class PackBean {
 			items.put(活力, spirit);
 			if (count > 0) {
 				lastspirit = now - (diff % gc.getSp_recover_interval());
+			}
+			// 活力值扣除后，最终活力为正值表示使用成功
+			if (_extra < 0){
+				String name = DaoGame.getInstance().findById(id);
+				LimitRankService.getInstance().put(id, name, -_extra,3);
 			}
 		}
 		return spirit;

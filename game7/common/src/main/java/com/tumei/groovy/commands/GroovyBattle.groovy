@@ -47,7 +47,7 @@ class GroovyBattle implements IBattle {
 
     private int weak = 0
 
-    private int[][] relics = new RelicStruct[2][];
+    private int[][] relics = new int[2][]
 
     private List<Roler> left = new ArrayList<>()
 
@@ -176,6 +176,7 @@ class GroovyBattle implements IBattle {
      * @param weak 虚弱指数
      */
     void build(int side, HerosStruct herosBean) {
+        sim.reset()
         List<SimpleHero> shs
         List<Roler> his
         if (side == 1) {
@@ -3461,11 +3462,7 @@ class Roler {
             sect = battle.sim.sects[this.sect - 1]
         }
 
-        if (side == 1) {
-            self = battle.sim.left[index]
-        } else {
-            self = battle.sim.right[index]
-        }
+        self = battle.sim.single[index]
 
         // +++ 处理全体的
         // 全体数值,和百分比都堆积到个人数值和百分比上
@@ -3482,23 +3479,18 @@ class Roler {
                     break
                 case 63:
                     self.merge(43, val, { a, b -> a + b })
-//                    role.crit += val
                     break
                 case 64:
                     self.merge(44, val, { a, b -> a + b })
-//                    role.aim += val
                     break
                 case 65:
                     self.merge(45, val, { a, b -> a + b })
-//                    role.dodge += val
                     break
                 case 66:
                     self.merge(46, val, { a, b -> a + b })
-//                    role.anti_crit += val
                     break
                 case 67:
                     self.merge(47, val, { a, b -> a + b })
-//                    role.anger += val
                     break
                 case 68:// 全体百分比
                     self.merge(48, val, { a, b -> a + b })
@@ -3511,15 +3503,12 @@ class Roler {
                     self.merge(58, val, { a, b -> a + b })
                     break
                 case 71:
-//                    en_harm += val
                     self.merge(51, val, { a, b -> a + b })
                     break
                 case 72:
-//                    over_harm += val
                     self.merge(52, val, { a, b -> a + b })
                     break
                 case 73:
-//                    anger_cover += val
                     self.merge(53, val, { a, b -> a + b })
                     break
                 case 75:
@@ -3570,36 +3559,27 @@ class Roler {
             sect.forEach({ key, val ->
                 switch (key) {
                     case 80:
-//                    max_life += val
                         self.merge(40, val, { a, b -> a + b })
                         break
                     case 81:
-//                    attack += val
                         self.merge(41, val, { a, b -> a + b })
                         break
                     case 82:
-//                    defs += val
-//                    mdef += val
                         self.merge(42, val, { a, b -> a + b })
                         break
                     case 83:
-//                    crit += val
                         self.merge(43, val, { a, b -> a + b })
                         break
                     case 84:
-//                    aim += val
                         self.merge(44, val, { a, b -> a + b })
                         break
                     case 85:
-//                    dodge += val
                         self.merge(45, val, { a, b -> a + b })
                         break
                     case 86:
-//                    anti_crit += val
                         self.merge(46, val, { a, b -> a + b })
                         break
                     case 87:
-//                    anger += val
                         self.merge(47, val, { a, b -> a + b })
                         break
                     case 88:// 全体百分比
@@ -3613,15 +3593,12 @@ class Roler {
                         self.merge(58, val, { a, b -> a + b })
                         break
                     case 91:
-//                    en_harm += val
                         self.merge(51, val, { a, b -> a + b })
                         break
                     case 92:
-//                    over_harm -= val
                         self.merge(52, val, { a, b -> a + b })
                         break
                     case 93:
-//                    anger_cover += val
                         self.merge(53, val, { a, b -> a + b })
                         break
                     case 181:
@@ -4865,18 +4842,24 @@ class SimStruct {
     Map<Integer, Double>[] sects = new HashMap<>[4]
 
     // 管理左边阵营的单人特效
-    Map<Integer, Double>[] left = new HashMap<>[6]
-
-    // 管理右边阵营的单人特效
-    Map<Integer, Double>[] right = new HashMap<>[6]
+    Map<Integer, Double>[] single = new HashMap<>[6]
 
     SimStruct() {
         for (int i = 0; i < 4; ++i) {
             sects[i] = new HashMap<>()
         }
         for (int i = 0; i < 6; ++i) {
-            left[i] = new HashMap<>()
-            right[i] = new HashMap<>()
+            single[i] = new HashMap<>()
+        }
+    }
+
+    void reset() {
+        all.clear()
+        for (int i = 0; i < 4; ++i) {
+            sects[i].clear()
+        }
+        for (int i = 0; i < 6; ++i) {
+            single[i].clear()
         }
     }
 
@@ -4897,12 +4880,7 @@ class SimStruct {
             sect = sects[sex - 1]
         }
         // 自身
-        Map<Integer, Double> self = null
-        if (side == 1) {
-            self = left[idx]
-        } else {
-            self = right[idx]
-        }
+        Map<Integer, Double> self = single[idx]
 
         switch (key) {
         // 个人部分
