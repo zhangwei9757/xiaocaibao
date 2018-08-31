@@ -25,8 +25,9 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     private WebSecurityConfig webSecurityConfig;
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
-//    private String common = "ROLE_ANONYMOUS";
+
     private String common = "ROLE_ADMIN";
+
     private Map<String, String> urlRoleMap = new HashMap<>();
 
     public void update(String url, String role) {
@@ -37,12 +38,12 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         urlRoleMap.remove(url);
     }
 
-
     @PostConstruct
     public void init() {
         List<WebSecurityConf> urlsByMode = webSecurityConfig.getUrlsByMode(webSecurityConfig.mode);
         for (WebSecurityConf wsc : urlsByMode) {
-            if (gameConfig.getReal() == 1) {
+            // 0：表示开发 1：表示生产
+            if (gameConfig.getReal() == 0) {
                 // 开发环境赋值
                 if (!Strings.isNullOrEmpty(wsc.devRole)) {
 
@@ -83,14 +84,11 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         FilterInvocation fi = (FilterInvocation) object;
         String url = fi.getRequestUrl();
 
-        if (url.startsWith("/swagger-ui.html")) {
-            int a = 1;
-        }
-            for (Map.Entry<String, String> entry : urlRoleMap.entrySet()) {
-                if (antPathMatcher.match(entry.getKey(), url)) {
-                    return SecurityConfig.createList(entry.getValue());
-                }
+        for (Map.Entry<String, String> entry : urlRoleMap.entrySet()) {
+            if (antPathMatcher.match(entry.getKey(), url)) {
+                return SecurityConfig.createList(entry.getValue());
             }
+        }
 
 //        String httpMethod = fi.getRequest().getMethod();
 

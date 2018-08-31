@@ -25,6 +25,13 @@ public class WebSecurityConf{
         this.role = role;
     }
 
+    public WebSecurityConf(String url, String mode, String role, String devRole) {
+        this.url = url;
+        this.mode = mode;
+        this.role = role;
+        this.devRole = devRole;
+    }
+
     public WebSecurityConf(String mode) {
         this.mode = mode;
     }

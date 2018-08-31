@@ -157,7 +157,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        } else {
 //            rg = rg.anyRequest().hasAnyAuthority("ADMIN");
 //        }
-        rg.antMatchers().permitAll();
+        rg.anyRequest().permitAll();
         // 循环完以后启动FilterSecurityInterceptor配置
         // SecurityMetadataSource用来动态获取url权限配置
         // AccessDecisionManager来进行权限判断

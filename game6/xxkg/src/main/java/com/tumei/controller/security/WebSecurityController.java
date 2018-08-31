@@ -41,7 +41,7 @@ public class WebSecurityController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "url", value = "指定路径", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "mode", value = "指定模块", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query")
     })
     public String insert(String url, String mode, String role) throws Exception {
         if (checkUrl(url)) {
@@ -57,7 +57,7 @@ public class WebSecurityController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "url", value = "指定路径", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "mode", value = "指定模块", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query")
     })
     public String delete(String url, String mode, String role) throws Exception {
         if (checkUrl(url)) {
@@ -73,7 +73,7 @@ public class WebSecurityController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "url", value = "指定路径", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "mode", value = "指定模块", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "role", value = "指定生产环境角色权限", required = false, dataType = "String", paramType = "query")
     })
     public String update(String url, String mode, String role) throws Exception {
         if (checkUrl(url)) {
@@ -86,6 +86,9 @@ public class WebSecurityController {
 
     // 检查路径是不是以“/”开头
     public boolean checkUrl(String url) {
+        if (url.equalsIgnoreCase("*")) { //  * 直接返回
+            return true;
+        }
         if (url == null || !StringUtils.startsWithIgnoreCase(url,"/")) {
             // 当参数不合法时，返回true
             return true;

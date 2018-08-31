@@ -74,17 +74,8 @@
       <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="45" selection-end-line="160" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/resources/bootstrap.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="18" />
+            <state relative-caret-position="447">
+              <caret line="159" column="36" selection-start-line="159" selection-start-column="36" selection-end-line="159" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -101,30 +92,14 @@
       <file leaf-file-name="MyFilterInvocationSecurityMetadataSource.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AntPathMatcher.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/4.3.8.RELEASE/spring-core-4.3.8.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2826">
-              <caret line="190" selection-start-line="190" selection-end-line="190" />
+            <state relative-caret-position="-291">
+              <caret line="60" column="17" lean-forward="true" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="17" />
               <folding>
-                <element signature="e#6174#6175#0" expanded="true" />
-                <element signature="e#6222#6223#0" expanded="true" />
+                <element signature="e#3509#3510#0" expanded="true" />
+                <element signature="e#3536#3537#0" expanded="true" />
+                <element signature="e#3597#3598#0" expanded="true" />
+                <element signature="e#3666#3667#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Xxkg.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -132,8 +107,8 @@
       <file leaf-file-name="WebSecurityConf.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+            <state relative-caret-position="450">
+              <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -141,8 +116,8 @@
       <file leaf-file-name="WebSecurityController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1548">
-              <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
+            <state relative-caret-position="256">
+              <caret line="43" column="126" lean-forward="true" selection-start-line="43" selection-start-column="126" selection-end-line="43" selection-end-column="126" />
             </state>
           </provider>
         </entry>
@@ -244,15 +219,15 @@
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/SecurityController.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyWebAppInitializer.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MySecurityService.java" />
-        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/Readonly.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyInvocationSecurityMetadataSourceService.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyAccessDecisionManager.java" />
-        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java" />
-        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/resources/bootstrap.yml" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java" />
       </list>
     </option>
   </component>
@@ -1211,6 +1186,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3150838" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.5841321" weight="0.33115467" />
       <window_info id="Palette&#9;" order="6" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="10" />
@@ -1221,15 +1197,14 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info id="Capture Tool" order="2" />
       <window_info anchor="right" id="Designer" order="4" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4945227" visible="true" weight="0.10127932" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4945227" visible="true" weight="0.1716418" />
       <window_info anchor="bottom" id="Problems" order="11" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="5" sideWeight="0.5054773" side_tool="true" weight="0.19669509" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.45740148" weight="0.38017428" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.5841321" weight="0.33115467" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.45740148" visible="true" weight="0.38017428" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" x="738" y="435" width="444" height="169" id="Documentation" order="7" type="FLOATING" />
@@ -1339,7 +1314,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="1546" />
+      <option name="time" value="1553" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1590,13 +1565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/security/spring-security-core/4.1.4.RELEASE/spring-security-core-4.1.4.RELEASE.jar!/org/springframework/security/access/SecurityConfig.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="730">
@@ -1632,21 +1600,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/4.3.8.RELEASE/spring-core-4.3.8.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2826">
+        <state relative-caret-position="504">
           <caret line="190" selection-start-line="190" selection-end-line="190" />
           <folding>
             <element signature="e#6174#6175#0" expanded="true" />
             <element signature="e#6222#6223#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1548">
-          <caret line="96" column="33" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1657,17 +1625,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityConf.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/Xxkg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="450">
+          <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
         </state>
       </provider>
     </entry>
@@ -1678,10 +1639,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/WebSecurityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="43" column="126" lean-forward="true" selection-start-line="43" selection-start-column="126" selection-end-line="43" selection-end-column="126" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/security/MyFilterInvocationSecurityMetadataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-291">
+          <caret line="60" column="17" lean-forward="true" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="17" />
+          <folding>
+            <element signature="e#3509#3510#0" expanded="true" />
+            <element signature="e#3536#3537#0" expanded="true" />
+            <element signature="e#3597#3598#0" expanded="true" />
+            <element signature="e#3666#3667#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="45" selection-end-line="160" selection-end-column="45" />
+        <state relative-caret-position="447">
+          <caret line="159" column="36" selection-start-line="159" selection-start-column="36" selection-end-line="159" selection-end-column="36" />
         </state>
       </provider>
     </entry>
