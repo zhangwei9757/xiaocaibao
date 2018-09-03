@@ -16,6 +16,9 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
+import static com.tumei.common.utils.Defs.center_prefix;
+import static com.tumei.common.utils.Defs.xxkg_prefix;
+
 /**
  * Created by Administrator on 2016/12/28 0028.
  */
@@ -28,10 +31,6 @@ public class RemoteService extends BaseRemoteService {
 	public static RemoteService getInstance() {
 		return instance;
 	}
-
-	private static final String center_prefix = "http://Center";
-
-	private static final String xxkg_prefix = "http://xxkg";
 
 	private HttpHeaders headers;
 

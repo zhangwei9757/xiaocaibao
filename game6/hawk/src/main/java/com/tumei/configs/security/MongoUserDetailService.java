@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Administrator on 2017/1/20 0020.
  */
 public class MongoUserDetailService implements UserDetailsService {
-	private Log log = LogFactory.getLog(MongoUserDetailService.class);
+	private static final Log log = LogFactory.getLog(MongoUserDetailService.class);
 
 	@Autowired
 	private AccountBeanRepository accountBeanRepository;

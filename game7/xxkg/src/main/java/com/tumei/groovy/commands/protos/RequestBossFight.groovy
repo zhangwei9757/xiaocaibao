@@ -63,7 +63,13 @@ class RequestBossFight extends BaseProtocol {
         HerosStruct hss = hsb.createHerosStruct()
 
         BossConf bc = Readonly.instance.getBossConf(boss.level)
-        for (int i = 0; i < boss.courageIdx; ++i) {
+
+        int bmax = boss.courageIdx
+        if (bmax > 5) {
+            bmax = 5
+        }
+
+        for (int i = 0; i < bmax; ++i) {
             int idx = boss.courage[i]
             int key = bc.upatt[idx*2]
             int val = bc.upatt[idx*2+1]

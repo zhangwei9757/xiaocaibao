@@ -16,7 +16,7 @@ class AdminController {
 
     @RequestMapping(value = "/logon_admin", method = RequestMethod.GET)
     String logon_admin(Model model) {
-        return "logon";
+        return "logon"
     }
 
 }

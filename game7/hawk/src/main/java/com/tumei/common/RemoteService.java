@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+import static com.tumei.common.utils.Defs.guild_prefix;
+import static com.tumei.common.utils.Defs.xxkg_prefix;
+
 /**
  * Created by Administrator on 2016/12/28 0028.
  */
@@ -26,10 +29,6 @@ public class RemoteService extends BaseRemoteService {
 	public static RemoteService getInstance() {
 		return _instance;
 	}
-
-	private static final String xxkg_prefix = "http://xxkg";
-
-	private static final String guild_prefix = "http://Guild";
 
 	private HttpHeaders headers;
 

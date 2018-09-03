@@ -104,8 +104,8 @@ public class SummonBean {
 	 */
 	public void addLucky(int _lucky) {
 		lucky += _lucky;
-		if (lucky > 1000) {
-			lucky = 1000;
+		if (lucky > 280) {
+			lucky = 280;
 		}
 	}
 

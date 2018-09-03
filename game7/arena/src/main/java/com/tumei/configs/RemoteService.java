@@ -15,15 +15,14 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+import static com.tumei.common.utils.Defs.xxkg_prefix;
+
 /**
  * Created by Administrator on 2016/12/28 0028.
  */
 @Service
 public class RemoteService extends BaseRemoteService {
 	private static final Log log = LogFactory.getLog(RemoteService.class);
-
-	private static final String xxkg_prefix = "http://xxkg";
-
 
 	@Autowired
 	private ServiceRouter sr;

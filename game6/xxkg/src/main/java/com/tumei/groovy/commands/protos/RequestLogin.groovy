@@ -117,11 +117,6 @@ class RequestLogin extends BaseProtocol {
 
             if (TimeUtil.getDay(rb.getCreatetime()) == today) { // new guy
                 user.SetOldUser(false)
-                if (uid % 1000 < 3) {
-                    rl.result = "本服务器不再支持注册新的角色"
-                    user.send(rl)
-                    return
-                }
             }
             else { // oldguy
                 user.SetOldUser(true)

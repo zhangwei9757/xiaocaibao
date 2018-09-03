@@ -80,7 +80,7 @@ public class BossBean {
 	 * @return
 	 */
 	public boolean canCourage() {
-		return (courageIdx < 6);
+		return (courageIdx < 5);
 	}
 
 	/**
@@ -88,6 +88,7 @@ public class BossBean {
 	 */
 	public void doCourage() {
 		if (courageIdx >= 6) {
+		    courageIdx = 5;
 			return;
 		}
 		++courageIdx;

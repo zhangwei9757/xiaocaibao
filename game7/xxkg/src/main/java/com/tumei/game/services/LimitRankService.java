@@ -177,8 +177,9 @@ public class LimitRankService {
                 // 开启时间超过10天可进行对应活动
                 long tmp = localService.getOpenDate().getTime();
                 tmp = LocalDateTime.ofEpochSecond(tmp / 1000, 0, ZoneOffset.ofHours(8)).toEpochSecond(ZoneOffset.ofHours(8));
-                long least = tmp + 10 * 1000 * 24 * 3600;
-                if (System.currentTimeMillis() >= least) {
+                long least = (tmp + 10L * 24 * 3600) * 1000;
+                long predict = System.currentTimeMillis();
+                if (predict >= least) {
                     thisFc = fest;
                     // 如果存在活动就记录类型
                     flag = fest.flag;
@@ -328,7 +329,7 @@ public class LimitRankService {
         }
 
         // 20多分钟进行一次保存
-        if (++cum >= 10) {
+        if (++cum >= 1000) {
             save();
             cum = 0;
         }

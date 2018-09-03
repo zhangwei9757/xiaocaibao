@@ -388,11 +388,13 @@ public class RequestSummon extends BaseProtocol {
 			}
 			case 6:
 			{
-				if (sb.getLucky() >= 1000) {
+				if (sb.getLucky() >= 280) {
 					sb.setLucky(0);
 					sb.setLuckyCount(sb.getLuckyCount() + 1);
 					HeroBean hb = pb.addHero(this.hero, "幸运");
 					rs.awards.add(new AwardBean(hb.getId(), 1, hb.getHid()));
+				} else {
+				    rs.result = "幸运值不足";
 				}
 
 				break;

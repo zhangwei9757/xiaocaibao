@@ -28,6 +28,10 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tumei.common.utils.Defs.center_prefix;
+import static com.tumei.common.utils.Defs.guild_prefix;
+import static com.tumei.common.utils.Defs.arena_prefix;
+
 /**
  * Created by Administrator on 2016/12/28 0028.
  * <p>
@@ -43,11 +47,6 @@ public class RemoteService extends BaseRemoteService {
         return _instance;
     }
 
-    private static final String prefix = "http://Arena";
-
-    private static final String guild_prefix = "http://Guild";
-
-    private static final String center_prefix = "http://Center";
 
     private HttpHeaders headers;
 
@@ -450,7 +449,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public void arenaSubmitInfo(ArenaRoleDto dto) {
         try {
-            String url = prefix + serviceRouter.chooseArena(dto.uid) + "/submitInfo";
+            String url = arena_prefix + serviceRouter.chooseArena(dto.uid) + "/submitInfo";
             String rtn = restTemplate.postForEntity(url, dto, String.class).getBody();
             if (!Strings.isNullOrEmpty(rtn)) {
                 log.error("上传跨服竞技场玩家信息失败:" + rtn);
@@ -468,7 +467,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public ArenaInfo arenaGetInfo(long uid) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/getInfo?uid=" + uid;
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/getInfo?uid=" + uid;
             return restTemplate.getForEntity(url, ArenaInfo.class).getBody();
         } catch (Exception ex) {
             log.error("上传跨服竞技场玩家信息失败.");
@@ -484,7 +483,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public ArenaFightResult arenaFight(long uid, int peer) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/fight?uid={uid}&peer={peer}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/fight?uid={uid}&peer={peer}";
             return restTemplate.getForEntity(url, ArenaFightResult.class, uid, peer).getBody();
         } catch (Exception ex) {
             log.error("跨服竞技场维护中.");
@@ -500,7 +499,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public LadderInfoDto arenaLadder(long uid) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/ladder?uid={uid}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/ladder?uid={uid}";
             return restTemplate.getForEntity(url, LadderInfoDto.class, uid).getBody();
         } catch (Exception ex) {
             log.error("跨服竞技场维护中.");
@@ -516,7 +515,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public int arenaChooseSlot(long uid, int slot) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/chooseSlot?uid={uid}&slot={slot}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/chooseSlot?uid={uid}&slot={slot}";
             return restTemplate.getForEntity(url, Integer.class, uid, slot).getBody();
         } catch (Exception ex) {
             log.error("跨服竞技场维护中.");
@@ -532,7 +531,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public LadderHonorDto arenaHonor(long uid) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/getHonor?uid={uid}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/getHonor?uid={uid}";
             return restTemplate.getForEntity(url, LadderHonorDto.class, uid).getBody();
         } catch (Exception ex) {
             log.error("arenaHonor error:" + ex.getMessage());
@@ -542,7 +541,7 @@ public class RemoteService extends BaseRemoteService {
 
     public List<LadderVideoDto> arenaVideos(long uid) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/getVideos?uid={uid}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/getVideos?uid={uid}";
             return restTemplate.getForEntity(url, ArrayList.class, uid).getBody();
         } catch (Exception ex) {
             log.error("arenaVideos error:" + ex.getMessage());
@@ -559,7 +558,7 @@ public class RemoteService extends BaseRemoteService {
      */
     public LadderFightResult arenaLadderFight(long uid, long pid, int group, int index) {
         try {
-            String url = prefix + serviceRouter.chooseArena(uid) + "/fightLadder?uid={uid}&pid={pid}&group={group}&index={index}";
+            String url = arena_prefix + serviceRouter.chooseArena(uid) + "/fightLadder?uid={uid}&pid={pid}&group={group}&index={index}";
             return restTemplate.getForEntity(url, LadderFightResult.class, uid, pid, group, index).getBody();
         } catch (Exception ex) {
             log.error("arenaLadderFight error:" + ex.getMessage());

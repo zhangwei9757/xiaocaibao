@@ -4,6 +4,16 @@ package com.tumei.common.utils;
  * Created by Administrator on 2017/3/8 0008.
  */
 public class Defs {
+
+	public static final String arena_prefix = "http://arena";
+
+	public static final String guild_prefix = "http://guild";
+
+	public static final String center_prefix = "http://center";
+
+	public static final String xxkg_prefix = "http://xxkg";
+
+
 	public static final int 白色 = 0;
 	public static final int 绿色 = 1;
 	public static final int 蓝色 = 2;
