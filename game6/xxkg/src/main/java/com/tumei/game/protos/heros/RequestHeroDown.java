@@ -1,6 +1,7 @@
 package com.tumei.game.protos.heros;
 
 import com.tumei.common.Readonly;
+import com.tumei.common.utils.Defs;
 import com.tumei.modelconf.*;
 import com.tumei.websocket.SessionUser;
 import com.tumei.game.GameUser;
@@ -82,7 +83,7 @@ public class RequestHeroDown extends BaseProtocol {
 			return;
 		}
 
-		if (!pb.contains(钻石, 50)) {
+		if (!pb.contains(钻石, Defs.英雄重生)) {
 			rci.result = ErrCode.钻石不足.name();
 			return;
 		}

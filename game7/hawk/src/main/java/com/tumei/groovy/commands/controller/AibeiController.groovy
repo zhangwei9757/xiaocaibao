@@ -179,7 +179,7 @@ class AibeiController {
                         receiptBean.channel = 800
                         receiptBean.bundle = fields[2]
                         long accid = receiptBean.uid / 1000
-                        receiptBean.accid = accid
+                        receiptBean.accid = (int)accid
 
                         try {
                             receiptBean = receiptBeanRepository.insert(receiptBean)

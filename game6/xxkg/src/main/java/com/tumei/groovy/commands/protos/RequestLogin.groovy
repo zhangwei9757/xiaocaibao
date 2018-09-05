@@ -1,7 +1,9 @@
 package com.tumei.groovy.commands.protos
 
+import com.tumei.common.DaoService
 import com.tumei.common.LocalService
 import com.tumei.common.RemoteService
+import com.tumei.common.utils.Defs
 import com.tumei.common.utils.ErrCode
 import com.tumei.common.utils.TimeUtil
 import com.tumei.game.GameServer
@@ -166,6 +168,14 @@ class RequestLogin extends BaseProtocol {
         user.updateLastesLogonServer(rb)
 //        user.submitArenaInfo()
         user.StaUserLog()
+
+        // 如果是bt刷新个人累计充值状态
+        if (Defs.ISBT) {
+            ChargeBean cb = DaoService.getInstance().findCharge(uid);
+            if (cb != null) {
+                cb.flushChargeForMail();
+            }
+        }
     }
 }
 

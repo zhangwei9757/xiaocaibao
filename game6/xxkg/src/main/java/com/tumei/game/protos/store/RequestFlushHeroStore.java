@@ -1,6 +1,7 @@
 package com.tumei.game.protos.store;
 
 import com.tumei.common.DaoService;
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.StoreBean;
 import com.tumei.websocket.SessionUser;
@@ -62,12 +63,12 @@ public class RequestFlushHeroStore extends BaseProtocol {
 
 		PackBean pb = user.getDao().findPack(user.getUid());
 		if (!pb.contains(刷新令, 1)) {
-			if (!pb.contains(钻石, 20)) {
+			if (!pb.contains(钻石, Defs.英雄商店刷新)) {
 				rci.result = "没有足够的刷新令和钻石";
 				user.send(rci);
 				return;
 			}
-			user.payItem(钻石, 20, "刷新");
+			user.payItem(钻石, Defs.英雄商店刷新, "刷新");
 		} else {
 			user.payItem(刷新令, 1, "刷新");
 		}

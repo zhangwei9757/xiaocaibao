@@ -112,8 +112,8 @@ public class PackBean {
 		pb.setId(id);
 		pb.lastspirit = System.currentTimeMillis() / 1000;
 
-		pb.addItem(金币, 5000, "初始");
-//		pb.addItem(钻石, 0, "初始发放");
+		pb.addItem(金币, Defs.初始化金币, "初始");
+		pb.addItem(钻石, Defs.初始化钻石, "初始发放");
 
 		pb.addItem(活力, 30, "初始");
 		pb.addItem(突破石, 50, "初始");

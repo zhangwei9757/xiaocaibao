@@ -1,5 +1,6 @@
 package com.tumei.configs.security;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @Service
+@Scope(value = "singleton")
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 
     // decide 方法是判定是否拥有权限的决策方法，
@@ -27,14 +29,15 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
             throws AccessDeniedException, InsufficientAuthenticationException {
         //这段代码其实不需要,因为spring-security-core-4.1.4.RELEASE-sources.jar!/org/springframework/security/access/intercept/AbstractSecurityInterceptor.java第215行判断提前返回了,不会进入decide方法
         if (CollectionUtils.isEmpty(configAttributes)) {
-            throw new AccessDeniedException("not allow");
+            return;
         }
+
         Iterator<ConfigAttribute> ite = configAttributes.iterator();
         while (ite.hasNext()) {
             ConfigAttribute ca = ite.next();
             String needRole = ca.getAttribute();
             for (GrantedAuthority ga : authentication.getAuthorities()) {
-                if(ga.getAuthority().equals(needRole)){
+                if (ga.getAuthority().equals(needRole)) {
                     //匹配到有对应角色,则允许通过
                     return;
                 }

@@ -1,6 +1,7 @@
 package com.tumei.game.protos.activity;
 
 import com.tumei.common.LocalService;
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.ActivityBean;
 import com.tumei.model.PackBean;
@@ -30,8 +31,8 @@ public class RequestFundBuy extends BaseProtocol {
 		ReturnFundBuy rl = new ReturnFundBuy();
 		rl.seq = seq;
 
-		if (user.getVip() < 3) {
-			rl.result = "VIP3及以上玩家才能购买基金";
+		if (user.getVip() < Defs.开服基金购买等级或英雄福利购买等级) {
+			rl.result = String.format("VIP%d及以上玩家才能购买基金", Defs.开服基金购买等级或英雄福利购买等级);
 			user.send(rl);
 			return;
 		}
@@ -44,10 +45,10 @@ public class RequestFundBuy extends BaseProtocol {
 		}
 
 		PackBean pb = user.getDao().findPack(user.getUid());
-		if (!pb.contains(钻石, 1000)) {
+		if (!pb.contains(钻石, Defs.开服基金购买)) {
 			rl.result = "钻石不足";
 		} else {
-			user.payItem(钻石, 1000, "开服基金");
+			user.payItem(钻石, Defs.开服基金购买, "开服基金");
 			ab.setFund(1);
 			LocalService.getInstance().incFundCount();
 		}

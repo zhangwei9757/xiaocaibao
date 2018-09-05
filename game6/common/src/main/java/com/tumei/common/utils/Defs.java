@@ -85,6 +85,65 @@ public class Defs {
 	public static final String CENTER_PREFIX = "http://Center006";
 	public static final String SIMFIGHT_PREFIX = "http://SimFight006";
 	public static final String XXKG_PREFIX = "http://xxkg6-";
+	public static final boolean ISBT = true;
+
+	// 正常
+	//public static final int 英雄转化 = 500;
+	//public static final int 英雄重生 = 50;
+	//public static final int 英雄刷新 = 100;
+	//public static final int 英雄商店刷新 = 20;
+	//public static final int 中级召唤单抽 = 300;
+	//public static final int 中级召唤十连 = 2800;
+	//public static final int 高级召唤单抽 = 268;
+	//public static final int 高级召唤十连 = 2500;
+	//public static final int 夺宝奇兵 = 60;
+	//public static final int 神器商店刷新 = 50;
+	//public static final int 神器召唤 = 480;
+	//public static final int 开服基金购买 = 1000;
+	//public static final int 白银免战 = 10;
+	//public static final int 黄金免战 = 30;
+	//public static final int 符文副本入场费1 = 2000000;
+	//public static final int 符文副本入场费2 = 50;
+	//public static final int 符文副本入场费3 = 200;
+	//public static final int 重生宝物 = 50;
+	//public static final int 幸运值 = 1000;
+	//public static final int 开服基金购买等级或英雄福利购买等级 = 3;
+	//public static final int 英雄福利购买 = 888;
+	//public static final int 初始化钻石 = 0;
+	//public static final int 初始化金币 = 5000;
+	//public static final int 初始化VIP = 0;
+	//public static final int 初始化VIPEXP = 0;
+	//public static final int[] li = new int[]{600, 3000, 6800, 19800, 32800, 64800};
+	//public static final int 神器召唤五连 = 2180;
+
+	//BT模式
+	public static final int 英雄转换 = 5000;
+	public static final int 英雄重生 = 2500;
+	public static final int 英雄刷新 = 1000;
+	public static final int 英雄商店刷新 = 200;
+	public static final int 中级召唤单抽 = 3000;
+	public static final int 中级召唤十连 = 28000;
+	public static final int 高级召唤单抽 = 5360;
+	public static final int 高级召唤十连 = 50000;
+	public static final int 夺宝奇兵 = 1200;
+	public static final int 神器商店刷新 = 500;
+	public static final int 神器召唤 = 480 * 30;
+	public static final int 开服基金购买 = 1000 * 10;
+	public static final int 白银免战 = 10 * 50;
+	public static final int 黄金免战 = 30 * 50;
+	public static final int 符文副本入场费1 = 2000000;
+	public static final int 符文副本入场费2 = 2500;
+	public static final int 符文副本入场费3 = 7500;
+	public static final int 重生宝物 = 2500;
+	public static final int 幸运值 = 300;
+	public static final int 开服基金购买等级或英雄福利购买等级 = 8;
+	public static final int 英雄福利购买 = 8888;
+	public static final int 初始化钻石 = 88888;
+	public static final int 初始化金币 = 888888;
+	public static final int 初始化VIP = 6;
+	public static final int 初始化VIPEXP = 72000;
+	public static final int[] li = new int[]{600, 3000, 6800, 19800, 32800, 64800, 158800};
+	public static final int 神器召唤五连 = 2180 * 30;
 
 	public static String getColorString(int grade, String name) {
 		String fm = "%s";

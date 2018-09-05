@@ -3,8 +3,13 @@ package com.tumei.controller
 import com.google.common.base.Strings
 import com.tumei.centermodel.*
 import com.tumei.centermodel.beans.ServerBean
+import com.tumei.centermodel.beans.UserRoleBean
+import com.tumei.common.DaoUtils
 import com.tumei.common.Readonly
 import com.tumei.common.RemoteService
+import com.tumei.common.utils.JsonUtil
+import com.tumei.modelconf.HeroConf
+import com.tumei.modelconf.ItemConf
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
@@ -12,15 +17,22 @@ import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
 
 import javax.servlet.http.HttpServletRequest
+import java.nio.charset.Charset
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * Created by Administrator on 2016/12/16 0016.
@@ -28,65 +40,112 @@ import java.text.SimpleDateFormat
  * 内网服务访问的接口
  */
 class CmdController {
-    private Log log = LogFactory.getLog(this.class);
+    private static final Log log = LogFactory.getLog(this.class)
+
+    @Autowired
+    private DaoUtils dao
 
     @Autowired
     @Qualifier("centerTemplate")
-    private MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate
 
     @Autowired
-    private AccountBeanRepository accountBeanRepository;
+    @Qualifier("confTemplate")
+    private MongoTemplate confTemplate
 
     @Autowired
-    private Readonly readonly;
+    private AccountBeanRepository accountBeanRepository
 
     @Autowired
-    private RemoteService remoteService;
+    private Readonly readonly
+
+    @Autowired
+    private RemoteService remoteService
+
+    static String getBody(HttpServletRequest request) {
+        try {
+            StringBuilder sb = new StringBuilder()
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()))
+            String line
+            while ((line = reader.readLine()) != null) {
+                sb.append(line)
+            }
+            return sb.toString()
+        } catch (Exception ex) {
+
+        }
+        return null
+    }
 
     @ApiOperation(value = "重新加载只读配置: 比如允许的包名")
     @RequestMapping(value = "/cmd/reload", method = RequestMethod.GET)
     @ResponseBody String reload() {
-        readonly.reload();
-        return readonly.debug();
-    }
-
-    class ServerInfo {
-        public int zone;
-        public String url;
-
-        public ServerInfo() {}
-
-        public ServerInfo(int _zone, String _url) {
-            zone = _zone;
-            url = _url;
-        }
+        readonly.reload()
+        return readonly.debug()
     }
 
     @Autowired
-    private ServersBeanRepository serversBeanRepository;
+    private ServersBeanRepository serversBeanRepository
 
     @ApiOperation(value = "查看网页支付活动id")
     @RequestMapping(value = "/cmd/infoWebBuff", method = RequestMethod.GET)
     @ResponseBody String infoWebBuff() {
-        int val = 1000_00;
-        log.info("valu:" + val);
+        int val = 1000_00
+        log.info("valu:" + val)
         return readonly.getWebBuff()
     }
 
 
     @ApiOperation(value = "获取所有Game服务器列表")
-    @RequestMapping(value = "/cmd/getGameServers", method = RequestMethod.GET)
-    public @ResponseBody List<ServerInfo> getGameServers() {
-        List<ServerInfo> servers = new ArrayList<>();
-        List<ServersBean> ssbs = serversBeanRepository.findAll();
-        ServersBean ssb;
-        if (ssbs.size() != 0) {
-            ssb = ssbs.get(0);
-            for (ServerBean sb : ssb.getServers()) {
-                servers.add(new ServerInfo(sb.id, sb.host));
-            }
+    @RequestMapping(value = "/cmd/getServers", method = RequestMethod.GET)
+    public @ResponseBody List<ServerBean> getServers() {
+        return serversBeanRepository.findAll().get(0).servers
+    }
+
+    @ApiOperation(value = "调整服务器,包括开服")
+    @RequestMapping(value = "/cmd/saveServer", method = RequestMethod.POST)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "server", value = "服务器信息", required = true, dataType = "ServerBean", paramType = "parameter"),
+    ])
+    @ResponseBody String saveServer(HttpServletRequest request) {
+        String body = getBody(request)
+        if (body == null) {
+            return "无法获取参数"
         }
-        return servers;
+
+        ServerBean data = JsonUtil.Unmarshal(body, ServerBean.class)
+        if (data == null) {
+            return "无法获取参数"
+        }
+
+        ServersBean ssb = serversBeanRepository.findAll().get(0);
+
+        boolean has = ssb.servers.stream().anyMatch({sb -> sb.id == data.id })
+        if (has) {
+            return "重复的服务器区"
+        }
+
+        ssb.servers.add(data)
+        serversBeanRepository.save(ssb)
+
+        return "成功"
+    }
+
+    @ApiOperation(value = "删除服务器")
+    @RequestMapping(value = "/cmd/delServer", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "oid", value = "服务器信息", required = true, dataType = "String", paramType = "query"),
+    ])
+    @ResponseBody String delServer(HttpServletRequest request) {
+        int oid = Integer.parseInt(request.getParameter("oid"))
+        log.info("准备删除服务器:" + oid)
+
+        ServersBean ssb = serversBeanRepository.findAll().get(0);
+
+        ssb.servers.removeIf({sb -> sb.id == oid })
+        serversBeanRepository.save(ssb)
+
+        return "成功"
     }
 
     @ApiOperation(value = "向xxkg服务器发送通知")
@@ -102,7 +161,7 @@ class CmdController {
         if (zone == 0) {
             zone = -2//serversBeanRepository.count()
         }
-        return remoteService.sendNotifyMsg(zone, msg);
+        return remoteService.sendNotifyMsg(zone, msg)
     }
 
     @ApiOperation(value = "根据玩家的id获取玩家信息，包括帐号名，密码")
@@ -111,12 +170,49 @@ class CmdController {
             @ApiImplicitParam(name = "uid", value = "不包含服务器区号的id", required = true, dataType = "long", paramType = "query")
     ])
     public @ResponseBody String getInfoByUserId(HttpServletRequest request) {
-        long uid = Long.parseLong(request.getParameter("uid"));
-        AccountBean accountBean = accountBeanRepository.findById(uid);
+        long uid = Long.parseLong(request.getParameter("uid"))
+        AccountBean accountBean = accountBeanRepository.findById(uid)
         if (accountBean != null) {
-            return "帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ").";
+            return "帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ")."
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
+    }
+
+    @ApiOperation(value = "根据id查询玩家")
+    @RequestMapping(value = "/cmd/infoAccount", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "uid", value = "不包含服务器区号的id", required = true, dataType = "String", paramType = "query")
+    ])
+    @ResponseBody AccountBean infoAccount(HttpServletRequest request) {
+        String acc = request.getParameter("uid")
+        try {
+            long uid = Long.parseLong(acc)
+            return accountBeanRepository.findById(uid)
+        } catch (Exception ex) {
+            log.error("info Account error:" + ex.message)
+        }
+
+        return accountBeanRepository.findByAccount(acc)
+    }
+
+    @ApiOperation(value = "根据玩家的id 查询到玩家之后绑定到另外一个id")
+    @RequestMapping(value = "/cmd/bindAccount", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "acc", value = "account", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "oid", value = "另外一个id", required = true, dataType = "long", paramType = "query"),
+    ])
+    @ResponseBody String bindAccount(HttpServletRequest request) {
+        String acc = request.getParameter("acc")
+        long oid = Long.parseLong(request.getParameter("oid"))
+
+        AccountBean accountBean = accountBeanRepository.findByAccount(acc)
+        if (accountBean != null) {
+            accountBean.setId(oid)
+            accountBeanRepository.save(accountBean)
+
+            return "绑定成功"
+        }
+        return "该帐号不存在"
     }
 
     @ApiOperation(value = "根据玩家的id 修改密码")
@@ -128,14 +224,14 @@ class CmdController {
     public @ResponseBody String modifyPassword(HttpServletRequest request) {
         long uid = Long.parseLong(request.getParameter("uid"))
         String password = request.getParameter("password")
-        AccountBean accountBean = accountBeanRepository.findById(uid);
+        AccountBean accountBean = accountBeanRepository.findById(uid)
         if (accountBean != null) {
-            accountBean.setPasswd(password);
-            accountBeanRepository.save(accountBean);
+            accountBean.setPasswd(password)
+            accountBeanRepository.save(accountBean)
 
-            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ").";
+            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ")."
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
     }
 
     @ApiOperation(value = "根据玩家的id 修改玩家权限")
@@ -147,14 +243,14 @@ class CmdController {
     public @ResponseBody String modifyAdmin(HttpServletRequest request) {
         long uid = Long.parseLong(request.getParameter("uid"))
         String admin = request.getParameter("admin")
-        AccountBean accountBean = accountBeanRepository.findById(uid);
+        AccountBean accountBean = accountBeanRepository.findById(uid)
         if (accountBean != null) {
-            accountBean.setRole(admin);
-            accountBeanRepository.save(accountBean);
+            accountBean.setRole(admin)
+            accountBeanRepository.save(accountBean)
 
-            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ").";
+            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ")."
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
     }
 
 
@@ -174,35 +270,35 @@ class CmdController {
         int zone = Integer.parseInt(request.getParameter("zone"))
         String source = request.getParameter("source")
 
-        int total = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int total = 0
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
         try {
-            Date s = sdf.parse(begin);
-            Date e = sdf.parse(end);
+            Date s = sdf.parse(begin)
+            Date e = sdf.parse(end)
 
             if (zone < 0) {
                 zone = 0
             }
 
-            Criteria criteria = Criteria.where("time").lt(e).gte(s);
-            criteria.and("sandbox").is(sandbox);
+            Criteria criteria = Criteria.where("time").lt(e).gte(s)
+            criteria.and("sandbox").is(sandbox)
 
             if (zone != 0) {
-                criteria.and("zone").is(zone);
+                criteria.and("zone").is(zone)
             }
             if (!Strings.isNullOrEmpty(source)) {
-                criteria.and("source").is(source);
+                criteria.and("source").is(source)
             }
 
-            List<ReceiptBean> rbs = mongoTemplate.find(new Query(criteria), ReceiptBean.class);
+            List<ReceiptBean> rbs = mongoTemplate.find(new Query(criteria), ReceiptBean.class)
             for (ReceiptBean rb : rbs) {
-                total += rb.rmb;
+                total += rb.rmb
             }
         } catch (Exception e) {
-            log.error("传入的参数错误，无法解析:" + e.getMessage());
+            log.error("传入的参数错误，无法解析:" + e.getMessage())
         }
 
-        return total;
+        return total
     }
 
     @ApiOperation(value = "获取指定日期的新玩家")
@@ -217,21 +313,225 @@ class CmdController {
         String end = request.getParameter("end")
         String source = request.getParameter("source")
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
         try {
-            Date s = sdf.parse(begin);
-            Date e = sdf.parse(end);
+            Date s = sdf.parse(begin)
+            Date e = sdf.parse(end)
 
-            Criteria criteria = Criteria.where("createtime").lt(e).gte(s);
+            Criteria criteria = Criteria.where("createtime").lt(e).gte(s)
             if (!Strings.isNullOrEmpty(source)) {
-                criteria.and("source").is(source);
+                criteria.and("source").is(source)
             }
 
-            return mongoTemplate.count(new Query(criteria), AccountBean.class);
+            return mongoTemplate.count(new Query(criteria), AccountBean.class)
         } catch (Exception e) {
-            log.error("传入的参数错误，无法解析:" + e.getMessage());
+            log.error("传入的参数错误，无法解析:" + e.getMessage())
         }
 
-        return -1;
+        return -1
     }
+
+    @ApiOperation(value = "获取最高充值的玩家")
+    @RequestMapping(value = "/cmd/getTopAccount", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "id", value = "是否指定玩家id", required = false, dataType = "long", paramType = "query"),
+            @ApiImplicitParam(name = "count", value = "前n个", required = true, dataType = "int", paramType = "query"),
+    ])
+    @ResponseBody List<TopCharge> getTopAccount(HttpServletRequest request) {
+        long id = 0
+        String idstr = request.getParameter("id")
+        if (!Strings.isNullOrEmpty(idstr)) {
+            id = Long.parseLong(idstr)
+        }
+        int count = Integer.parseInt(request.getParameter("count"))
+
+        List<TopCharge> rtn = new ArrayList<>()
+
+        List<AccountBean> accs
+        if (id > 0) {
+            accs = mongoTemplate.find(new Query(Criteria.where("id").is(id)), AccountBean.class)
+        } else {
+            accs = mongoTemplate.find(new Query().with(new Sort(Sort.Direction.DESC, "charge")).limit(count), AccountBean.class)
+        }
+
+        try {
+            for (AccountBean acc : accs) {
+                TopCharge tc = new TopCharge()
+                tc.id = acc.id
+                tc.account = acc.account
+                tc.charge = acc.charge
+                tc.createtime = acc.createtime
+
+                UserBean u = dao.findUser(acc.id)
+                if (u != null) {
+                    for (UserRoleBean urs : u.relates) {
+                        tc.infos.add(String.format("zone:%s,role:%s,name:%s,vip:%s,level:%s", urs.server, urs.role, urs.name, urs.vip, urs.level))
+                    }
+                }
+                rtn.add(tc)
+            }
+        } catch (Exception e) {
+
+        }
+        return rtn
+    }
+
+    @ApiOperation(value = "获取所有物品")
+    @RequestMapping(value = "/cmd/getItems", method = RequestMethod.GET)
+    @ApiImplicitParams([
+    ])
+    @ResponseBody List<ItemConf> getItems(HttpServletRequest request) {
+        return confTemplate.findAll(ItemConf.class)
+    }
+
+    @ApiOperation(value = "获取所有英雄")
+    @RequestMapping(value = "/cmd/getHeros", method = RequestMethod.GET)
+    @ApiImplicitParams([
+    ])
+    @ResponseBody List<HeroConf> getHeros(HttpServletRequest request) {
+        return confTemplate.findAll(HeroConf.class)
+    }
+
+    @Async
+    @ApiOperation(value = "查看公告")
+    @RequestMapping(value = "/cmd/getBulletin", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "file", value = "文件地址", required = true, dataType = "String", paramType = "query")
+    ])
+    @ResponseBody String getBulletin(HttpServletRequest request) {
+        String file = request.getParameter("file")
+        try {
+            for (char c in file.toCharArray()) {
+                if (!c.letterOrDigit) {
+                    return "错误的文件名字"
+                }
+            }
+
+            file = "/home/ubuntu/html/v1/" + file + ".html"
+            return Files.readAllLines(Paths.get(file)).join("\n")
+        } catch (Exception ex) {
+            log.error("查看公告失败:" + ex.getMessage())
+        }
+        return "无法查看"
+    }
+
+
+    @Async
+    @ApiOperation(value = "修改公告")
+    @RequestMapping(value = "/cmd/fixBulletin", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "file", value = "文件地址", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "data", value = "公告内容", required = true, dataType = "String", paramType = "query")
+    ])
+    @ResponseBody String fixBulletin(HttpServletRequest request) {
+        log.info("fixBulletin.")
+        String file = request.getParameter("file")
+        String data = request.getParameter("data")
+        try {
+            for (char c in file.toCharArray()) {
+                if (!c.letterOrDigit) {
+                    return "错误的文件名字"
+                }
+            }
+
+            file = "/home/ubuntu/html/v1/" + file + ".html"
+
+            log.info("data:" + data)
+
+            Files.write(Paths.get(file), data.getBytes(Charset.defaultCharset()))
+            return data
+        } catch (Exception ex) {
+            log.error("修改公告失败:" + ex.getMessage())
+        }
+        return "修改失败"
+    }
+
+    @ApiOperation(value = "最近七日的收入")
+    @RequestMapping(value = "/cmd/recentInfos", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "date", value = "开始日期(包含)格式：[2017-9-1]", required = true, dataType = "String", paramType = "query"),
+    ])
+    @ResponseBody List<RecentIncome> recentInfos(HttpServletRequest request) {
+        String dt = request.getParameter("date")
+        LocalDate s = LocalDate.parse(dt, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+        List<RecentIncome> rtn = new ArrayList<>()
+
+        for (int i = 0; i < 15; ++i) {
+            LocalDate ldt = s.plusDays(-i)
+            int today = ldt.getYear() * 10000 + ldt.getMonthValue() * 100 + ldt.getDayOfMonth()
+            Criteria criteria = Criteria.where("day").is(today)
+            DailyStaBean dsb = mongoTemplate.findOne(new Query(criteria), DailyStaBean.class)
+
+            if (dsb != null) {
+                // 没有检测过留存的进行计算, 并保存
+                if (i >= 0 && (!dsb.checked && dsb.nusers.size() > 0)) {
+                    for (int j = 1; j <= 7; ++j) {
+                        LocalDate l = ldt.plusDays(j)
+                        today = l.getYear() * 10000 + l.getMonthValue() * 100 + l.getDayOfMonth()
+                        criteria = Criteria.where("day").is(today)
+                        DailyStaBean other = mongoTemplate.findOne(new Query(criteria), DailyStaBean.class)
+                        if (other != null) {
+                            int intersect = dsb.nusers.intersect(other.users).size()
+                            dsb.rs[j-1] = intersect * 100 / dsb.nusers.size()
+
+                            if (j == 7) {// 第七日的完成,则不需要计算了
+                                //dsb.checked = true
+                            }
+                        } else {
+                            dsb.rs[j-1] = 0
+                        }
+                    }
+
+                    mongoTemplate.save(dsb)
+                }
+
+                RecentIncome ri = new RecentIncome()
+                ri.day = dsb.day
+                ri.rs = Arrays.copyOf(dsb.rs, dsb.rs.length)
+                ri.charge = dsb.charge
+                ri.ncharge = dsb.ncharge
+                ri.dau = dsb.users.size()
+                ri.danu = dsb.nusers.size()
+                ri.dacu = dsb.cusers.size()
+
+                if (ri.dau > 0) {
+                    ri.arpu = ri.charge / ri.dau / 100
+                }
+                int cusers = dsb.cusers.size()
+                if (cusers > 0) {
+                    ri.arppu = ri.charge / cusers / 100
+                }
+                int nusers = dsb.nusers.size()
+                if (nusers > 0) {
+                    ri.arnpu = ri.ncharge / nusers / 100
+                }
+
+                rtn.add(ri)
+            }
+        }
+
+        return rtn
+    }
+}
+
+class RecentIncome {
+    public int day
+    public int charge;  // 总充值
+    public int ncharge; // 新增玩家充值
+    public float[] rs = new float[7];  // 新增玩家7日留存
+    public int dau; // 当日总活跃玩家
+    public int danu; // 当日新增玩家
+    public int dacu; // 当日充值玩家
+    public float arpu; // 活跃玩家平均收入
+    public float arppu; // 充值玩家平均收入
+    public float arnpu; // 新增玩家平均收入
+}
+
+class TopCharge {
+    public long id
+    public String account
+    public int charge
+    public Date createtime
+    public List<String> infos = new ArrayList<>()
 }

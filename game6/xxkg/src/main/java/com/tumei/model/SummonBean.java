@@ -1,6 +1,7 @@
 package com.tumei.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.common.utils.TimeUtil;
 import org.springframework.data.annotation.Id;
@@ -104,8 +105,8 @@ public class SummonBean {
 	 */
 	public void addLucky(int _lucky) {
 		lucky += _lucky;
-		if (lucky > 1000) {
-			lucky = 1000;
+		if (lucky > Defs.幸运值) {
+			lucky = Defs.幸运值;
 		}
 	}
 

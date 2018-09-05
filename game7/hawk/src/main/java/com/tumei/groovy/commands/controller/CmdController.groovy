@@ -52,23 +52,23 @@ class CmdController {
 
     @Autowired
     @Qualifier("centerTemplate")
-    private MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate
 
     @Autowired
     @Qualifier("confTemplate")
-    private MongoTemplate confTemplate;
+    private MongoTemplate confTemplate
 
     @Autowired
-    private AccountBeanRepository accountBeanRepository;
+    private AccountBeanRepository accountBeanRepository
 
     @Autowired
-    private Readonly readonly;
+    private Readonly readonly
 
     @Autowired
-    private RemoteService remoteService;
+    private RemoteService remoteService
 
     @Autowired
-    private GroovyLoader groovyLoader;
+    private GroovyLoader groovyLoader
 
     static String getBody(HttpServletRequest request) {
         try {
@@ -89,8 +89,8 @@ class CmdController {
     @ApiOperation(value = "重新加载只读配置: 比如允许的包名")
     @RequestMapping(value = "/cmd/reload", method = RequestMethod.GET)
     @ResponseBody String reload() {
-        readonly.reload();
-        return readonly.debug();
+        readonly.reload()
+        return readonly.debug()
     }
 
     @Autowired
@@ -115,9 +115,9 @@ class CmdController {
         String msg = request.getParameter("msg")
 
         if (zone == 0) { // 如果传递0,查询一共有多少个服务器,然后通知,写成负数,发送的时候就会发送所有这些服务器了!
-            zone = -serverBeanRepository.count();
+            zone = -serverBeanRepository.count()
         }
-        remoteService.sendNotifyMsg(zone, msg);
+        remoteService.sendNotifyMsg(zone, msg)
         return "发送结束"
     }
 
@@ -146,7 +146,7 @@ class CmdController {
             long uid = Long.parseLong(acc)
             return accountBeanRepository.findById(uid)
         } catch (Exception ex) {
-
+            log.error("info Account error:" + ex.message)
         }
 
         return accountBeanRepository.findByAccount(acc)
@@ -165,11 +165,11 @@ class CmdController {
         AccountBean accountBean = accountBeanRepository.findByAccount(acc);
         if (accountBean != null) {
             accountBean.setId(oid)
-            accountBeanRepository.save(accountBean);
+            accountBeanRepository.save(accountBean)
 
             return "绑定成功"
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
     }
 
     @ApiOperation(value = "所有服务器")
@@ -224,14 +224,14 @@ class CmdController {
     ])
     boolean isReloadable(HttpServletRequest request) {
         int mode = Integer.parseInt(request.getParameter("mode"))
-        boolean rtn = groovyLoader.isReload();
+        boolean rtn = groovyLoader.isReload()
         if (mode == 0) {
-            return rtn;
+            return rtn
         }
 
-        rtn = !rtn;
-        groovyLoader.setReload(rtn);
-        return rtn;
+        rtn = !rtn
+        groovyLoader.setReload(rtn)
+        return rtn
     }
 
     @ApiOperation(value = "guild是否热更新状态")
@@ -250,7 +250,6 @@ class CmdController {
         return remoteService.flushGroup()
     }
 
-
     @ApiOperation(value = "根据玩家的id 修改密码")
     @RequestMapping(value = "/cmd/modifyPassword", method = RequestMethod.GET)
     @ApiImplicitParams([
@@ -260,14 +259,14 @@ class CmdController {
     @ResponseBody String modifyPassword(HttpServletRequest request) {
         long uid = Long.parseLong(request.getParameter("uid"))
         String password = request.getParameter("password")
-        AccountBean accountBean = accountBeanRepository.findById(uid);
+        AccountBean accountBean = accountBeanRepository.findById(uid)
         if (accountBean != null) {
-            accountBean.setPasswd(password);
-            accountBeanRepository.save(accountBean);
+            accountBean.setPasswd(password)
+            accountBeanRepository.save(accountBean)
 
-            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ").";
+            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ")."
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
     }
 
     @ApiOperation(value = "根据玩家的id 修改玩家权限")
@@ -279,14 +278,14 @@ class CmdController {
     @ResponseBody String modifyAdmin(HttpServletRequest request) {
         long uid = Long.parseLong(request.getParameter("uid"))
         String admin = request.getParameter("admin")
-        AccountBean accountBean = accountBeanRepository.findById(uid);
+        AccountBean accountBean = accountBeanRepository.findById(uid)
         if (accountBean != null) {
-            accountBean.setRole(admin);
-            accountBeanRepository.save(accountBean);
+            accountBean.setRole(admin)
+            accountBeanRepository.save(accountBean)
 
-            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ").";
+            return "修改成功, 帐号(" + accountBean.getAccount() + ") 密码(" + accountBean.getPasswd() + ") 权限(" + accountBean.getRole() + ")."
         }
-        return "该帐号不存在";
+        return "该帐号不存在"
     }
 
 
@@ -306,35 +305,35 @@ class CmdController {
         int zone = Integer.parseInt(request.getParameter("zone"))
         String source = request.getParameter("source")
 
-        int total = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int total = 0
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
         try {
-            Date s = sdf.parse(begin);
-            Date e = sdf.parse(end);
+            Date s = sdf.parse(begin)
+            Date e = sdf.parse(end)
 
             if (zone < 0) {
                 zone = 0
             }
 
-            Criteria criteria = Criteria.where("time").lt(e).gte(s);
-            criteria.and("sandbox").is(sandbox);
+            Criteria criteria = Criteria.where("time").lt(e).gte(s)
+            criteria.and("sandbox").is(sandbox)
 
             if (zone != 0) {
-                criteria.and("zone").is(zone);
+                criteria.and("zone").is(zone)
             }
             if (!Strings.isNullOrEmpty(source)) {
-                criteria.and("source").is(source);
+                criteria.and("source").is(source)
             }
 
-            List<ReceiptBean> rbs = mongoTemplate.find(new Query(criteria), ReceiptBean.class);
+            List<ReceiptBean> rbs = mongoTemplate.find(new Query(criteria), ReceiptBean.class)
             for (ReceiptBean rb : rbs) {
-                total += rb.rmb;
+                total += rb.rmb
             }
         } catch (Exception e) {
-            log.error("传入的参数错误，无法解析:" + e.getMessage());
+            log.error("传入的参数错误，无法解析:" + e.getMessage())
         }
 
-        return total;
+        return total
     }
 
     @ApiOperation(value = "最近七日的收入")
@@ -358,26 +357,26 @@ class CmdController {
                 // 没有检测过留存的进行计算, 并保存
                 if (i >= 0 && (!dsb.checked && dsb.nusers.size() > 0)) {
                     for (int j = 1; j <= 7; ++j) {
-                        LocalDate l = ldt.plusDays(j);
+                        LocalDate l = ldt.plusDays(j)
                         today = l.getYear() * 10000 + l.getMonthValue() * 100 + l.getDayOfMonth()
                         criteria = Criteria.where("day").is(today)
                         DailyStaBean other = mongoTemplate.findOne(new Query(criteria), DailyStaBean.class)
                         if (other != null) {
-                            int intersect = dsb.nusers.intersect(other.users).size();
+                            int intersect = dsb.nusers.intersect(other.users).size()
                             dsb.rs[j-1] = intersect * 100 / dsb.nusers.size()
 
                             if (j == 7) {// 第七日的完成,则不需要计算了
-                                //dsb.checked = true;
+                                //dsb.checked = true
                             }
                         } else {
                             dsb.rs[j-1] = 0
                         }
                     }
 
-                    mongoTemplate.save(dsb);
+                    mongoTemplate.save(dsb)
                 }
 
-                RecentIncome ri = new RecentIncome();
+                RecentIncome ri = new RecentIncome()
                 ri.day = dsb.day
                 ri.rs = Arrays.copyOf(dsb.rs, dsb.rs.length)
                 ri.charge = dsb.charge
@@ -417,22 +416,28 @@ class CmdController {
         String end = request.getParameter("end")
         String source = request.getParameter("source")
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
         try {
-            Date s = sdf.parse(begin);
-            Date e = sdf.parse(end);
+            Date s = sdf.parse(begin)
+            Date e = sdf.parse(end)
 
-            Criteria criteria = Criteria.where("createtime").lt(e).gte(s);
+            Criteria criteria = Criteria.where("createtime").lt(e).gte(s)
             if (!Strings.isNullOrEmpty(source)) {
-                criteria.and("source").is(source);
+                if (source.equalsIgnoreCase("空白")) {
+                    criteria.and("source").is("")
+                } else {
+                    criteria.and("source").is(source)
+                }
             }
 
-            return mongoTemplate.count(new Query(criteria), AccountBean.class);
+            return mongoTemplate.getCollection("Account").distinct("ip", new Query(criteria).getQueryObject()).size()
+
+//            return mongoTemplate.count(new Query(criteria), AccountBean.class)
         } catch (Exception e) {
-            log.error("传入的参数错误，无法解析:" + e.getMessage());
+            log.error("传入的参数错误，无法解析:" + e.getMessage())
         }
 
-        return -1;
+        return -1
     }
 
     @ApiOperation(value = "获取最高充值的玩家")
@@ -477,7 +482,7 @@ class CmdController {
         } catch (Exception e) {
 
         }
-        return rtn;
+        return rtn
     }
 
     @ApiOperation(value = "获取最近的操作日志")
@@ -489,11 +494,11 @@ class CmdController {
         int count = Integer.parseInt(request.getParameter("count"))
 
         try {
-            return mongoTemplate.find(new Query().with(new Sort(Sort.Direction.DESC, "time")).limit(count), GmOperBean.class);
+            return mongoTemplate.find(new Query().with(new Sort(Sort.Direction.DESC, "time")).limit(count), GmOperBean.class)
         } catch (Exception e) {
 
         }
-        return null;
+        return null
     }
 
     @ApiOperation(value = "获取所有物品")
@@ -589,16 +594,16 @@ class CmdController {
 }
 
 class RecentIncome {
-    public int day;
-    public int charge;  // 总充值
-    public int ncharge; // 新增玩家充值
-    public float[] rs = new float[7];  // 新增玩家7日留存
-    public int dau; // 当日总活跃玩家
-    public int danu; // 当日新增玩家
-    public int dacu; // 当日充值玩家
-    public float arpu; // 活跃玩家平均收入
-    public float arppu; // 充值玩家平均收入
-    public float arnpu; // 新增玩家平均收入
+    public int day
+    public int charge  // 总充值
+    public int ncharge // 新增玩家充值
+    public float[] rs = new float[7]  // 新增玩家7日留存
+    public int dau // 当日总活跃玩家
+    public int danu // 当日新增玩家
+    public int dacu // 当日充值玩家
+    public float arpu // 活跃玩家平均收入
+    public float arppu // 充值玩家平均收入
+    public float arnpu // 新增玩家平均收入
 }
 
 class TopCharge {

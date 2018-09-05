@@ -2,6 +2,7 @@ package com.tumei.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tumei.common.DaoService;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.game.services.TreasureRankService;
@@ -235,5 +236,8 @@ public class TreasureBean {
 
 	public void setDoubleBox(int doubleBox) {
 		this.doubleBox = doubleBox;
+		if (Defs.ISBT) {
+			this.doubleBox *= 20;
+		}
 	}
 }

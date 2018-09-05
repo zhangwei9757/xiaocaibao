@@ -30,7 +30,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  */
 @Component
 public class DaoUtils {
-	final static Log log = LogFactory.getLog(DaoUtils.class);
+	private final static Log log = LogFactory.getLog(DaoUtils.class);
 
 	@Autowired
 	private CacheIt cacheIt;
@@ -233,17 +233,17 @@ public class DaoUtils {
 		return null;
 	}
 
-	public synchronized void addCharge(int rmb) {
+	public synchronized void addCharge(long uid, int rmb) {
 		DailyStaBean dsb = findDs(0);
 		if (dsb != null) {
-			dsb.addCharge(rmb);
+			dsb.addCharge(uid, rmb);
 		}
 	}
 
-	public synchronized void addUser(long uid) {
+	public synchronized void addUser(long uid, boolean isNew) {
 		DailyStaBean dsb = findDs(0);
 		if (dsb != null) {
-			dsb.addUser(uid);
+			dsb.addUser(uid, isNew);
 		}
 	}
 

@@ -19,4 +19,7 @@ public class BasicUserInfo {
 
 	// 总充值记录
 	public int charge;
+
+	public long fr;
+	public long fs;
 }

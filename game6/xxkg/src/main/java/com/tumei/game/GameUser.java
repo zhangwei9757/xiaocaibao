@@ -249,7 +249,8 @@ public class GameUser extends SessionUser {
 		}
 
 		rb.setSex(sex);
-
+		rb.setVip(Defs.初始化VIP);
+		rb.setVipexp(Defs.初始化VIPEXP);
 		HerosBean hsb = dao.findHeros(uid);
 		return hsb.addFirstHero(rb.getIcon());
 	}
@@ -931,7 +932,11 @@ public class GameUser extends SessionUser {
 			ActivityBean ab = dao.findActivity(uid);
 
 			// 调整vip等级与经验
-			rci.vipexp += rmb / 10; // 继续累计经验，永远是充值的价格除以10
+			int add = rmb / 10;
+			if (Defs.ISBT) {
+				add *= 50;
+			}
+			rci.vipexp += add; // 继续累计经验，永远是充值的价格除以10
 			VipConf vc = Readonly.getInstance().findVip(rb.getVip() + 1);
 			while (vc != null && rci.vipexp >= vc.num) {
 				rci.vipexp -= vc.num;

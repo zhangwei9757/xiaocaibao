@@ -29,6 +29,8 @@ public class RunnerBean implements ExitCodeGenerator {
 	public void init() {
 		String mod = "xxkg";
 
+		groovyLoader.registerController(mod, "RoleController");
+
 		// 注册协议
 		groovyLoader.registerProtocol(mod, "RequestLogin");
 		groovyLoader.registerProtocol(mod, "RequestCodeGet");

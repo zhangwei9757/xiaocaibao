@@ -1,5 +1,7 @@
 package com.tumei.game.protos.structs;
 
+import com.tumei.common.utils.Defs;
+
 /**
  * Created by Administrator on 2017/3/13 0013.
  */
@@ -34,5 +36,9 @@ public class ChargeStruct {
 		gem = _gem;
 		extra = _extra;
 		ratio = _ratio;
+		if (Defs.ISBT) {
+			gem *= 50;
+			extra *= 50;
+		}
 	}
 }

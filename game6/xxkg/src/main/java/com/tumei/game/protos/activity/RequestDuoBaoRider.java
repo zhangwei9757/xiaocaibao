@@ -1,6 +1,7 @@
 package com.tumei.game.protos.activity;
 
 import com.tumei.common.Readonly;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
 import com.tumei.model.ActivityBean;
@@ -61,13 +62,14 @@ public class RequestDuoBaoRider extends BaseProtocol {
 		ab.flushDb();
 
 		long time = ab.flushDbCouple();
-		int gem = 60;
+		// 13  夺宝奇兵钻石由60改为1200
+		int gem = Defs.夺宝奇兵;
 		if (time > 0) {
 			if (ab.getCoupleType() == 1) {
-				gem = 48;
+				gem = (int) (Defs.夺宝奇兵 * 0.8);// 0.8
 			}
 			else {
-				gem = 54;
+				gem = (int) (Defs.夺宝奇兵 * 0.9);// 0.9
 			}
 		}
 

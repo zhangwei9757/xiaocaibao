@@ -1,6 +1,7 @@
 package com.tumei.game.protos.rune;
 
 import com.tumei.common.Readonly;
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.PackBean;
 import com.tumei.model.RuneBean;
@@ -48,6 +49,10 @@ public class RequestRuneReset extends BaseProtocol {
 		if (mode == 0) {
 			if (rb.getUsedCount() > 0) {
 				gem = (int)(Math.pow(2, (rb.getUsedCount() - 1)) * 100);
+				// 符文重置价格 *20
+				if (Defs.ISBT) {
+					gem *= 20;
+				}
 				if (!pb.contains(钻石, gem)) {
 					rl.result = "参数错误";
 					user.send(rl);

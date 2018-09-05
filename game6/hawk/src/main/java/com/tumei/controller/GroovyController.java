@@ -634,7 +634,7 @@ public class GroovyController {
 	@RequestMapping(value = "/migrate", method = RequestMethod.GET)
 
 	@ApiImplicitParams( {
-			@ApiImplicitParam(name = "uid", value = "账号", defaultValue = "tm6-1", required = true, dataType = "Long", paramType = "query"),
+			@ApiImplicitParam(name = "uid", value = "账号", required = true, dataType = "Long", paramType = "query"),
 			@ApiImplicitParam(name = "from", value = "准备合区 x1", defaultValue = "tm6-1", required = true, dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "to", value = "目的合区 x2", required = true, defaultValue = "tm6-2", dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "zone", value = "目的合区", required = true, dataType = "int", paramType = "query"),

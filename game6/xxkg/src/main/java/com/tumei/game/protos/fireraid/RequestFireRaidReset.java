@@ -1,5 +1,6 @@
 package com.tumei.game.protos.fireraid;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.model.FireRaidBean;
@@ -45,7 +46,10 @@ public class RequestFireRaidReset extends BaseProtocol {
 			rl.result = "今日重置次数已经达到上限";
 		} else {
 			rl.gem = left * 50;
-
+			// 8，远征重置钻石价格*10
+			if (Defs.ISBT) {
+				rl.gem *= 10;
+			}
 			PackBean pb = user.getDao().findPack(user.getUid());
 			if (rl.gem > 0 && !pb.contains(钻石, rl.gem)) {
 				rl.result = ErrCode.钻石不足.name();

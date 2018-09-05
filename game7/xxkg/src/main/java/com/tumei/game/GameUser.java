@@ -829,6 +829,8 @@ public class GameUser extends WebSocketUser {
                 sb.append("sign=" + MD5Util.encode("NXSbyUDnv7TnP844lyo1tP96vVmD41sC" + ts));
                 sb.append("&timestamp=" + ts);
                 sb.append("&app_id=5124");
+                sb.append("&currency_type=1");
+                sb.append("&access_type=1");
                 sb.append("&server_id=" + server.getZone());
                 sb.append("&account_id=" + (uid / 1000));
                 sb.append("&role_id=" + uid);

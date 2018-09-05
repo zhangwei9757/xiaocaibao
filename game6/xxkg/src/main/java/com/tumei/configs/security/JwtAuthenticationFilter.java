@@ -27,12 +27,15 @@ import java.util.List;
  *
  */
 public class JwtAuthenticationFilter extends GenericFilterBean {
-	private Log log = LogFactory.getLog(JwtAuthenticationFilter.class);
+	private static final Log log = LogFactory.getLog(JwtAuthenticationFilter.class);
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		String token = request.getHeader("Authorization");
+		if (Strings.isNullOrEmpty(token)) {
+			token = request.getParameter("xtkn");
+		}
 		if (!Strings.isNullOrEmpty(token)) {
 //			log.info("连接地址:" + request.getRemoteAddr() + " 附带token:" + token);
 			try {

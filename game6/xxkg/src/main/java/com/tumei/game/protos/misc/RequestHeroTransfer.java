@@ -1,5 +1,6 @@
 package com.tumei.game.protos.misc;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.websocket.SessionUser;
 import com.tumei.game.GameUser;
 import com.tumei.model.HerosBean;
@@ -94,7 +95,7 @@ public class RequestHeroTransfer extends BaseProtocol {
 		int id = hsb.getChoise().get(transfee - 1);
 		PackBean pb = user.getDao().findPack(user.getUid());
 
-		if (!pb.contains(钻石, 500)) {
+		if (!pb.contains(钻石, Defs.英雄转换)) {
 			rci.result = ErrCode.钻石不足.name();
 			return;
 		}
@@ -105,7 +106,7 @@ public class RequestHeroTransfer extends BaseProtocol {
 			return;
 		}
 
-		user.payItem(钻石, 500, "转化英雄");
+		user.payItem(钻石, Defs.英雄转换, "转化英雄");
 
 		HeroBean newguy = pb.addHero(id, "转换");
 		newguy.setLevel(hb.getLevel());
@@ -135,11 +136,11 @@ public class RequestHeroTransfer extends BaseProtocol {
 		if (hsb.getChoise().size() >= 4) {
 			if (_force) {
 				PackBean pb = user.getDao().findPack(user.getUid());
-				if (!pb.contains(钻石, 100)) {
+				if (!pb.contains(钻石, Defs.英雄刷新)) {
 					rci.result = ErrCode.钻石不足.name();
 					return;
 				}
-				user.payItem(钻石, 100, "刷新转化英雄");
+				user.payItem(钻石, Defs.英雄刷新, "刷新转化英雄");
 				needFlush = true;
 			}
 		} else {

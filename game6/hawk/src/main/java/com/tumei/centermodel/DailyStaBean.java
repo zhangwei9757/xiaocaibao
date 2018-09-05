@@ -23,14 +23,36 @@ public class DailyStaBean {
     // 总充值
     private int charge;
 
+    // 新增充值
+    private int ncharge;
+
     // 所有登录的玩家
     private HashSet<Long> users = new HashSet<>();
 
-    public void addCharge(int rmb) {
-    	charge += rmb;
+    // 所有新增的玩家
+    private HashSet<Long> nusers = new HashSet<>();
+
+    // 所有充值的玩家
+    private HashSet<Long> cusers = new HashSet<>();
+
+    // 2日留存
+    private float[] rs = new float[7];
+
+    // false则在查询的时候会进行重建 charge r2 r7
+    private boolean checked;
+
+    public synchronized void addCharge(long uid, int rmb) {
+        charge += rmb;
+        cusers.add(uid);
+        if (nusers.contains(uid)) {
+            ncharge += rmb;
+        }
     }
 
-    public void addUser(long uid) {
+    public synchronized void addUser(long uid, boolean isNew) {
         users.add(uid);
+        if (isNew) {
+            nusers.add(uid);
+        }
     }
 }

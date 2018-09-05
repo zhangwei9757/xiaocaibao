@@ -1,5 +1,6 @@
 package com.tumei.game.protos.rune;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.PackBean;
 import com.tumei.model.RuneBean;
@@ -45,16 +46,16 @@ public class RequestRuneHammer extends BaseProtocol {
 		int gem = 0;
 		switch (mode) {
 			case 1:
-				if (!pb.contains(金币, 2000000)) {
+				if (!pb.contains(金币, Defs.符文副本入场费1)) {
 					rl.result = "金币不足";
 					user.send(rl);
 					return;
 				}
 				rb.setHammer(5);
-				user.payItem(金币, 2000000, "选锤子");
+				user.payItem(金币, Defs.符文副本入场费1, "选锤子");
 				break;
 			case 2:
-				gem = 50;
+				gem = Defs.符文副本入场费2;
 				if (!pb.contains(钻石, gem)) {
 					rl.result = "钻石不足";
 					user.send(rl);
@@ -64,7 +65,7 @@ public class RequestRuneHammer extends BaseProtocol {
 				user.payItem(钻石, gem, "选锤子");
 				break;
 			case 3:
-				gem = 200;
+				gem = Defs.符文副本入场费3;
 				if (!pb.contains(钻石, gem)) {
 					rl.result = "钻石不足";
 					user.send(rl);

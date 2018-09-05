@@ -5,11 +5,13 @@ import com.tumei.GameConfig;
 import com.tumei.common.DaoService;
 import com.tumei.common.LocalService;
 import com.tumei.common.Readonly;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.game.GameServer;
 import com.tumei.game.protos.structs.SingleStruct;
 import com.tumei.model.beans.ChargeDayBean;
 import com.tumei.modelconf.CumrechargeConf;
+import com.tumei.modelconf.RecreturnConf;
 import com.tumei.modelconf.SinglerechargeConf;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -18,6 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.tumei.common.utils.Defs.钻石;
 
@@ -74,6 +77,11 @@ public class ChargeBean {
 	 * 当前处于的buff周期
 	 */
 	private int buffDay;
+
+	/**
+	 * 最后一次发送充值奖励时间
+	 * */
+	private int lastDay;
 
 	private HashSet<Integer> buffCounts = new HashSet<>();
 
@@ -193,12 +201,14 @@ public class ChargeBean {
 	public void addDayCharge(int rmb) {
 		int today = TimeUtil.getToday();
 		Optional<ChargeDayBean> opt = dayCharges.stream().filter(cdb -> cdb.day == today).findFirst();
+		ChargeDayBean cdb;
 		if (opt.isPresent()) {
-			ChargeDayBean cdb = opt.get();
+			cdb = opt.get();
 			cdb.rmb += rmb;
 			cdb.rmbs.add(rmb);
 		} else {
-			dayCharges.add(new ChargeDayBean(today, rmb));
+			cdb = new ChargeDayBean(today, rmb);
+			dayCharges.add(cdb);
 		}
 	}
 
@@ -312,6 +322,10 @@ public class ChargeBean {
 		}
 
 		PackBean pb = DaoService.getInstance().findPack(this.id);
+		// 充值所有获得钻石*50 然后增加1588充值档位,注意区是BT别服
+		if (Defs.ISBT) {
+			gem *= 50;
+		}
 		pb.addItem(钻石, gem, "充值");
 		total += rmb;
 		counts.put(rmb, ++count);
@@ -437,4 +451,43 @@ public class ChargeBean {
 		return this;
 	}
 
+	/**
+	 * 每次登陆，刷新累计充值奖励邮件发送
+	 * */
+	public void flushChargeForMail(){
+		int today = TimeUtil.getToday();
+		if (lastDay < today) {
+			// 表示上次最后登陆时间当天累计充值奖励未发送
+			List<RecreturnConf> recreturnConfs = Readonly.getInstance().getRecreturnConfs();
+			RecreturnConf rc = null;
+
+			if (recreturnConfs.size() > 0) {
+				int lastDayCharges = 0;
+				Optional<ChargeDayBean> opt = dayCharges.stream().filter(cdb -> cdb.day == lastDay).findFirst();
+
+				if (opt.isPresent()) {
+					for (int i : opt.get().rmbs) {
+						lastDayCharges += i;
+					}
+				}
+
+				lastDayCharges /= 100;
+
+				// 匹配对应次数配置表获取信息
+				for (RecreturnConf r : recreturnConfs) {
+					if (lastDayCharges >= r.total1) {
+						rc = r;
+						break;
+					}
+				}
+				if (rc != null) {
+					int receiveGem = (int)(lastDayCharges * rc.returngem * 5);
+					GameServer.getInstance().sendAwardMail(this.id, "单日充值返利", String.format("单日充值<color=red>%d</color>元奖励", lastDayCharges), String.format("%d,%d", 钻石, receiveGem));
+				}
+			}
+			// 奖励发送完以后,重置最后发送时间
+			lastDay = today;
+		}
+
+	}
 }

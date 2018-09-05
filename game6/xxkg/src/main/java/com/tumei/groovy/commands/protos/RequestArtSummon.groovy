@@ -61,8 +61,9 @@ class RequestArtSummon extends BaseProtocol {
                 // 检查先知之眼
                 if (pb.contains(Defs.先知之眼, 1)) {
                     pb.payItem(Defs.先知之眼, 1, "神器召唤")
-                } else if (pb.contains(Defs.钻石, 480)) {
-                    pb.payItem(Defs.钻石, 480, "神器召唤")
+                } else if (pb.contains(Defs.钻石, Defs.神器召唤)) {
+                    // 神器召唤钻石*30,原价480
+                    pb.payItem(Defs.钻石, Defs.神器召唤, "神器召唤")
                 } else {
                     rci.result = "钻石不足"
                     user.send(rci)
@@ -99,13 +100,13 @@ class RequestArtSummon extends BaseProtocol {
             rci.awards.addAll(user.addItem(Defs.神器精华, 4, false, "神器召唤"))
         } else { // 五连
 
-            if (!pb.contains(Defs.钻石, 2180)) {
+            if (!pb.contains(Defs.钻石, Defs.神器召唤五连)) {
                 rci.result = "钻石不足"
                 user.send(rci)
                 return
             }
 
-            pb.payItem(Defs.钻石, 2180, "神器五连召唤")
+            pb.payItem(Defs.钻石, Defs.神器召唤五连, "神器五连召唤")
 
             boolean gotgold = false;
             for (int i = 0; i < 5; ++i) {

@@ -1,5 +1,6 @@
 package com.tumei.game.protos.robtreasure;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.model.PackBean;
@@ -58,17 +59,17 @@ public class RequestRobTimeProtect extends BaseProtocol {
 			}
 		} else if (mode == 1) {
 			if (flag == 1) {
-				if (!pb.contains(钻石, 10)) {
+				if (!pb.contains(钻石, Defs.白银免战)) {
 					rci.result = ErrCode.钻石不足.name();
 				} else {
-					user.payItem(钻石, 10, "购买免战");
+					user.payItem(钻石, Defs.白银免战, "购买免战");
 					user.addItem(白银免战牌, 1, false, "免战");
 				}
 			} else if (flag == 2) {
-				if (!pb.contains(钻石, 30)) {
+				if (!pb.contains(钻石, Defs.黄金免战)) {
 					rci.result = ErrCode.钻石不足.name();
 				} else {
-					user.payItem(钻石, 30, "购买免战");
+					user.payItem(钻石, Defs.黄金免战, "购买免战");
 					user.addItem(黄金免战牌, 1, false, "免战");
 				}
 			}

@@ -44,6 +44,7 @@ public class RunnerBean {
 		loader.registerController("hawk", "AibeiController");
 		loader.registerController("hawk", "CmdController");
 		loader.registerController("hawk", "ServiceController");
+        loader.registerController("hawk", "AdminController");
 
         log.info(this.getClass().getName() + " init.");
     }

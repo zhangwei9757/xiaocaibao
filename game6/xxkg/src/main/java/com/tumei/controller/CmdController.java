@@ -1,33 +1,24 @@
 package com.tumei.controller;
 
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
 import com.tumei.GameConfig;
 import com.tumei.common.DaoService;
 import com.tumei.common.Readonly;
 import com.tumei.common.service.CacheIt;
 import com.tumei.common.utils.SystemUtil;
 import com.tumei.common.utils.TimeUtil;
-import com.tumei.configs.MongoTemplateConfig;
 import com.tumei.controller.cmd.CmdServerInfo;
 import com.tumei.game.GameServer;
+import com.tumei.game.protos.notifys.NotifyRedPoint;
 import com.tumei.game.services.OpenRankService;
-import com.tumei.model.*;
+import com.tumei.model.DataStaBean;
+import com.tumei.model.MailsBean;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-import org.springframework.data.mongodb.core.WriteResultChecking;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +40,9 @@ public class CmdController {
 	private GameServer server;
 
 	@Autowired
+	private DaoService dao;
+
+	@Autowired
 	private CacheIt cacheIt;
 
 	@Autowired
@@ -56,6 +50,55 @@ public class CmdController {
 
 	@Autowired
 	private OpenRankService openRankService;
+
+	@ApiOperation(value = "给指定点玩家增加邮件", tags = {"邮件"})
+	@RequestMapping(value = "/addmail", method = RequestMethod.GET)
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "玩家id", required = true, dataType = "long", paramType = "query"),
+			@ApiImplicitParam(name = "title", value = "标题", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String", paramType = "query")
+	})
+	public String addmail(long id, String title, String content) {
+		MailsBean msb = dao.findMails(id);
+		msb.addInfoMail(title, content);
+		NotifyRedPoint nrp = new NotifyRedPoint();
+		nrp.infos.put(1000, 1);
+		server.send(id, nrp);
+		return "成功增加邮件";
+	}
+
+	@ApiOperation(value = "给指定点玩家增加奖励邮件", tags = {"邮件"})
+	@RequestMapping(value = "/addawardmail", method = RequestMethod.GET)
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "玩家id", required = true, dataType = "long", paramType = "query"),
+			@ApiImplicitParam(name = "title", value = "标题", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "awards", value = "奖励", required = true, dataType = "String", paramType = "query")
+	})
+	public String addawardmail(long id, String title, String content, String awards) {
+		MailsBean msb = dao.findMails(id);
+		msb.addAwardMail(title, content, awards);
+		NotifyRedPoint nrp = new NotifyRedPoint();
+		nrp.infos.put(1000, 1);
+		server.send(id, nrp);
+		return "成功增加邮件";
+	}
+
+	@ApiOperation(value = "给全服玩家增加奖励邮件")
+	@RequestMapping(value = "/addawardmailAll", method = RequestMethod.GET)
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "title", value = "标题", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "awards", value = "奖励", required = true, dataType = "String", paramType = "query")})
+	public String addawardmailAll(String title, String content, String awards) {
+		List<Long> ids = dao.getAllIds();
+		for (long id : ids) {
+			MailsBean msb = dao.findMails(id);
+			msb.addAwardMail(title, content, awards);
+		}
+
+		return "服务器内发送邮件";
+	}
 
 	@ApiOperation(value = "发送开服竞赛奖励")
 	@RequestMapping(value = "/sendOpenAwards", method = RequestMethod.GET)
@@ -93,14 +136,6 @@ public class CmdController {
 		return "广播信息:[" + data + "]";
 	}
 
-//		@ApiOperation(value = "注销服务中不可用")
-//	@RequestMapping(value = "/deregisterNoPassing", method = RequestMethod.GET)
-//	@ApiImplicitParams({
-//		@ApiImplicitParam(name = "service", value = "服务名", required = true, dataType = "String", paramType = "query"),
-//	})
-//	public String deregister() {
-//		return rs.deregisterNoPassing();
-//	}
 
 	@ApiOperation(value = "刷新游戏配置")
 	@RequestMapping(value = "/configs", method = RequestMethod.GET)

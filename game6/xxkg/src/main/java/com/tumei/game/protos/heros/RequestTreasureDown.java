@@ -121,8 +121,8 @@ public class RequestTreasureDown extends BaseProtocol {
 		eb.setLevel(1);
 		eb.setGrade(0);
 		eb.setGradeexp(0);
-
-		user.payItem(钻石, 50, "重生宝物");
+		// 宝物重生 2500钻
+		user.payItem(钻石, Defs.重生宝物, "重生宝物");
 
 		user.send(rci);
 	}

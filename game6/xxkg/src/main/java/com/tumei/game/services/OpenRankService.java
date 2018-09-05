@@ -533,6 +533,89 @@ public class OpenRankService {
 		changes.add(uid);
 	}
 
+	/**
+	 * 获取指定的排行榜
+	 *
+	 * @param mode 指定需要获取的排行榜的模式
+	 *
+	 * @return
+	 *
+	 * 返回一个列表即为排行榜
+	 *
+	 */
+	public List<NameValue> getRanks(int mode) {
+		List<NameValue> rtn = new ArrayList<>();
+		switch (mode) {
+			case 1:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = charges.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getCharge()));
+					++i;
+				}
+				break;
+			}
+			case 2:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = spends.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getSpend()));
+					++i;
+				}
+				break;
+			}
+			case 3:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = levels.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getLevel()));
+					++i;
+				}
+				break;
+			}
+			case 4:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = stars.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getStar()));
+					++i;
+				}
+				break;
+			}
+			case 5:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = scenes.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getScene()));
+					++i;
+				}
+				break;
+			}
+			case 6:
+			{
+				int i = 0;
+				Iterator<OpenRankBean> itr = powers.iterator();
+				while (itr.hasNext() && i < 20)  {
+					OpenRankBean orb = itr.next();
+					rtn.add(new NameValue(orb.getName(), orb.getPower()));
+					++i;
+				}
+				break;
+			}
+		}
+		return rtn;
+	}
+
 	public synchronized boolean copyInfos(long uid, List<NameValue> _powers, List<NameValue> _scenes, List<NameValue> _levels, List<NameValue> _stars, List<NameValue> _charges, List<NameValue> _spends) {
 		long now = System.currentTimeMillis();
 

@@ -50,6 +50,10 @@ public class ArenaController {
 			if (diff < old) { // 低于1500排名的部分去掉
 				old = diff;
 			}
+			// 历史排名奖励*20
+			if (Defs.ISBT) {
+				old *= 20;
+			}
 			server.sendAwardMail(uid, "跨服竞技场最高排名奖励", "排名提升到第" + (now+1) + "名.", "10," + old);
 		}
 		return 0;

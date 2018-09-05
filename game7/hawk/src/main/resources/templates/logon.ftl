@@ -109,6 +109,7 @@
         	today: null,    // 总体信息查询日期
         	from: null,		// 开始查询日期
         	income: null,		// 收入
+        	ipusers: null,   // ip数量
         	serverid: null,	// 当前选择的服务器id
         	serverhost: null,	// 当前选择服务器的host
         	serverinfo: null,	// 当前选择的服务器的状态
@@ -364,6 +365,19 @@
                             .then((response) => {
       							this.loading = false;
       							this.income = parseInt(response.data) / 100 + "元"
+                            })
+                            .catch(function(response) {
+      							this.loading = false;
+                                this.$message.error("错误:" + response);
+                            })
+      	},
+      	queryNewUser() {
+			var url = "/cmd/getNewUsers?xtkn=" + this.jwt + "&begin=" + this.from[0] + "&end=" + this.from[1] + "&source=" + this.source
+      		this.loading = true;
+      		this.$http.get(url, {emulateJSON: true})
+                            .then((response) => {
+      							this.loading = false;
+      							this.ipusers = parseInt(response.data) + "个"
                             })
                             .catch(function(response) {
       							this.loading = false;

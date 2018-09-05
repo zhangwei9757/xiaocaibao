@@ -17,6 +17,11 @@ import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.json.simple.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.Update
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -41,10 +46,11 @@ class AibeiController {
     private ReceiptBeanRepository receiptBeanRepository
 
     @Autowired
-    private ServersBeanRepository serversBeanRepository;
+    private ServersBeanRepository serversBeanRepository
 
     @Autowired
-    private UserBeanRepository userBeanRepository;
+    @Qualifier(value = "centerTemplate")
+    private MongoTemplate mongoTemplate
 
     class ServerInfo {
         public int server_id;
@@ -177,12 +183,14 @@ class AibeiController {
                         receiptBean.rmb = (int) (money * 100)
                         receiptBean.channel = 800
                         receiptBean.bundle = fields[2]
+                        long accid = receiptBean.uid / 1000
+                        receiptBean.accid = (int) accid
 
                         try {
                             receiptBean = receiptBeanRepository.insert(receiptBean)
 
                             // 增加统计
-                            daoUtils.addCharge(receiptBean.rmb)
+                            daoUtils.addCharge(id, receiptBean.rmb)
                         } catch (Exception ex) {
                             log.error("重复单据[" + receiptBean.tid + "],人物id:" + id + " 异常:" + ex.getMessage())
                             return "SUCCESS" // 重复单据不要再发送，返回成功
@@ -193,11 +201,8 @@ class AibeiController {
                             log.warn("---- 玩家(" + receiptBean.uid + ")的充值没有通知成功，重新登录即可恢复.")
                         }
 
-                        UserBean ub = userBeanRepository.findById((long)(receiptBean.uid / 1000))
-                        if (ub != null) {
-                            ub.charge += receiptBean.rmb;
-                            userBeanRepository.save(ub);
-                        }
+                        mongoTemplate.findAndModify(Query.query(Criteria.where("id").is(accid)),
+                                new Update().inc("charge", receiptBean.rmb).inc("chargecount", 1), AccountBean.class)
 
                         return "SUCCESS"
                     } else {

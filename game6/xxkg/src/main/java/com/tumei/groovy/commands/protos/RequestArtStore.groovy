@@ -53,7 +53,8 @@ class RequestArtStore extends BaseProtocol {
         rci.count = sb.getArtCount()
         if (mode == 1) {
             if (rci.count > 0) {
-                rci.gem = rci.count * 50
+                // 12， 神器商店刷新变为500钻
+                rci.gem = rci.count * Defs.神器商店刷新
                 PackBean pb = DaoService.getInstance().findPack(user.uid)
                 if (!pb.contains(Defs.钻石, rci.gem)) {
                     rci.result = ErrCode.钻石不足.name()

@@ -28,6 +28,7 @@ public class ReceiptBean {
 	// 支付时间
 	public Date time;
 	public int ts;
+	public int accid;
 	// 商品代码, 苹果上有苹果的
 	public String good;
 	/**

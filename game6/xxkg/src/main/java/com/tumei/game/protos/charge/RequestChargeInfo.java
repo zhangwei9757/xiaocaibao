@@ -1,5 +1,6 @@
 package com.tumei.game.protos.charge;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.ChargeBean;
 import com.tumei.websocket.SessionUser;
@@ -45,7 +46,7 @@ public class RequestChargeInfo extends BaseProtocol {
 
 		ChargeBean cb = user.getDao().findCharge(uid);
 
-		int[] li = new int[]{600, 3000, 6800, 19800, 32800, 64800};
+		int[] li = Defs.li;
 
 		for (int i = 0; i < li.length; ++i) {
 			int rmb = li[i];

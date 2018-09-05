@@ -1,5 +1,6 @@
 package com.tumei.game.protos.activity;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.model.ActivityBean;
@@ -30,8 +31,8 @@ public class RequestForheroBuy extends BaseProtocol {
 		ReturnForheroBuy rl = new ReturnForheroBuy();
 		rl.seq = seq;
 
-		if (user.getVip() < 3) {
-			rl.reuslt = "VIP3及以上等级的玩家才能购买神将福利";
+		if (user.getVip() < Defs.开服基金购买等级或英雄福利购买等级) {
+			rl.reuslt = String.format("VIP%d及以上等级的玩家才能购买神将福利", Defs.开服基金购买等级或英雄福利购买等级);
 			user.send(rl);
 			return;
 		}
@@ -44,13 +45,13 @@ public class RequestForheroBuy extends BaseProtocol {
 		}
 
 		PackBean pb = user.getDao().findPack(user.getUid());
-		if (!pb.contains(钻石, 888)) {
+		if (!pb.contains(钻石, Defs.英雄福利购买)) {
 			rl.reuslt = ErrCode.钻石不足.name();
 			user.send(rl);
 			return;
 		}
 
-		user.payItem(钻石, 888, "购买神将福利");
+		user.payItem(钻石, Defs.英雄福利购买, "购买神将福利");
 		ab.setHeroFuli(1);
 
         user.send(rl);

@@ -118,6 +118,38 @@
 
 </div>
 
+<div style="margin-top: 20px; margin-left: 0px;" v-if="logged">
+    <h2>新增IP查询</h2>
+    <el-form label-width="80px">
+        <el-form-item label="选择日期">
+            <el-date-picker
+                    v-model="from"
+                    type="daterange"
+                    range-separator="至"
+                    value-format="yyyy-MM-dd"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+            </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="来源">
+            <el-input v-model="source">
+            </el-input>
+        </el-form-item>
+
+        <el-form-item label="总数量">
+            <el-input placeholder="查询结果..." v-model="ipusers" class="input-with-select">
+            </el-input>
+        </el-form-item>
+
+
+        <el-form-item>
+            <el-button type="primary" icon="el-icon-menu" @click="queryNewUser">查询</el-button>
+        </el-form-item>
+    </el-form>
+
+</div>
+
 <div style="margin-top: 0px; margin-left: 0px;" v-if="logged">
     <h2>最高充值玩家</h2>
     <el-form label-width="80px">

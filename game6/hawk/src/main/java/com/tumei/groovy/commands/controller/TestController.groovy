@@ -225,7 +225,7 @@ class TestController {
 
             r.servers.addAll(getServers(isGM))
 
-            dao.addUser(u.getId())
+            dao.addUser(u.getId(), false)
 
             return r
         } catch (AuthenticationException ae) {
@@ -267,6 +267,7 @@ class TestController {
             if (!checkVersion(version)) {
                 return new Reply(ErrCode.版本过低)
             }
+            boolean isNew = false
 
             // 验证帐号对应的token是否有效
             String url = "http://checkuser.sdk.quicksdk.net/v2/checkUserInfo";
@@ -304,6 +305,7 @@ class TestController {
                 ub.setCreatetime(new Date())
                 ub.setRole("USER")
                 accountBeanRepository.save(ub)
+                isNew = true
             }
 
             // 记录登录信息
@@ -345,6 +347,7 @@ class TestController {
                 return false
             })
             r.servers.addAll(getServers(isGM))
+            dao.addUser(u.getId(), isNew)
 
             return r
         } catch (AuthenticationException ae) {
@@ -357,6 +360,72 @@ class TestController {
         return new Reply(ErrCode.系统错误)
     }
 
+    @ApiOperation(value = "登录")
+    @RequestMapping(value = "/logon_gm", method = RequestMethod.GET)
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "account", value = "帐号", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
+    ])
+    @ResponseBody
+    Reply logon_gm(HttpServletRequest request) {
+        try {
+            String account = request.getParameter("account")
+            String password = request.getParameter("password")
+
+            if (Strings.isNullOrEmpty(account)) {
+                return new Reply(ErrCode.帐号不存在)
+            }
+
+            account = account.toLowerCase()
+
+
+            // 查询存在
+            AccountBean ub = accountBeanRepository.findByAccount(account)
+            if (ub == null) {
+                return new Reply(ErrCode.帐号不存在) // 帐号不存在
+            }
+
+            if (!ub.getPasswd().equalsIgnoreCase(password)) {
+                return new Reply(ErrCode.帐号不存在或密码错误)
+            }
+
+            boolean hasUser = false
+            boolean isGM = false
+            // 判断登录权限和GM权限
+            if (!Strings.isNullOrEmpty(ub.getRole())) {
+                String[] roles = ub.getRole().split(",")
+                for (int i = 0; i < roles.size(); ++i) {
+                    String r = roles[i].trim()
+                    if (r.equalsIgnoreCase("USER")) {
+                        hasUser = true
+                    } else if (r.equalsIgnoreCase("ADMIN")) {
+                        isGM = true
+                    }
+                }
+            }
+
+            if (!hasUser || !isGM) {
+                return new Reply(ErrCode.帐号权限被封禁)
+            }
+
+            log.info("帐号(" + account + ") 认证成功, uid(" + ub.getId() + ")")
+
+            // 读取该帐号相关的最近登录服务器id和有帐号的服务器id
+            Reply r = new Reply(ErrCode.成功)
+            // 返回一个jwt token, 客户端可以选择使用cookie+session的方式，也可以使用jwtToken的验证模式
+            r.jwt = JwtUtil.generate(ub.getId(), ub.getAccount(), ub.getRole())
+
+            r.servers.addAll(getServers(isGM))
+            return r
+        } catch (AuthenticationException ae) {
+            log.error("认证错误: " + ae.getMessage())
+            return new Reply(ErrCode.帐号不存在或密码错误)
+        } catch (Exception ex) {
+            log.error("错误: " + ex.getMessage(), ex)
+        }
+
+        return new Reply(ErrCode.系统错误)
+    }
 
 
 
@@ -472,7 +541,6 @@ class TestController {
                 return false
             })
             r.servers.addAll(getServers(isGM))
-            dao.addUser(u.getId())
 
             return r
         } catch (AuthenticationException ae) {
@@ -567,7 +635,7 @@ class TestController {
 
             r.servers.addAll(getServers(false))
 
-            dao.addUser(u.getId())
+            dao.addUser(u.getId(), true)
             return r
         } catch (Exception ex) {
             log.error("注册帐号错误:", ex)

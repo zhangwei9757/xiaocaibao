@@ -1051,7 +1051,7 @@
 							})
       	},
       	delServer(s) {
-			var url = "/cmd/delServer?xtkn=" + this.jwt + "&oid=" + s.objectId
+			var url = "/cmd/delServer?xtkn=" + this.jwt + "&oid=" + s.id
 			this.loading = true;
 			this.$http.get(url, {emulateJSON: true})
 							.then((response) => {

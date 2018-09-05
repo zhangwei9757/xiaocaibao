@@ -1,5 +1,6 @@
 package com.tumei.game.protos.misc;
 
+import com.tumei.common.utils.Defs;
 import com.tumei.model.beans.AwardBean;
 import com.tumei.websocket.SessionUser;
 import com.tumei.game.GameUser;
@@ -157,7 +158,7 @@ public class RequestSummon extends BaseProtocol {
 					sb.setLastMiddleFree(now);
 					rs.fee = 0;
 				} else {
-					int gem = (sb.getTodayCount() <= 0 ? 150 : 300);
+					int gem = (sb.getTodayCount() <= 0 ? Defs.中级召唤单抽 / 2 : Defs.中级召唤单抽);
 					rs.fee = 1;
 					if (!pb.contains(传奇令, 1)) {
 						if (!pb.contains(钻石, gem)) {
@@ -203,7 +204,7 @@ public class RequestSummon extends BaseProtocol {
 			}
 			case 3: // 十次中级召唤
 			{
-				int gem = 2800;
+				int gem = Defs.中级召唤十连;
 				rs.fee = 1;
 				if (!pb.contains(传奇令, 10)) {
 					if (!pb.contains(钻石, gem)) {
@@ -246,7 +247,7 @@ public class RequestSummon extends BaseProtocol {
 
 			case 4: // 单次高级召唤
 			{
-				int gem = (sb.getAdvanceFreeCount() > 0 ? 0 : 268);
+				int gem = (sb.getAdvanceFreeCount() > 0 ? 0 : Defs.高级召唤单抽);
 				if (gem > 0) {
 					rs.fee = 1;
 				}
@@ -315,7 +316,7 @@ public class RequestSummon extends BaseProtocol {
 			}
 			case 5: // 十次高级召唤
 			{
-				int gem = 2500;
+				int gem = Defs.高级召唤十连;
 				rs.fee = 1;
 
 				if (!pb.contains(钻石, gem)) {
@@ -381,7 +382,7 @@ public class RequestSummon extends BaseProtocol {
 			}
 			case 6:
 			{
-				if (sb.getLucky() >= 1000) {
+				if (sb.getLucky() >= Defs.幸运值) {
 					sb.setLucky(0);
 					sb.setLuckyCount(sb.getLuckyCount() + 1);
 					HeroBean hb = pb.addHero(this.hero, "幸运");

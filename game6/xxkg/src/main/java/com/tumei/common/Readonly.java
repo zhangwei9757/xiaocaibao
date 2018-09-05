@@ -122,6 +122,8 @@ public class Readonly {
 		public List<BossConf> bossConfs;
 		public List<BossrankConf> bossrankConfs;
 
+		public List<RecreturnConf> recreturnConfs;
+
 		public void initialize() {
 			List<BundleBean> bbs = centerTemplate.findAll(BundleBean.class);
 			if (bbs != null && bbs.size() > 0) {
@@ -735,6 +737,17 @@ public class Readonly {
 				}
 				else if (o1.key > o2.key) {
 					return 1;
+				}
+				return 0;
+			});
+
+			recreturnConfs = mongoTemplate.findAll(RecreturnConf.class);
+			recreturnConfs.sort((o1, o2) -> {
+				if (o1.total1 < o2.total1) {
+					return 1;
+				}
+				else if (o1.total1 > o2.total1) {
+					return -1;
 				}
 				return 0;
 			});
@@ -1899,6 +1912,8 @@ public class Readonly {
 	public List<BossrankConf> getBossrankConfs() {
 		return conf.bossrankConfs;
 	}
+
+	public List<RecreturnConf> getRecreturnConfs() { return conf.recreturnConfs; }
 }
 
 

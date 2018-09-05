@@ -131,6 +131,10 @@ public class RequestArenaFight extends BaseProtocol {
                     user.send(rl);
                     return;
                 } else if (rtn > 0) { // 只有超过最高名次才进入
+				    if (Defs.ISBT) {
+				        // 排名变化钻石数量*10
+				        rtn *= 10;
+                    }
                     GameServer.getInstance().sendAwardMail(user.getUid(), "竞技场奖励", "最高名次提升到" + (rs.rank + 1) + ".", 钻石 + "," + rtn);
 
                     if (rs.id > 100000) { // 非npc,通知降低名次
