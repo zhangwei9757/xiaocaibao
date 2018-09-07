@@ -56,7 +56,7 @@ class RequestLogin extends BaseProtocol {
         }
 
         long pt = rb.getPlaytime()
-        if (pt != 0 && pt/1000 > now) {
+        if (pt != 0) {
             rl.result = ErrCode.角色封停禁止登录.name()
         }
         else {

@@ -1268,9 +1268,10 @@ class GroovyMineSystem implements IMineSystem {
         int count = rmb.getBuyEnergyCount()
         rl.gem = GameConfig.getInstance().getMine_buyenergy_cost()[count]
 
-//		if (usedCount >= 3) {
-//			rl.result = "今日购买行动力已达上限"
-//		} else {
+        if (Defs.ISBT) {
+            rl.gem *= 20
+        }
+
         PackBean pb = user.getDao().findPack(user.getUid())
         if (!pb.contains(Defs.钻石, rl.gem)) {
             rl.result = ErrCode.钻石不足.name()
@@ -1279,7 +1280,6 @@ class GroovyMineSystem implements IMineSystem {
             rmb.setEnergy(rmb.getEnergy() + GameConfig.getInstance().getMine_buyenergy_count())
             rmb.setBuyEnergyCount(count + 1)
         }
-//		}
 
         user.send(rl)
     }

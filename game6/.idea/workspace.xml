@@ -8,7 +8,9 @@
     <bookmark url="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/websocket/SessionUser.java" line="106" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52d80243-6f6c-4e97-8382-d58636bfdad9" name="Default" comment="k" />
+    <list default="true" id="52d80243-6f6c-4e97-8382-d58636bfdad9" name="Default" comment="k">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="game6.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -57,90 +59,92 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CmdController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/CmdController.java">
+      <file leaf-file-name="RequestRuneStore.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/rune/RequestRuneStore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3600">
-              <caret line="200" selection-start-line="200" selection-end-line="200" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="522">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RoleController.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/controller/RoleController.groovy">
+      <file leaf-file-name="RequestGetRuneAwards.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/rune/RequestGetRuneAwards.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5778">
-              <caret line="346" selection-start-line="346" selection-end-line="346" />
-              <folding>
-                <element signature="e#46#85#0" expanded="true" />
-                <element signature="n#!!block;n#search#0;n#!!block;n#RoleController#0" />
-              </folding>
+            <state relative-caret-position="720">
+              <caret line="50" column="70" selection-start-line="50" selection-start-column="70" selection-end-line="50" selection-end-column="70" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Defs.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/utils/Defs.java">
+      <file leaf-file-name="RequestDailyAward.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyAward.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="136" column="29" lean-forward="true" selection-start-line="136" selection-start-column="29" selection-end-line="136" selection-end-column="29" />
+            <state relative-caret-position="1818">
+              <caret line="112" column="1" selection-start-line="112" selection-start-column="1" selection-end-line="112" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequestTreasureDown.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestTreasureDown.java">
+      <file leaf-file-name="GroupTextNotify.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/GroupTextNotify.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="26" column="32" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="32" />
+            <state relative-caret-position="198">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OpenRankService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/OpenRankService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6228">
-              <caret line="606" column="52" selection-start-line="606" selection-start-column="52" selection-end-line="606" selection-end-column="52" />
-              <folding>
-                <element signature="method#init#0;class#OpenRankService#0" />
-                <element signature="method#calcday3#0;class#OpenRankService#0" />
-                <element signature="method#calcday5#0;class#OpenRankService#0" />
-                <element signature="method#calcday7#0;class#OpenRankService#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JwtAuthenticationFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/JwtAuthenticationFilter.java">
+      <file leaf-file-name="RequestLineup.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestLineup.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
+      <file leaf-file-name="DaoService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="3474">
+              <caret line="221" column="38" selection-start-line="221" selection-start-column="38" selection-end-line="221" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequestHeroTransfer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/misc/RequestHeroTransfer.java">
+      <file leaf-file-name="CacheIt.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/CacheIt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state relative-caret-position="1476">
+              <caret line="95" selection-start-line="95" selection-end-line="95" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BossDto.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/dto/boss/BossDto.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="20" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RemoteService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/RemoteService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6336">
+              <caret line="380" column="50" selection-start-line="380" selection-start-column="50" selection-end-line="380" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestBossInfo.groovy" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestBossInfo.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="670">
+              <caret line="68" column="9" lean-forward="true" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -157,10 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>小事件</find>
-      <find>split</find>
-      <find>getBetweenInc</find>
-      <find>updateLatestServer</find>
       <find>更新最近</find>
       <find>RefreshScop</find>
       <find>RefreshScope</find>
@@ -187,6 +187,10 @@
       <find>tm6-1</find>
       <find>DaoGame.getInstance()</find>
       <find>dao\(\)</find>
+      <find>charge</find>
+      <find>chargsend</find>
+      <find>矿区</find>
+      <find>hystrix</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -201,14 +205,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/dopub" />
-        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/MongoTemplateConfig.java" />
-        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/ChargeBean.java" />
-        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupScene.java" />
-        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/GroupBean.java" />
-        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupRole.java" />
-        <option value="$PROJECT_DIR$/hawk/src/main/java/com/tumei/model/structs/GroupPreRole.java" />
-        <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java" />
         <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/controller/struct/GroupRole.java" />
         <option value="$PROJECT_DIR$/run_guild.bat" />
         <option value="$PROJECT_DIR$/run_simfight.bat" />
@@ -252,6 +248,14 @@
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/OpenRankService.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/JwtAuthenticationFilter.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestHeroDown.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/charge/RequestCharge.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupCreate.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/tumei/common/utils/Defs.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/ChargeBean.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyTasks.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/star/RequestStarInfo.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestBossInfo.groovy" />
       </list>
     </option>
   </component>
@@ -340,7 +344,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -379,6 +382,7 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -429,7 +433,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tumei" type="462c0819:PsiDirectoryNode" />
-              <item name="configs" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="game6" type="b2602c69:ProjectViewProjectNode" />
@@ -439,8 +443,18 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tumei" type="462c0819:PsiDirectoryNode" />
-              <item name="configs" type="462c0819:PsiDirectoryNode" />
-              <item name="security" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game6" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="protos" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="game6" type="b2602c69:ProjectViewProjectNode" />
@@ -462,18 +476,6 @@
               <item name="tumei" type="462c0819:PsiDirectoryNode" />
               <item name="groovy" type="462c0819:PsiDirectoryNode" />
               <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="game6" type="b2602c69:ProjectViewProjectNode" />
-              <item name="game6" type="462c0819:PsiDirectoryNode" />
-              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="tumei" type="462c0819:PsiDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -622,16 +624,6 @@
         <value defaultName="singleModule" />
       </option>
       <patterns />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <module name="game6" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
     </configuration>
     <configuration name="远程调试" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -1167,11 +1159,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3150838" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.5841321" weight="0.33144155" />
       <window_info id="Palette&#9;" order="6" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="10" />
@@ -1182,7 +1172,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info id="Capture Tool" order="2" />
       <window_info anchor="right" id="Designer" order="4" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4945227" visible="true" weight="0.20149253" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4945227" visible="true" weight="0.20575693" />
       <window_info anchor="bottom" id="Problems" order="11" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1191,16 +1181,17 @@
       <window_info id="Favorites" order="5" sideWeight="0.5054773" side_tool="true" weight="0.19669509" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.45740148" weight="0.4640523" />
       <window_info anchor="bottom" id="Tail" order="8" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.5841321" weight="0.33144155" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" x="738" y="435" width="444" height="169" id="Documentation" order="7" type="FLOATING" />
-      <window_info anchor="right" id="LuaJ" order="6" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Nl-Palette" order="3" />
-      <window_info anchor="right" id="Properties" order="5" />
+      <window_info anchor="right" id="LuaJ" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Properties" order="5" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.46162048" weight="0.28830874" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.46162048" weight="0.2875817" />
       <window_info anchor="right" id="Coverage" order="9" sideWeight="0.29651162" side_tool="true" weight="0.146875" />
     </layout>
   </component>
@@ -1245,52 +1236,28 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoService.java</url>
-          <line>638</line>
-          <properties />
-          <option name="timeStamp" value="255" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupDonateAward.java</url>
-          <line>32</line>
-          <properties />
-          <option name="timeStamp" value="881" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
           <line>542</line>
           <properties />
           <option name="timeStamp" value="968" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+        <line-breakpoint suspend="THREAD" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
           <line>245</line>
           <properties />
           <option name="timeStamp" value="970" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+        <line-breakpoint suspend="THREAD" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE-sources.jar!/org/springframework/scripting/support/ScriptFactoryPostProcessor.java</url>
           <line>297</line>
           <properties />
           <option name="timeStamp" value="972" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+        <line-breakpoint suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/pub/hawk1/commands/controller/TestController.groovy</url>
           <line>178</line>
           <properties />
           <option name="timeStamp" value="1038" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java</url>
-          <line>722</line>
-          <properties />
-          <option name="timeStamp" value="1446" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GroupBean.java</url>
-          <line>643</line>
-          <properties />
-          <option name="timeStamp" value="1448" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
@@ -1299,7 +1266,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="1480" />
+      <option name="time" value="1556" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1307,339 +1274,356 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/CustomWebAppConfigurer.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailySceneFight.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="706">
+          <caret line="118" selection-start-line="118" selection-end-line="118" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/Swagger2.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="334">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/CacheIt.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyTasks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="280">
+          <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/WebSecurityController.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyAward.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="83" column="37" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1818">
+          <caret line="112" column="1" selection-start-line="112" selection-start-column="1" selection-end-line="112" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/2.7.0/springfox-swagger2-2.7.0.jar!/springfox/documentation/swagger2/web/Swagger2Controller.class" />
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/security/WebSecurityMongo.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/structs/StoreStruct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+        <state relative-caret-position="90">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/AdminController.groovy">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/star/RequestStarAward.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        <state relative-caret-position="688">
+          <caret line="87" selection-start-line="87" selection-end-line="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/Hawk.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/star/RequestStarSelect.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="688">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/resources/templates/account.ftl">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/4.1.4.RELEASE/spring-security-core-4.1.4.RELEASE.jar!/org/springframework/security/access/intercept/AbstractSecurityInterceptor.class" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE.jar!/org/springframework/stereotype/Service.class" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.8.RELEASE/spring-context-4.3.8.RELEASE.jar!/org/springframework/stereotype/Component.class" />
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/security/CustomAccessDecisionManager.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/star/RequestStarInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+        <state>
+          <caret column="34" selection-start-column="30" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8.0.172-zulu/src.zip!/java/lang/NumberFormatException.java" />
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/controller/WebSecurityController.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/store/RequestStore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="562">
+          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/MongoTemplateConfig.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/skin/RequestChangeSkin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="779">
-          <caret line="144" column="15" selection-start-line="144" selection-start-column="15" selection-end-line="144" selection-end-column="15" />
+        <state relative-caret-position="280">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk.2018-07-04.log" />
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/configs/security/CustomFilterInvocationSecurityMetadataSource.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/skin/RequestSkinDown.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+        <state relative-caret-position="280">
+          <caret line="94" selection-start-line="94" selection-end-line="94" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/skin/RequestSkinInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="51" column="21" lean-forward="true" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
+        <state relative-caret-position="-152">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/controller/GroovyController.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/skin/RequestSkinUp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="636" column="58" selection-start-line="636" selection-start-column="58" selection-end-line="636" selection-end-column="58" />
+        <state relative-caret-position="742">
+          <caret line="89" column="1" lean-forward="true" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/RunnerBean.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupDonate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        <state relative-caret-position="162">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/ServersBean.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupDesc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        <state relative-caret-position="162">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/ServersBeanRepository.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupApproveMode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="15" column="16" lean-forward="true" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+        <state relative-caret-position="162">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/beans/ServerBean.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupApprove.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="162">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupFindId.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupGetSceneAwards.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/MineRobInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/HeroConf.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineMove.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
+        <state relative-caret-position="144">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/modelconf/ItemConf.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/modelconf/HeroConf.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/CmdController.groovy">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineLook.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="463" column="20" lean-forward="true" selection-start-line="463" selection-start-column="20" selection-end-line="463" selection-end-column="20" />
+        <state relative-caret-position="144">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/TestController.groovy">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineLeave.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1076">
-          <caret line="565" column="24" selection-start-line="565" selection-start-column="24" selection-end-line="565" selection-end-column="24" />
+        <state relative-caret-position="144">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/ServiceController.groovy">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineHarvest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="62" column="40" lean-forward="true" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
+        <state relative-caret-position="144">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/resources/templates/logon.ftl">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineEnter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="1053" column="70" selection-start-line="1053" selection-start-column="70" selection-end-line="1053" selection-end-column="70" />
+        <state relative-caret-position="130">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/AccountBean.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineEnhance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/UserBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-231">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/DailyStaBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/common/DaoUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="228" column="32" selection-start-line="228" selection-start-column="32" selection-end-line="228" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/groovy/commands/controller/AibeiController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        <state relative-caret-position="144">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineBuyEnergy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="144">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/GroovyMineSystem.groovy">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="1268" column="53" selection-start-line="1268" selection-start-column="53" selection-end-line="1268" selection-end-column="53" />
+        <state relative-caret-position="144">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/GameConfig.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/NotifyMineInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="119" column="31" selection-start-line="119" selection-start-column="31" selection-end-line="119" selection-end-column="31" />
-          <folding>
-            <element signature="e#2399#2400#0" expanded="true" />
-            <element signature="e#2444#2445#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="198">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/ConsulConfig.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/NotifyMineFinish.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="126" column="36" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="37" />
-          <folding>
-            <element signature="e#4984#4985#0" expanded="true" />
-            <element signature="e#5017#5018#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/centermodel/ReceiptBean.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/mine/RequestMineAccelerate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        <state relative-caret-position="144">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/CmdController.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestCodeGet.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3600">
-          <caret line="200" selection-start-line="200" selection-end-line="200" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="162">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/user/BasicUserInfo.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/GroupTextNotify.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/controller/RoleController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5778">
-          <caret line="346" selection-start-line="346" selection-end-line="346" />
-          <folding>
-            <element signature="e#46#85#0" expanded="true" />
-            <element signature="n#!!block;n#search#0;n#!!block;n#RoleController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/OpenRankService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6228">
-          <caret line="606" column="52" selection-start-line="606" selection-start-column="52" selection-end-line="606" selection-end-column="52" />
-          <folding>
-            <element signature="method#init#0;class#OpenRankService#0" />
-            <element signature="method#calcday3#0;class#OpenRankService#0" />
-            <element signature="method#calcday5#0;class#OpenRankService#0" />
-            <element signature="method#calcday7#0;class#OpenRankService#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/controller/user/PackInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/JwtAuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="198">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-90">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/misc/RequestHeroTransfer.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/Readonly.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        <state relative-caret-position="-19890">
+          <caret line="43" column="47" selection-start-line="43" selection-start-column="42" selection-end-line="43" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/utils/Defs.java">
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestLineup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="136" column="29" lean-forward="true" selection-start-line="136" selection-start-column="29" selection-end-line="136" selection-end-column="29" />
+        <state relative-caret-position="360">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/heros/RequestTreasureDown.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/utils/GenUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="32" />
+        <state relative-caret-position="-1148">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar!/com/google/common/cache/LoadingCache.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/BaseDaoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/RoleBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="112" column="27" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/ConsulConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/GameConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3474">
+          <caret line="221" column="38" selection-start-line="221" selection-start-column="38" selection-end-line="221" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="73" column="35" lean-forward="true" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="92" column="64" lean-forward="true" selection-start-line="92" selection-start-column="64" selection-end-line="92" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hawk/src/main/java/com/tumei/common/DaoUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="633">
+          <caret line="215" column="19" selection-start-line="215" selection-start-column="19" selection-end-line="215" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/CacheIt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1476">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/tumei/dto/boss/BossDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/RemoteService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6336">
+          <caret line="380" column="50" selection-start-line="380" selection-start-column="50" selection-end-line="380" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestBossInfo.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="670">
+          <caret line="68" column="9" lean-forward="true" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
         </state>
       </provider>
     </entry>

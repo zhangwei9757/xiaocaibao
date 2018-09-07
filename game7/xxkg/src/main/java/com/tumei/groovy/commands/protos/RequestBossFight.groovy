@@ -73,7 +73,7 @@ class RequestBossFight extends BaseProtocol {
             int idx = boss.courage[i]
             int key = bc.upatt[idx*2]
             int val = bc.upatt[idx*2+1]
-            hss.buffs.merge(key, val, {s -> s + val})
+            hss.buffs.merge(key, val, {a, b -> a + b})
         }
 
         BattleResultStruct rtn = RemoteService.instance.askBossFight(hss)

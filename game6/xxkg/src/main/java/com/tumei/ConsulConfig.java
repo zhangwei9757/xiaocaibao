@@ -104,7 +104,7 @@ public class ConsulConfig {
 	 * 多久回复能量
 	 * 600
 	 */
-	private int mine_energy_recover = 1;
+	private int mine_energy_recover = 600;
 
 	/**
 	 * 每次回复能量的点数

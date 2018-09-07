@@ -98,7 +98,7 @@ public class RequestUseItem extends BaseProtocol {
 					if (ct != 0) {
 						rci.result = "正在打折中";
 					} else {
-						ab.setCoupleTime(System.currentTimeMillis()/1000 + 600);
+						ab.setCoupleTime(System.currentTimeMillis()/1000 + 120);
 						ab.setCoupleType(1);
 					}
 					break;
@@ -110,7 +110,7 @@ public class RequestUseItem extends BaseProtocol {
 					if (ct != 0) {
 						rci.result = "正在打折中";
 					} else {
-						ab.setCoupleTime(System.currentTimeMillis()/1000 + 600);
+						ab.setCoupleTime(System.currentTimeMillis()/1000 + 120);
 						ab.setCoupleType(2);
 					}
 					break;

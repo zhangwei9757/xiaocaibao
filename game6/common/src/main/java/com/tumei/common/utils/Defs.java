@@ -115,6 +115,10 @@ public class Defs {
 	//public static final int 初始化VIPEXP = 0;
 	//public static final int[] li = new int[]{600, 3000, 6800, 19800, 32800, 64800};
 	//public static final int 神器召唤五连 = 2180;
+	//public static final int 创建公会 = 500;
+	//public static final int 今日月卡奖励 = 100;
+	//public static final int 今日高级月卡奖励 = 200;
+	//public static final int 今日年卡奖励 = 150;
 
 	//BT模式
 	public static final int 英雄转换 = 5000;
@@ -128,7 +132,6 @@ public class Defs {
 	public static final int 夺宝奇兵 = 1200;
 	public static final int 神器商店刷新 = 500;
 	public static final int 神器召唤 = 480 * 30;
-	public static final int 开服基金购买 = 1000 * 10;
 	public static final int 白银免战 = 10 * 50;
 	public static final int 黄金免战 = 30 * 50;
 	public static final int 符文副本入场费1 = 2000000;
@@ -136,14 +139,19 @@ public class Defs {
 	public static final int 符文副本入场费3 = 7500;
 	public static final int 重生宝物 = 2500;
 	public static final int 幸运值 = 300;
+	public static final int 开服基金购买 = 1000 * 20;
 	public static final int 开服基金购买等级或英雄福利购买等级 = 8;
 	public static final int 英雄福利购买 = 8888;
-	public static final int 初始化钻石 = 88888;
+	public static final int 初始化钻石 = 8888;
 	public static final int 初始化金币 = 888888;
 	public static final int 初始化VIP = 6;
 	public static final int 初始化VIPEXP = 72000;
 	public static final int[] li = new int[]{600, 3000, 6800, 19800, 32800, 64800, 158800};
 	public static final int 神器召唤五连 = 2180 * 30;
+	public static final int 创建公会 = 50000;
+	public static final int 今日月卡奖励 = 100 * 50;
+	public static final int 今日高级月卡奖励 = 200 * 50;
+	public static final int 今日年卡奖励 = 150 * 50;
 
 	public static String getColorString(int grade, String name) {
 		String fm = "%s";

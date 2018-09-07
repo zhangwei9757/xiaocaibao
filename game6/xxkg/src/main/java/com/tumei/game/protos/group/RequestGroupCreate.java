@@ -2,6 +2,7 @@ package com.tumei.game.protos.group;
 
 import com.google.common.base.Strings;
 import com.tumei.common.RemoteService;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.common.group.GroupReturn;
@@ -47,7 +48,7 @@ public class RequestGroupCreate extends BaseProtocol {
 		}
 
 		PackBean pb = user.getDao().findPack(user.getUid());
-		if (!pb.contains(钻石, 500)) {
+		if (!pb.contains(钻石, Defs.创建公会)) {
 			rci.result = ErrCode.钻石不足.name();
 			user.send(rci);
 			return;
@@ -57,7 +58,7 @@ public class RequestGroupCreate extends BaseProtocol {
 		GroupReturn rtn = RemoteService.getInstance().askGroupCreate(grm, name, icon, approval);
 		if (Strings.isNullOrEmpty(rtn.result)) {
 			gb.setGid(rtn.group);
-			user.payItem(钻石, 500, "创建公会");
+			user.payItem(钻石, Defs.创建公会, "创建公会");
 		}
 
 		rci.result = rtn.result;

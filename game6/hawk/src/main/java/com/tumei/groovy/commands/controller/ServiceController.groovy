@@ -37,9 +37,9 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ServiceController {
     private static final Log log = LogFactory.getLog(this.class)
 
-    private static final String quick_ckey = "45658799209587791571919162719543"
+    private static final String quick_ckey = "53542807042775759929013114088114"
 
-    private static final String quick_md5 = "a0vznqv0uvzjdjdlpoujxqq83dkwdjln"
+    private static final String quick_md5 = "afwou1awuogcmzkguxbx5u6ez64ridkt"
 
     @Autowired
     private DaoUtils dao

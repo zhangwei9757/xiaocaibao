@@ -73,7 +73,7 @@ class RequestArtSummon extends BaseProtocol {
 
             ++(ab.artTotal)
             if ((ab.artTotal % 20) == 0) { // 20次必得橙色
-                def list = ascs.stream().filter({asc -> asc.team >= 4}).collect(Collectors.toList())
+                List<ArtsummonConf> list = ascs.stream().filter({asc -> asc.team >= 4}).collect(Collectors.toList())
                 int idx = RandomUtil.getRandom() % list.size()
                 ArtsummonConf asc = list.get(idx) as ArtsummonConf
                 rci.awards.addAll(user.addItems(asc.good, false, "神器召唤"))

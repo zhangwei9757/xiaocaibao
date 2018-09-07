@@ -34,12 +34,9 @@ public class RequestSendMessage extends BaseProtocol {
 		RoleBean rb = user.getDao().findRole(user.getUid());
 		long say = rb.getSaytime();
 		if (say != 0) {
-			long now = System.currentTimeMillis();
-			if (say > now) {
-				rci.result = ErrCode.禁止发言.name();
-				user.send(rci);
-				return;
-			}
+            rci.result = ErrCode.禁止发言.name();
+            user.send(rci);
+            return;
 		}
 
 		if ((msg.contains("退") && msg.contains("款"))) {

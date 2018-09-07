@@ -408,6 +408,16 @@ class TestController {
                 return new Reply(ErrCode.帐号权限被封禁)
             }
 
+            // 记录登录信息
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(account, password)
+            Authentication authentication = authenticationManager.authenticate(token)
+
+            SecurityContext sc = SecurityContextHolder.getContext()
+            sc.setAuthentication(authentication)
+
+            // 获取认证后的帐号对应的uid,并保存到session中，传递到game server
+            HttpSession session = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest().getSession()
+            session.setAttribute("uid", ub.getId())
             log.info("帐号(" + account + ") 认证成功, uid(" + ub.getId() + ")")
 
             // 读取该帐号相关的最近登录服务器id和有帐号的服务器id

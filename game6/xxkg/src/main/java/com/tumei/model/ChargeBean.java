@@ -435,17 +435,17 @@ public class ChargeBean {
 
 		if (now <= getMonth() && day != getSendMonthDay()) {
 			// 发送月卡奖励
-			GameServer.getInstance().sendAwardMail(this.id, "月卡奖励", "今日月卡奖励", String.format("%s,100", 钻石));
+			GameServer.getInstance().sendAwardMail(this.id, "月卡奖励", "今日月卡奖励", String.format("%s,%d", 钻石, Defs.今日月卡奖励));
 			setSendMonthDay(day);
 		}
 		if (now <= getBigmonth() && day != getSendBigMonthDay()) {
 			// 发送大月卡奖励
-			GameServer.getInstance().sendAwardMail(this.id, "高级月卡奖励", "今日高级月卡奖励", String.format("%s,200", 钻石));
+			GameServer.getInstance().sendAwardMail(this.id, "高级月卡奖励", "今日高级月卡奖励", String.format("%s,%d", 钻石, Defs.今日高级月卡奖励));
 			setSendBigMonthDay(day);
 		}
 		if (now <= getYear() && day != getSendYearDay()) {
 			// 发送年卡奖励
-			GameServer.getInstance().sendAwardMail(this.id, "年卡奖励", "今日年卡奖励", String.format("%s,150", 钻石));
+			GameServer.getInstance().sendAwardMail(this.id, "年卡奖励", "今日年卡奖励", String.format("%s,%d", 钻石, Defs.今日年卡奖励));
 			setSendYearDay(day);
 		}
 		return this;

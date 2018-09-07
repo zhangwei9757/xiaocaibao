@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dc9bb93-e4d5-4c9b-9917-8c6f3a7d1251" name="Default" comment="" />
+    <list default="true" id="7dc9bb93-e4d5-4c9b-9917-8c6f3a7d1251" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/hawk/target/" />
     <ignored path="$PROJECT_DIR$/guild/target/" />
@@ -17,15 +19,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RequestRelicActivate.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestRelicActivate.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1548">
-              <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RequestLimitAward.groovy" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestLimitAward.groovy">
           <provider selected="true" editor-type-id="text-editor">
@@ -38,8 +31,8 @@
       <file leaf-file-name="RequestSummon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/misc/RequestSummon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="49" column="23" lean-forward="true" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+            <state relative-caret-position="522">
+              <caret line="49" column="23" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -47,8 +40,8 @@
       <file leaf-file-name="LimitRankService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/LimitRankService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+            <state relative-caret-position="1296">
+              <caret line="96" selection-start-line="96" selection-end-line="96" />
               <folding>
                 <element signature="e#1260#1261#0" expanded="true" />
                 <element signature="e#1292#1293#0" expanded="true" />
@@ -60,17 +53,26 @@
       <file leaf-file-name="GameUser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/GameUser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="871" column="43" lean-forward="true" selection-start-line="871" selection-start-column="43" selection-end-line="871" selection-end-column="43" />
+            <state relative-caret-position="14328">
+              <caret line="871" column="43" selection-start-line="871" selection-start-column="43" selection-end-line="871" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+            <state relative-caret-position="612">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RankService.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/RankService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="639">
+              <caret line="811" column="15" selection-start-line="811" selection-start-column="15" selection-end-line="811" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -78,7 +80,7 @@
       <file leaf-file-name="Readonly.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/Readonly.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
+            <state relative-caret-position="30690">
               <caret line="1842" column="25" selection-start-line="1842" selection-start-column="25" selection-end-line="1842" selection-end-column="25" />
             </state>
           </provider>
@@ -96,7 +98,7 @@
       <file leaf-file-name="DaoGame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/DaoGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10962">
+            <state relative-caret-position="11970">
               <caret line="688" selection-start-line="688" selection-end-line="688" />
             </state>
           </provider>
@@ -157,7 +159,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/beans/RelicBean.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/model/WarBean.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/com/tumei/common/service/ServiceRouter.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestWarComplete.groovy" />
@@ -208,6 +209,7 @@
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupJoin.java" />
         <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupDonate.java" />
         <option value="$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GuildbagBean.java" />
+        <option value="$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyTasks.java" />
       </list>
     </option>
   </component>
@@ -234,10 +236,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="22" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="258" />
     <option name="y" value="23" />
-    <option name="width" value="1920" />
+    <option name="width" value="1614" />
     <option name="height" value="978" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -246,6 +248,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,16 +292,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tumei" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="game7" type="b2602c69:ProjectViewProjectNode" />
-              <item name="game7" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="tumei" type="462c0819:PsiDirectoryNode" />
-              <item name="configs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="game7" type="b2602c69:ProjectViewProjectNode" />
@@ -445,6 +440,27 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game7" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game7" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game7" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game7" type="462c0819:PsiDirectoryNode" />
+              <item name="xxkg" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tumei" type="462c0819:PsiDirectoryNode" />
               <item name="groovy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -489,12 +505,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../game6" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -616,12 +630,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32690126" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
@@ -638,27 +650,14 @@
       <window_info id="UI Designer" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.36601308" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.36662883" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21192758" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32915717" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32690126" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3382688" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.19750284" />
-      <window_info id="Designer" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.36662883" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5007143" side_tool="true" weight="0.32963374" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928573" weight="0.38251987" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32690126" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -696,48 +695,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/modelconf/SummonrankConf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/arena/src/main/java/com/tumei/groovy/commands/ArenaService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-903">
-          <caret line="65" column="22" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestRdshopCancel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/common/RemoteService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3480">
-          <caret line="260" column="17" selection-start-line="260" selection-start-column="17" selection-end-line="260" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/guild/src/main/java/com/tumei/modelconf/GuildbagConf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/guild/src/main/java/com/tumei/model/GuildbagStruct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
-          <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/guild/src/main/java/com/tumei/controller/GroupService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -983,13 +940,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/guild/src/main/java/com/tumei/controller/GroupController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="198" selection-start-line="198" selection-end-line="198" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/group/RequestGroupLeave.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="319">
@@ -1042,8 +992,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/GameUser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="871" column="43" lean-forward="true" selection-start-line="871" selection-start-column="43" selection-end-line="871" selection-end-column="43" />
+        <state relative-caret-position="14328">
+          <caret line="871" column="43" selection-start-line="871" selection-start-column="43" selection-end-line="871" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/configs/security/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/groovy/commands/protos/RequestRelicActivate.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1548">
+          <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/guild/src/main/java/com/tumei/controller/GroupController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-937">
+          <caret line="198" selection-start-line="198" selection-end-line="198" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/LocalService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4244">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/FireRaidRankService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1778">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/protos/daily/RequestDailyTasks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xxkg/src/main/java/com/tumei/game/services/RankService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="811" column="15" selection-start-line="811" selection-start-column="15" selection-end-line="811" selection-end-column="15" />
         </state>
       </provider>
     </entry>
