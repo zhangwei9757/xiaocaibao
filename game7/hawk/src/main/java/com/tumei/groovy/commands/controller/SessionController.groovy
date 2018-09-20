@@ -668,7 +668,7 @@ class SessionController {
         if (a < 1) {
             return false
         }
-        if (b <= 2) {
+        if (a == 1 && b <= 2) {
             return false
         }
 

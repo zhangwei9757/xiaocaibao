@@ -1,6 +1,7 @@
 package com.tumei.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tumei.common.utils.Defs;
 import com.tumei.modelconf.TeamExpConf;
 import com.tumei.common.Readonly;
 import org.apache.commons.logging.Log;
@@ -116,6 +117,8 @@ public class RoleBean {
         rb.grade = 2;
         rb.level = 1;
         rb.newbie = 1;
+        rb.setVip(Defs.初始化VIP);
+        rb.setVipexp(Defs.初始化VIPEXP);
         rb.nickname = "tm_" + _id;
         rb.createtime = new Date();
 

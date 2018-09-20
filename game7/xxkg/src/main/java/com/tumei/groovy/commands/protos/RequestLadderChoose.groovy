@@ -5,6 +5,7 @@ import com.tumei.game.GameUser
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.WebSocketUser
 
+import java.time.DayOfWeek
 import java.time.LocalDateTime
 
 /**
@@ -36,7 +37,7 @@ class RequestLadderChoose extends BaseProtocol {
         }
 
         LocalDateTime ldt = LocalDateTime.now()
-        if (ldt.dayOfWeek == 0 && ldt.hour < 10) {
+        if (ldt.dayOfWeek == DayOfWeek.MONDAY && ldt.hour < 10) {
             rci.result = "天梯怪物正在反攻天梯榜单,当前不可进入."
             user.send(rci)
             return

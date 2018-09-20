@@ -116,7 +116,7 @@ public class PackBean {
 		pb.addItem(钻石, Defs.初始化钻石, "初始发放");
 
 		pb.addItem(活力, 30, "初始");
-		pb.addItem(突破石, 50, "初始");
+		pb.addItem(突破石, 100, "初始");
 		pb.addItem(初级精炼石, 10, "初始");
 
 		pb.addItem(20012, 1, "初始");

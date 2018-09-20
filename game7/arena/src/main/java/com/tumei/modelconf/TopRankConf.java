@@ -24,4 +24,7 @@ public class TopRankConf {
 	public int[] time;
 	// 每个区分别对应的slot个数
 	public int[] newslot;
+
+	// 每多少个game server分配到一个slot里
+	public int groupnum;
 }

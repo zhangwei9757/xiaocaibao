@@ -14,6 +14,8 @@ import com.tumei.game.GameServer;
 import com.tumei.model.*;
 import com.tumei.model.festival.FestivalBean;
 import com.tumei.model.festival.FestivalBeanRepository;
+import com.tumei.model.limit.InvadingBean;
+import com.tumei.model.limit.InvadingBeanRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +109,10 @@ public class DaoService extends BaseDaoService {
 	private FestivalBeanRepository festivalBeanRepository;
 	@Autowired
 	private BossBeanRepository bossBeanRepository;
+	@Autowired
+	private InvadingBeanRepository invadingBeanRepository;
+	@Autowired
+	private WarBeanRepository warBeanRepository;
 
 	/********** 各种缓存接口 **********/
 	/**
@@ -201,6 +207,17 @@ public class DaoService extends BaseDaoService {
 	 * boss战信息
 	 */
 	private LoadingCache<Long, BossBean> bossBeanLoadingCache;
+
+	/**
+	 * 怪兽入侵活动
+	 */
+	private LoadingCache<Long, InvadingBean> invadingBeanLoadingCache;
+
+	/**
+	 * 战争学院
+	 */
+	private LoadingCache<Long, WarBean> warBeanLoadingCache;
+
 	/********** END 各种缓存接口 **********/
 
 	/**
@@ -764,6 +781,56 @@ public class DaoService extends BaseDaoService {
 		}, accDelay, writeDelay);
 
 
+		// 怪兽入侵
+		invadingBeanLoadingCache = cacheIt.cached(new CacheLoader<Long, InvadingBean>() {
+			@Override
+			public InvadingBean load(Long s) {
+				// 从指定数据库中读取数据
+				InvadingBean bean;
+				try {
+					bean = invadingBeanRepository.findById(s);
+					if (bean != null) {
+						return bean;
+					}
+				} catch (Exception e) {
+					log.error("cache find:", e);
+				}
+
+				bean = new InvadingBean();
+				bean.setId(s);
+				return bean;
+			}
+		}, (RemovalNotification<Long, InvadingBean> removalNotification) -> {
+			if (removalNotification.getCause() == RemovalCause.EXPIRED || removalNotification.getCause() == RemovalCause.EXPLICIT) {
+				invadingBeanRepository.save(removalNotification.getValue());
+			}
+		}, accDelay, writeDelay);
+
+		// 战争学院
+		warBeanLoadingCache = cacheIt.cached(new CacheLoader<Long, WarBean>() {
+			@Override
+			public WarBean load(Long s) {
+				// 从指定数据库中读取数据
+				WarBean bean;
+				try {
+					bean = warBeanRepository.findById(s);
+					if (bean != null) {
+						return bean;
+					}
+				} catch (Exception e) {
+					log.error("cache find:", e);
+				}
+
+				bean = new WarBean();
+				bean.setId(s);
+				return bean;
+			}
+		}, (RemovalNotification<Long, WarBean> removalNotification) -> {
+			if (removalNotification.getCause() == RemovalCause.EXPIRED || removalNotification.getCause() == RemovalCause.EXPLICIT) {
+				warBeanRepository.save(removalNotification.getValue());
+			}
+		}, accDelay, writeDelay);
+
 		_instance = this;
 	}
 
@@ -1095,6 +1162,24 @@ public class DaoService extends BaseDaoService {
 			return bossBeanLoadingCache.get(id);
 		} catch (ExecutionException e) {
 			log.error("获取Boss信息错误:", e);
+		}
+		return null;
+	}
+
+	public InvadingBean findInvading(long id) {
+		try {
+			return invadingBeanLoadingCache.get(id);
+		} catch (ExecutionException e) {
+			log.error("获取怪兽入侵信息错误：", e);
+		}
+		return null;
+	}
+
+	public WarBean findWar(long id) {
+		try {
+			return warBeanLoadingCache.get(id);
+		} catch (ExecutionException e) {
+			log.error("获取战争学院信息错误:", e);
 		}
 		return null;
 	}

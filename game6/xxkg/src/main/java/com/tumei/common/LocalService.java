@@ -326,4 +326,13 @@ public class LocalService {
 		this.serverBean.day7 = true;
 		serverBeanRepository.save(this.serverBean);
 	}
+
+	public synchronized int getLimitday() {
+		return this.serverBean.limitday;
+	}
+
+	public synchronized void setLimitday(int taskid) {
+		this.serverBean.limitday = taskid;
+		serverBeanRepository.save(this.serverBean);
+	}
 }

@@ -275,22 +275,24 @@ class BossService implements IBossSystem {
             }
 
             // 2. 根据伤害,发送公会奖励
-            rank = 1;
+            rank = 1
             for (BossGuildBean brb : gRanks) {
                 // 根据brb的id也就是公会id，找到公会所有玩家id
                 GroupBean gb = groupService.find(brb.id)
-                for (long uid :gb.roles.keySet()) {
-                    int zone = 1
-                    if (uid > 10000) {
-                        zone = sr.chooseZone(uid)
-                    }
+                if (gb != null) {
+                    for (long uid :gb.roles.keySet()) {
+                        int zone = 1
+                        if (uid > 10000) {
+                            zone = sr.chooseZone(uid)
+                        }
 
-                    Map<Long, Integer> ls = grk[zone]
-                    if (ls == null) {
-                        ls = new HashMap<>()
-                        grk.put(zone, ls)
+                        Map<Long, Integer> ls = grk[zone]
+                        if (ls == null) {
+                            ls = new HashMap<>()
+                            grk.put(zone, ls)
+                        }
+                        ls.put(uid, rank)
                     }
-                    ls.put(uid, rank)
                 }
 
                 ++rank

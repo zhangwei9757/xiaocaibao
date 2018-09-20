@@ -156,4 +156,9 @@ public class VipConf {
 	 * 神器商店刷新次数
 	 */
 	public int artrefresh;
+
+	/**
+	 * 战争学院可以同时进行的数量
+	 */
+	public int wardev;
 }

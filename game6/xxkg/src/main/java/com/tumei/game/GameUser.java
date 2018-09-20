@@ -249,8 +249,6 @@ public class GameUser extends SessionUser {
 		}
 
 		rb.setSex(sex);
-		rb.setVip(Defs.初始化VIP);
-		rb.setVipexp(Defs.初始化VIPEXP);
 		HerosBean hsb = dao.findHeros(uid);
 		return hsb.addFirstHero(rb.getIcon());
 	}
@@ -454,6 +452,23 @@ public class GameUser extends SessionUser {
 		List<AwardBean> awards = new ArrayList<>();
 		for (int i = 0; i < awds.size(); i += 2) {
 			awards.addAll(addItem(awds.get(i), awds.get(i + 1) * ratio, _open, reason));
+		}
+		return awards;
+	}
+
+	/**
+	 * 增加物品，3个数字一组，第一个是id,第二个和第三个是下限和上限
+	 *
+	 * @param awds
+	 * @param _open
+	 * @param reason
+	 * @return
+	 */
+	public List<AwardBean> addRangeItems(int[] awds, boolean _open, String reason) {
+		List<AwardBean> awards = new ArrayList<>();
+		for (int i = 0; i < awds.length; i += 3) {
+			int c = RandomUtil.getBetween(awds[i + 1], awds[i + 2]);
+			awards.addAll(addItem(awds[i], c, _open, reason));
 		}
 		return awards;
 	}

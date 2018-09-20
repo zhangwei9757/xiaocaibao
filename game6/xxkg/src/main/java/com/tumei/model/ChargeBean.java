@@ -11,6 +11,7 @@ import com.tumei.game.GameServer;
 import com.tumei.game.protos.structs.SingleStruct;
 import com.tumei.model.beans.ChargeDayBean;
 import com.tumei.modelconf.CumrechargeConf;
+import com.tumei.modelconf.DailyactlistConf;
 import com.tumei.modelconf.RecreturnConf;
 import com.tumei.modelconf.SinglerechargeConf;
 import org.springframework.data.annotation.Id;
@@ -82,6 +83,15 @@ public class ChargeBean {
 	 * 最后一次发送充值奖励时间
 	 * */
 	private int lastDay;
+
+	/**
+	 * 当日累计充值发送奖励时间
+	 * */
+	private int limitDay;
+	/**
+	 * 当时累计充值发过的所有档次奖励
+	 * */
+	private HashSet<Integer> limitChargeRewardx = new HashSet<>();
 
 	private HashSet<Integer> buffCounts = new HashSet<>();
 
@@ -210,6 +220,70 @@ public class ChargeBean {
 			cdb = new ChargeDayBean(today, rmb);
 			dayCharges.add(cdb);
 		}
+
+		// 刷新当天累计充值奖励
+		DailyactlistConf dc = flushLimitChargeReward();
+
+		if (dc != null) {
+			int todayCharges = cdb.rmb / 100;
+
+			int index = 0;// 对应奖励配置表所在位置
+			for (int cost : dc.costx) {
+				// 符合对应充值档位奖励要求，且未发送过该档位奖励，发送奖励
+				if (todayCharges >= cost && !limitChargeRewardx.contains(cost)) {
+					int[] receives = dc.rewardx[index];
+					StringBuilder sb = new StringBuilder();
+
+					for (int i = 0; i < receives.length; ++i) {
+						if (i > 0) {
+							sb.append(",");
+						}
+						sb.append(receives[i]);
+						sb.append(",");
+						sb.append(receives[++i]);
+					}
+					GameServer.getInstance().sendAwardMail(this.id, "道具返利", String.format("单日充值<color=red>%d</color>元返利", cost), sb.toString());
+
+					limitChargeRewardx.add(cost);
+				}
+				++index;
+			}
+		}
+
+		// 限时活动怪兽入侵累计充值
+		DaoService.getInstance().findInvading(id).doChargeAdd(rmb);
+	}
+
+	/**
+	 * 刷新累计充值活动,返回对应活动期间配置表
+	 *
+	 */
+	public DailyactlistConf flushLimitChargeReward() {
+		int today = TimeUtil.getToday();
+
+		List<DailyactlistConf> dailyactlistConfs = Readonly.getInstance().getDailyactlistConfs();
+		DailyactlistConf dc = null;
+
+		for (DailyactlistConf dcs : dailyactlistConfs) {
+			if (today >= dcs.start && today <= dcs.last) {
+				dc = dcs;
+				break;
+			}
+		}
+
+		if (dc == null) {
+			// 不在活动期间
+			limitDay = 0;
+			limitChargeRewardx.clear();
+		} else {
+			// 在活动期间
+			if (limitDay < today) {
+				// 限时时间与今天不同，表示进入新的一天，奖励记录清空
+				limitChargeRewardx.clear();
+				limitDay = today;
+			}
+		}
+		return dc;
 	}
 
 	/**

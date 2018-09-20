@@ -480,9 +480,11 @@ class ArenaService implements IArenaSystem {
                 rnd = true
             }
 
-            // 参数错误
-            if (slot < 0 || slot > 6) {
-                return -2
+            int segment = readonly.findTopRankConf(1).groupnum
+            int szone = uid % 1000
+            slot = (int) ((szone - 1) / segment)
+            if (slot >= arenaData.slotsSize()) {
+                slot = arenaData.slotsSize() - 1
             }
 
             arb.setSlot(slot)

@@ -119,6 +119,14 @@ public class Defs {
 	//public static final int 今日月卡奖励 = 100;
 	//public static final int 今日高级月卡奖励 = 200;
 	//public static final int 今日年卡奖励 = 150;
+	//public static final int 怪兽入侵碎片生成时间 = 20 * 60;
+	//public static final int 怪兽入侵碎片上限 = 50;
+	//public static final int 怪兽入侵血量上限 = 300;
+	//public static final int 怪兽入侵复活间隔 = 6 * 60 * 60;
+	//public static final int 怪兽入侵复活费用 = 500;
+	//public static final int 怪兽入侵次元碎片单价 = 10;
+	//public static final int 怪兽入侵次元碎片价格累加 = 5;
+	//public static final int 怪兽入侵次元碎片价格上限 = 50;
 
 	//BT模式
 	public static final int 英雄转换 = 5000;
@@ -152,6 +160,14 @@ public class Defs {
 	public static final int 今日月卡奖励 = 100 * 50;
 	public static final int 今日高级月卡奖励 = 200 * 50;
 	public static final int 今日年卡奖励 = 150 * 50;
+	public static final int 怪兽入侵碎片生成时间 = 60;// 20 * 60
+	public static final int 怪兽入侵碎片上限 = 50;
+	public static final int 怪兽入侵血量上限 = 10;// 300
+	public static final int 怪兽入侵复活间隔 = 60;// 6 * 60 * 60
+	public static final int 怪兽入侵复活费用 = 500 * 20;// BT 20倍
+	public static final int 怪兽入侵次元碎片单价 = 10 * 20;// BT 20倍
+	public static final int 怪兽入侵次元碎片价格累加 = 5 * 20;// BT 20倍
+	public static final int 怪兽入侵次元碎片价格上限 = 50 * 20;// BT 20倍
 
 	public static String getColorString(int grade, String name) {
 		String fm = "%s";

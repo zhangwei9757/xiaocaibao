@@ -156,7 +156,7 @@ class ServiceController {
                 receiptBean.sourceUser = channel_uid
                 receiptBean.rmb = (int) (Float.parseFloat(amount) * 100)
                 receiptBean.channel = 1
-                receiptBean.bundle = fields[2]
+//                receiptBean.bundle = fields[2]
                 receiptBean.sandbox = Integer.parseInt(is_test)
 
                 accid = (long) (receiptBean.uid / 1000)

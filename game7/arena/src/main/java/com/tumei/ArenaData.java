@@ -162,11 +162,9 @@ public class ArenaData {
 		slots = arenaSlotBeanRepository.findAll(new Sort("slot"));
 
 		int count = readonly.findTopRankConf(1).newslot[zone-1];
-		if (slots.size() == 0) {
-			for (int i = 0; i < count; ++i) {
-				createSlot(i);
-			}
-		}
+        for (int i = slots.size(); i < count; ++i) {
+            createSlot(i);
+        }
 
 		// 数据库slots数量大于 配置的slot,删除多余的部分
 		if (slots.size() > count) {

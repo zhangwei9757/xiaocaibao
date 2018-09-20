@@ -4,6 +4,9 @@ import com.tumei.centermodel.BundleBean;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.modelconf.*;
 import com.tumei.modelconf.festival.*;
+import com.tumei.modelconf.limit.InvadingConf;
+import com.tumei.modelconf.limit.InvrankConf;
+import com.tumei.modelconf.limit.InvtotalConf;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,6 +126,7 @@ public class Readonly {
 		public List<BossrankConf> bossrankConfs;
 
 		public List<RecreturnConf> recreturnConfs;
+		public List<MissionConf> missions = new ArrayList<>();
 
 		public void initialize() {
 			List<BundleBean> bbs = centerTemplate.findAll(BundleBean.class);
@@ -751,6 +755,16 @@ public class Readonly {
 				}
 				return 0;
 			});
+
+			missions = mongoTemplate.findAll(MissionConf.class);
+			missions.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				} else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
 		}
 	}
 
@@ -958,6 +972,10 @@ public class Readonly {
 		public List<FestivalSpendConf> festivalSpendConfs;
 		public List<FestivalSaleConf> festivalSaleConfs;
 		public List<FestivalCumConf> festivalCumConfs;
+		public List<DailyactlistConf> dailyactlists;
+		public List<InvadingConf> invadingConfs;
+		public List<InvrankConf> invrankConfs;
+		public List<InvtotalConf> invtotalConfs;
 
 		public void initialize() {
 			festivalConfs = mongoTemplate.findAll(FestivalConf.class);
@@ -1018,6 +1036,50 @@ public class Readonly {
 
 			festivalSpendConfs = mongoTemplate.findAll(FestivalSpendConf.class);
 			festivalSpendConfs.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				}
+				else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			dailyactlists = mongoTemplate.findAll(DailyactlistConf.class);
+			dailyactlists.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				}
+				else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			invadingConfs = mongoTemplate.findAll(InvadingConf.class);
+			invadingConfs.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				}
+				else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			invrankConfs = mongoTemplate.findAll(InvrankConf.class);
+			invrankConfs.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				}
+				else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			invtotalConfs = mongoTemplate.findAll(InvtotalConf.class);
+			invtotalConfs.sort((o1, o2) -> {
 				if (o1.key < o2.key) {
 					return -1;
 				}
@@ -1914,6 +1976,57 @@ public class Readonly {
 	}
 
 	public List<RecreturnConf> getRecreturnConfs() { return conf.recreturnConfs; }
+
+	public List<DailyactlistConf> getDailyactlistConfs() { return festConf.dailyactlists; }
+
+	public List<InvadingConf> getInvadingConfs() { return festConf.invadingConfs; }
+
+	public InvadingConf findInvadingConf(int key) {
+		InvadingConf ic = null;
+		if (festConf.invadingConfs.size() <= 0) {
+			return ic;
+		}
+		return festConf.invadingConfs.get(key - 1);
+	}
+
+	public List<InvrankConf> getInvrankConfs() { return festConf.invrankConfs; }
+
+	public InvrankConf findInvrankConf(int key) {
+		InvrankConf ic = null;
+		if (festConf.invrankConfs.size() <= 0) {
+			return ic;
+		}
+		return festConf.invrankConfs.get(key - 1);
+	}
+
+	public List<InvtotalConf> getInvtotalConfs() { return festConf.invtotalConfs; }
+
+	public InvtotalConf findInvtotalConfs(int rmb) {
+		InvtotalConf ic = null;
+		if (festConf.invtotalConfs.size() <= 0) {
+			return ic;
+		}
+		for (InvtotalConf invtotalConf : festConf.invtotalConfs) {
+			if (invtotalConf.cost == rmb) {
+				ic = invtotalConf;
+				break;
+			}
+		}
+		return ic;
+	}
+
+	public MissionConf findMission(int key) {
+		--key;
+		if (key < 0 || key >= conf.missions.size()) {
+			return null;
+		}
+
+		return conf.missions.get(key);
+	}
+
+	public List<MissionConf> getMissions() {
+		return conf.missions;
+	}
 }
 
 

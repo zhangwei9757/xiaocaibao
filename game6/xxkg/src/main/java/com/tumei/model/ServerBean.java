@@ -51,4 +51,7 @@ public class ServerBean {
 	public boolean day3 = false;
 	public boolean day5 = false;
 	public boolean day7 = false;
+
+	// 是否上次limitday的id没有被清除，需要发送奖励进行结算
+	public int limitday = 0;
 }

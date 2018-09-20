@@ -18,4 +18,9 @@ public class AwardBean {
 		count = _count;
 		hid = _hid;
 	}
+
+	public AwardBean(int id, long count) {
+		this.id = id;
+		this.count = count;
+	}
 }
