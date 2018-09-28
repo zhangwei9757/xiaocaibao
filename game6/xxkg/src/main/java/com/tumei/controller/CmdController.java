@@ -8,7 +8,9 @@ import com.tumei.common.utils.SystemUtil;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.controller.cmd.CmdServerInfo;
 import com.tumei.game.GameServer;
+import com.tumei.game.protos.notifys.NotifyMessage;
 import com.tumei.game.protos.notifys.NotifyRedPoint;
+import com.tumei.game.protos.structs.MessageStruct;
 import com.tumei.game.services.OpenRankService;
 import com.tumei.model.DataStaBean;
 import com.tumei.model.MailsBean;
@@ -163,6 +165,13 @@ public class CmdController {
 	public String flushActivity() {
 		Readonly.getInstance().refreshActivity();
 		return "活动配置刷新完毕";
+	}
+
+
+	@ApiOperation(value = "获取聊天信息")
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public List<MessageStruct> chats() {
+		return NotifyMessage.view();
 	}
 
 

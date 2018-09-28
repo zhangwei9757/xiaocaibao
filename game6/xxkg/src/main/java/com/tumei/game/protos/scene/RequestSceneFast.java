@@ -1,8 +1,12 @@
 package com.tumei.game.protos.scene;
 
 import com.tumei.GameConfig;
+import com.tumei.common.DaoService;
+import com.tumei.common.utils.Defs;
+import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
 import com.tumei.model.RoleBean;
+import com.tumei.model.WarBean;
 import com.tumei.model.beans.AwardBean;
 import com.tumei.modelconf.AddtimeConf;
 import com.tumei.websocket.SessionUser;
@@ -87,6 +91,16 @@ public class RequestSceneFast extends BaseProtocol {
 		sb.addSpeedCount(1);
 		sb.harvest(user, GameConfig.getInstance().getSceneFastTime(), rl);
 		rl.energy = sb.updateEnergy(GameConfig.getInstance().getSceneFastRecover());
+
+		if (rb.getLevel() >= Defs.战争学院紧急任务生成等级限制) {
+			WarBean wb = DaoService.getInstance().findWar(user.getUid());
+			int random = RandomUtil.getBetween(1,100);
+			if (random >= Defs.战争学院紧急任务生成机率){
+				wb.generateEmergy(user.getLevel());
+			}
+
+		}
+
 		user.send(rl);
 	}
 }

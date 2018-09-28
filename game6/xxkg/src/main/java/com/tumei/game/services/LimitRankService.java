@@ -6,28 +6,21 @@ import com.tumei.common.Readonly;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.common.zset.SkipList;
 import com.tumei.dto.db2proto.NameValue;
-import com.tumei.game.GameServer;
-import com.tumei.game.GameUser;
 import com.tumei.model.limit.InvadingBean;
-import com.tumei.model.limit.InvadingBeanRepository;
 import com.tumei.model.limit.LimitRankBean;
 import com.tumei.model.limit.LimitRankBeanRepository;
 import com.tumei.modelconf.limit.InvadingConf;
 import com.tumei.modelconf.limit.InvrankConf;
-import com.tumei.modelconf.limit.InvtotalConf;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springsource.loaded.ri.TypeDescriptorMethodProvider;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by zw on 2018/09/11
@@ -55,9 +48,6 @@ public class LimitRankService {
     @Autowired
     private LimitRankBeanRepository limitRankBeanRepository;
 
-    @Autowired
-    private InvadingBeanRepository invadingBeanRepository;
-
     // 时间段排行统计开始
     public long begin;
     // 时间段排行统计结束
@@ -67,10 +57,6 @@ public class LimitRankService {
      * 所有玩家的信息， 上榜的玩家
      */
     private HashMap<Long, LimitRankBean> users = new HashMap<>();
-    /**
-     * 所有玩家的信息，上榜，未上榜都有
-     */
-    private HashSet<Long> allUsers = new HashSet<>();
 
     // 累计一定的次数进行数据库写入
     private int cum;
@@ -113,7 +99,7 @@ public class LimitRankService {
          * 必须先排序且初始化users，再进行刷新活动识别，否则users集合无数据，
          * 无法对【当前无活动】且【有过期活动奖励未发送】，进行发送奖励
          */
-        flushLimitTask();
+        flushLimitTask(false);
 
         inited = true;
     }
@@ -176,7 +162,7 @@ public class LimitRankService {
      * <p>
      * 如果之前的限时任务标记没有清理，现在进入的新任务，或者进入无任务时间，需要将奖励发放到位。
      */
-    private synchronized void flushLimitTask() {
+    public synchronized void flushLimitTask(boolean force) {
         int today = TimeUtil.getToday();
         InvadingConf thisFc = null;
 
@@ -196,8 +182,8 @@ public class LimitRankService {
             this.begin = TimeUtil.fromDay(thisFc.start).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8));
             this.end = TimeUtil.fromDay(thisFc.end + 1).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8));
             // 是一个新的任务，需要结算之前任务的排行奖励
-            if (lastKey != thisFc.key) {
-                if (lastKey != 0) {
+            if (lastKey != thisFc.key || force) {
+                if (lastKey != 0 || force) {
                     // 发送奖励
                     sendTaskAwards(lastKey);
                 }
@@ -207,9 +193,12 @@ public class LimitRankService {
                 skipList = new SkipList<>(0L);
                 localService.setLimitday(thisFc.key);
                 this.limitRankBeanRepository.deleteAll();
+                // 如果不清掉，动态修改配置时，这个值判断的是错误的上次区间
+                begin = 0;
+                end = 0;
             }
         } else {
-            if (lastKey != 0) {
+            if (lastKey != 0 || force) {
                 // 发送奖励
                 sendTaskAwards(lastKey);
                 // 将所有排行数据都重置
@@ -217,6 +206,8 @@ public class LimitRankService {
                 skipList = new SkipList<>(0L);
                 localService.setLimitday(0);
                 this.limitRankBeanRepository.deleteAll();
+                begin = 0;
+                end = 0;
             }
         }
     }
@@ -229,22 +220,19 @@ public class LimitRankService {
     public synchronized void sendTaskAwards(int lastKey) {
         // 发送玩家累计充值，未手动领取的奖励
         DaoService instance = DaoService.getInstance();
-        for (long uid : allUsers) {
+        for (long uid : users.keySet()) {
             InvadingBean ib = instance.findInvading(uid);
             ib.sendMailAward();
         }
         // 发送排行榜奖励
         List<NameValue> ranks = getRanks(-1);
-        // 为了使用这个现有真实上榜的排行榜，第十一名必须剔除，防止重复发送邮件奖励
-        ranks.remove(ranks.size() - 1);
         for (NameValue rank : ranks) {
             if (rank.getUid() > 0) {
                 instance.findInvading(rank.getUid()).sendMailAwardRank(rank.getRank());
             }
         }
-        // 怪兽入侵活动结束，清除所有个人自己记录
-        invadingBeanRepository.deleteAll();
-        key = 0;
+        // 清掉活动标识key,防止使用下标0找到错误信息，还原成 -1
+        key = -1;
     }
 
     /**
@@ -260,7 +248,7 @@ public class LimitRankService {
 
         long now = System.currentTimeMillis();
         if (now >= end) {
-            flushLimitTask();
+            flushLimitTask(false);
         }
 
         // 20多分钟进行一次保存 1000
@@ -319,14 +307,6 @@ public class LimitRankService {
     }
 
     /**
-     * 只要活动期间登陆过就记录玩家
-     */
-    public synchronized  void put(long uid, int activity) {
-        if (!allUsers.contains(uid)) {
-            allUsers.add(uid);
-        }
-    }
-    /**
      * 获取排行榜前十个
      *
      * @return 返回一个列表即为排行榜
@@ -336,7 +316,6 @@ public class LimitRankService {
         // 键：排名----值：详细信息
         HashMap<Integer, NameValue> temp = new HashMap<>();
 
-        DaoService instance = DaoService.getInstance();
         List<InvrankConf> invrankConfs = readonly.getInvrankConfs();
 
         List<Long> uids = range(1, 10);
@@ -375,7 +354,8 @@ public class LimitRankService {
             if (temp.getOrDefault(j, null) != null && temp.get(j).getRank() == j) {
                 rtn.add(temp.get(j));
             } else {
-                rtn.add(new NameValue("虚位以待", 0, j));
+                InvrankConf ic = readonly.findInvrankConf(j);
+                rtn.add(new NameValue(-1,"", ic.limit, j));
             }
         }
 

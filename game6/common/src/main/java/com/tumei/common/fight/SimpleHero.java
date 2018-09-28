@@ -16,11 +16,17 @@ public class SimpleHero {
 	 */
 	public int grade;
 
-	public SimpleHero(int _id, long _life, int _anger, int _skin, int _grade) {
+	/**
+	 * 0:没有武装 > 0 武装
+	 */
+	public int wuz;
+
+	public SimpleHero(int _id, long _life, int _anger, int _skin, int _grade, int _wuz) {
 		id = _id;
 		maxlife = _life;
 		anger = _anger;
 		skin = _skin;
 		grade = _grade;
+		wuz = _wuz;
 	}
 }

@@ -1,8 +1,8 @@
 package com.tumei.common;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.tumei.common.fight.GroupFightResult;
-import com.tumei.common.fight.GroupFightStruct;
+import com.tumei.common.fight.FightResult;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.service.BaseRemoteService;
 import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.JwtUtil;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Service
 public class RemoteService extends BaseRemoteService {
-	static final Log log = LogFactory.getLog(RemoteService.class);
+	private static final Log log = LogFactory.getLog(RemoteService.class);
 
 	private static RemoteService instance;
 
@@ -53,11 +53,11 @@ public class RemoteService extends BaseRemoteService {
 		restTemplate.getForObject(url, boolean.class, zone, gid, role);
 	}
 
-	public GroupFightResult callFight(GroupFightStruct arg) {
-		GroupFightResult reply = null;
+	public FightResult callFight(SceneFightStruct arg) {
+		FightResult reply = null;
 		try {
 			String url = Defs.SIMFIGHT_PREFIX + "/simGroup";
-			reply = restTemplate.postForEntity(url, arg, GroupFightResult.class).getBody();
+			reply = restTemplate.postForEntity(url, arg, FightResult.class).getBody();
 		} catch (Exception ex) {
 			log.error("请求战斗失败:" + ex.getMessage());
 		}

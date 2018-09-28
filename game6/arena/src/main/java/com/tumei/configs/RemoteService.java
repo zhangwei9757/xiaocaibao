@@ -2,7 +2,7 @@ package com.tumei.configs;
 
 import com.tumei.common.fight.FightResult;
 import com.tumei.common.fight.FightStruct;
-import com.tumei.common.fight.PowerStruct;
+import com.tumei.common.fight.HerosStruct;
 import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.service.BaseRemoteService;
 import com.tumei.common.utils.Defs;
@@ -76,7 +76,7 @@ public class RemoteService extends BaseRemoteService {
 	 * @param arg
 	 * @return
 	 */
-	public long callPower(PowerStruct arg) {
+	public long callPower(HerosStruct arg) {
 		int reply = 0;
 		String url = Defs.SIMFIGHT_PREFIX + "/calcPower";
 		try {

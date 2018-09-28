@@ -198,6 +198,55 @@
 
             <br/>
             <br/>
+
+            <h2>聊天</h2>
+            <el-form label-width="80px">
+                <el-form-item>
+                    <el-button type="primary" icon="el-icon-menu" @click="viewChat">刷新</el-button>
+                </el-form-item>
+            </el-form>
+
+            <el-table
+                    :data="chats"
+                    stripe
+                    border
+                    max-height="600"
+                    style="width: 100%">
+                <el-table-column
+                        type="index">
+                </el-table-column>
+
+                <el-table-column
+                        prop="id"
+                        label="角色ID" width="140">
+                </el-table-column>
+                <el-table-column
+                        prop="name"
+                        label="昵称" width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="vip"
+                        label="VIP" width="80">
+                </el-table-column>
+
+                <el-table-column
+                        prop="msg"
+                        label="聊天">
+                </el-table-column>
+
+                <el-table-column label="操作"> min-width="240">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                @click="forbidSay(null, scope.row.id, 1)">禁言
+                        </el-button>
+                        <el-button
+                                size="mini"
+                                @click="forbidSay(null, scope.row.id, 0)">解禁
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
             <br/>
             <br/>
             <br/>

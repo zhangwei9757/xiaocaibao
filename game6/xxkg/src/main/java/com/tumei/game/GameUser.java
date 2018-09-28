@@ -7,8 +7,7 @@ import com.tumei.common.DaoService;
 import com.tumei.common.Readonly;
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightResult;
-import com.tumei.common.fight.PowerStruct;
-import com.tumei.common.structs.SceneFightStruct;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.common.utils.TimeUtil;
@@ -138,8 +137,7 @@ public class GameUser extends SessionUser {
 		return server;
 	}
 
-	public GameUser() {
-	}
+	public GameUser() {}
 
 	/**
 	 * 判断协议，与协议之间的间隔
@@ -296,12 +294,9 @@ public class GameUser extends SessionUser {
 
 		HerosBean hsb = dao.findHeros(uid);
 		SceneFightStruct arg = new SceneFightStruct();
-		arg.setUid(uid);
-		// 1. 填充左边
-		hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), null);
-
-		// 2. 根据当前scene 填充右边
-		arg.fillRight(rc, 20);
+		arg.hss = hsb.createHerosStruct();
+		arg.hss.relics.clear();
+		arg.right = rc.makeSceneBattle(20);
 
 		FightResult r = RemoteService.getInstance().callSceneFight(arg);
 
@@ -341,12 +336,9 @@ public class GameUser extends SessionUser {
 
 		HerosBean hsb = dao.findHeros(uid);
 		SceneFightStruct arg = new SceneFightStruct();
-		arg.setUid(uid);
-		// 1. 填充左边
-		hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), null);
-
-		// 2. 根据当前scene 填充右边
-		arg.fillRight(rc, 30);
+		arg.hss = hsb.createHerosStruct();
+		arg.hss.relics.clear();
+		arg.right = rc.makeSceneBattle(30);
 
 		FightResult r = RemoteService.getInstance().callSceneFight(arg);
 
@@ -400,10 +392,6 @@ public class GameUser extends SessionUser {
 
 			nui.gem = pb.getGem();
 			nui.gold = pb.getCoin();
-
-//			nui.items.putAll(pb.getItems());
-//			nui.items.remove(10);
-//			nui.items.remove(11);
 
 			RoleBean rb = dao.findRole(uid);
 			nui.level = rb.getLevel();
@@ -850,8 +838,7 @@ public class GameUser extends SessionUser {
 			hsb = DaoService.getInstance().findHeros(this.uid);
 		}
 
-		PowerStruct ts = hsb.createTeamStruct();
-		long tmp = RemoteService.getInstance().callPower(ts);
+		long tmp = RemoteService.getInstance().callPower(hsb.createHerosStruct());
 		if (tmp > 0) {
 			power = tmp;
 		}
@@ -986,11 +973,8 @@ public class GameUser extends SessionUser {
 		ard.grade = rb.getGrade();
 
 		HerosBean hsb = DaoService.getInstance().findHeros(this.uid);
-		ard.fashion = hsb.getFakeHero();
-
+		ard.info = hsb.createHerosStruct();
 		ard.power = calcPower(hsb);
-
-		hsb.fill(ard.lineups, ard.buffs, ard.formation, ard.arts);
 
 		RemoteService.getInstance().arenaSubmitInfo(ard);
 	}

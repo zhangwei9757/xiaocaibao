@@ -48,21 +48,17 @@ class RequestInvadingInfo extends BaseProtocol {
             rci.result = ErrCode.限时活动暂未开启
         } else {
             InvadingBean ib = DaoService.instance.findInvading(user.uid)
-            if (ib != null) {
-                ib.flushDebris();
-                rci.currentDay = ib.getCurrentDay()
-                rci.debris = ib.debris
-                if (ib.lastFlushDebris == 0) {
-                    rci.lastFlushDebris = 0
-                } else {
-                    rci.lastFlushDebris = ib.lastFlushDebris + Defs.怪兽入侵碎片生成时间
-                }
-                rci.loginList = ib.createInvadingLoginDto()
-                rci.maxDebris = Defs.怪兽入侵碎片上限
-                rci.buyTotal = ib.buyTotal
+            ib.flushDebris();
+            rci.currentDay = ib.getCurrentDay()
+            rci.debris = ib.getDebris()
+            if (ib.lastFlushDebris == 0) {
+                rci.lastFlushDebris = 0
             } else {
-                rci.result = "获取怪兽入侵信息错误"
+                rci.lastFlushDebris = ib.lastFlushDebris + Defs.怪兽入侵碎片生成时间
             }
+            rci.loginList = ib.createInvadingLoginDto()
+            rci.maxDebris = Defs.怪兽入侵碎片上限
+            rci.buyTotal = ib.buyTotal
         }
         user.send(rci)
     }

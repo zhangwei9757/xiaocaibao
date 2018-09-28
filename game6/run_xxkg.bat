@@ -17,4 +17,4 @@ cp -fr ${app}/configs/* ./pub/${app}${zone}/${app}/configs/
 
 cd ./pub/${app}${zone}
 
-java -XX:+UseG1GC -Xmx200m -jar ${app}.jar --db=${db} --zone=${zone} --profile=test --script=../commands --groovy.bean=application-bean
+java -XX:+UseG1GC -Xmx200m -jar ${app}.jar --db=${db} --zone=${zone} --port=${port} --profile=test --script=../commands --groovy.bean=application-bean

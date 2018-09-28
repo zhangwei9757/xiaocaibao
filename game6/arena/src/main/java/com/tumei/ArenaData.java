@@ -1,9 +1,8 @@
 package com.tumei;
 
 import com.tumei.common.fight.HeroStruct;
-import com.tumei.common.fight.PowerStruct;
+import com.tumei.common.utils.RandomUtil;
 import com.tumei.configs.MongoTemplateConfig;
-import com.tumei.configs.RemoteService;
 import com.tumei.model.*;
 import com.tumei.modelconf.Readonly;
 import com.tumei.modelconf.RobotConf;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.swing.text.html.Option;
 import java.util.*;
 
 /**
@@ -102,20 +100,16 @@ public class ArenaData {
 					rb.setIcon(heros.get(0));
 					rb.setLevel(rc.level);
 
-					List<HeroStruct> hss = rb.getFormation();
+					HeroStruct[] hss = rb.getInfo().heros;
 					for (int j = 0; j < 6; ++j) {
 						HeroStruct hb = new HeroStruct();
 						hb.hero = heros.get(j);
 						hb.level = rc.level;
 						hb.grade = rc.grade;
-						hss.add(hb);
+						hss[j] = hb;
 					}
 
-					PowerStruct ts = new PowerStruct();
-					ts.setHeros(hss);
-
-//					long power = remoteService.callPower(ts);
-//					rb.setPower(power);
+					rb.setPower(RandomUtil.getBetween(100000, 100000000));
 
 					rk.add(rb);
 					arenaRoleBeanRepository.save(rb);
@@ -142,11 +136,9 @@ public class ArenaData {
 		slots = arenaSlotBeanRepository.findAll(new Sort("slot"));
 
 		int count = readonly.findTopRankConf(1).newslot[zone-1];
-		if (slots.size() == 0) {
-			for (int i = 0; i < count; ++i) {
-				createSlot(i);
-			}
-		}
+        for (int i = slots.size(); i < count; ++i) {
+            createSlot(i);
+        }
 
 		// 数据库slots数量大于 配置的slot,删除多余的部分
 		if (slots.size() > count) {

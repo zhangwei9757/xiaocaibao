@@ -27,4 +27,6 @@ public class TopRankConf {
 	public int slot;
 
 	public int[] newslot;
+
+	public int groupnum;
 }

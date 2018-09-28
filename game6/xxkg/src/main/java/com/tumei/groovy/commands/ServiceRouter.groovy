@@ -16,8 +16,6 @@ class ServiceRouter implements IServiceRouter{
 
     @Override
     int chooseArena(long uid) {
-        int zone = chooseZone(uid) - 1
-
-        return (int)(zone / 20) + 1
+        return 1
     }
 }

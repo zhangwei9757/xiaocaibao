@@ -6,6 +6,7 @@ import com.tumei.dto.arena.LadderSimpleDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +46,8 @@ public class TrmonsterConf {
 	}
 
 	public void fill(SceneFightStruct sfs) {
-		List<DirectHeroStruct> dhss = sfs.getRight();
+		List<DirectHeroStruct> dhss = new ArrayList<>();
+		sfs.right = dhss;
 		for (int h : guard) {
 			DirectHeroStruct shs = new DirectHeroStruct();
 			shs.hero = h;

@@ -78,6 +78,8 @@ public class RequestEquipUp extends BaseProtocol {
 		 * 返回一键强化的次数
 		 */
 		public int count;
+
+		public long fee;
 	}
 
 	public int getCost(int quality, int level) {
@@ -383,6 +385,7 @@ public class RequestEquipUp extends BaseProtocol {
 			rci.grade = eb.getLevel();
 //			user.info("一键强化最终使用金币: " + rci.price);
 		}
+		rci.fee = eb.getFee();
 		user.send(rci);
 	}
 }

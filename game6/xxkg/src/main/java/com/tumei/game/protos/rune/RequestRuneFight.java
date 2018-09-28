@@ -3,7 +3,7 @@ package com.tumei.game.protos.rune;
 import com.tumei.common.Readonly;
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightResult;
-import com.tumei.common.structs.SceneFightStruct;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameUser;
 import com.tumei.model.HerosBean;
@@ -56,12 +56,9 @@ public class RequestRuneFight extends BaseProtocol {
 
 		HerosBean hsb = user.getDao().findHeros(user.getUid());
 		SceneFightStruct arg = new SceneFightStruct();
-		arg.setUid(user.getUid());
-		// 1. 填充左边
-		hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts());
+		arg.hss = hsb.createHerosStruct();
+		arg.right = fc.makeRune();
 
-		// 2. 根据当前scene 填充右边
-		arg.fillRightByRune(fc);
 
 		FightResult r = RemoteService.getInstance().callSceneFight(arg);
 

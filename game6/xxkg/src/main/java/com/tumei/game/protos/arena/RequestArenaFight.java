@@ -3,6 +3,7 @@ package com.tumei.game.protos.arena;
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightResult;
 import com.tumei.common.fight.FightStruct;
+import com.tumei.common.fight.HerosStruct;
 import com.tumei.common.utils.Defs;
 import com.tumei.game.GameServer;
 import com.tumei.model.*;
@@ -101,17 +102,17 @@ public class RequestArenaFight extends BaseProtocol {
 
             HerosBean hsb = user.getDao().findHeros(user.getUid());
             FightStruct arg = new FightStruct();
-            arg.setUid(user.getUid());
-            // 1. 填充左边
-            hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts1());
+            arg.left = hsb.createHerosStruct();
 
             // 2. 对手
             if (rs.id < 100000) { // npc
-				RankBean rb = user.getRankPeer(rs.id);
-				rb.fillHeros(arg.getRight());
+                HerosStruct hss = new HerosStruct();
+                RankBean rb = user.getRankPeer(rs.id);
+                rb.fillHeros(hss.heros);
+                arg.right = hss;
             } else {
                 HerosBean osb = user.getDao().findHeros(rs.id);
-                osb.fill(arg.getLineups2(), arg.getBuffs2(), arg.getRight(), arg.getArts2());
+                arg.right = osb.createHerosStruct();
             }
 
             FightResult r = RemoteService.getInstance().callFight(arg);

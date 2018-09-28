@@ -116,7 +116,10 @@ public class VipConf {
 	 * vip礼包
 	 */
 	public int[] vipbag;
-
+	/**
+	 * 每日炼化次数
+	 */
+	public int dailyglory;
 	/**
 	 * vip礼包价格
 	 */

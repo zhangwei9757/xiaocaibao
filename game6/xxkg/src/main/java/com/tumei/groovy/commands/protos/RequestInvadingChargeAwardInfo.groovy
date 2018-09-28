@@ -46,7 +46,7 @@ class RequestInvadingChargeAwardInfo extends BaseProtocol {
             if (ib != null) {
                 ib.flushDebris()
                 List<InvtotalConf> confs = Readonly.instance.getInvtotalConfs()
-                int index = 0
+
                 for (InvtotalConf ic : confs) {
                     InvadingAwardDto iad = new InvadingAwardDto()
                     List<AwardStruct> list = new ArrayList<>()
@@ -54,11 +54,11 @@ class RequestInvadingChargeAwardInfo extends BaseProtocol {
                     for (int i = 0; i < reward.length; ++i) {
                         list.add(new AwardStruct(reward[i], reward[++i]))
                     }
-                    iad.status = ib.getReceiveStatu(ic.cost * 100);
+                    // 些处获取充值信息，在活动启动时就读取了，不能动态更改配置文件，会导致异常
+                    iad.status = ib.getReceiveStatu(ic.cost * 100);// 配置为元，转化为分
                     iad.awards = list
                     iad.cost = ic.cost
                     rci.chargesList.add(iad)
-                    ++index
                 }
                 rci.chargeTotal = ib.chargeTotal
             } else {

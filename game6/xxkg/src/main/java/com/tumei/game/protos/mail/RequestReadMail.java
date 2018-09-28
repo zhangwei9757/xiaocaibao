@@ -50,7 +50,7 @@ public class RequestReadMail extends BaseProtocol {
 					for (int i=0; (i+1) < fields.length; i += 2) {
 						int aid = Integer.parseInt(fields[i]);
 						long count = Long.parseLong(fields[i+1]);
-						rl.awards.addAll(user.addItem(aid, count, false, "邮件"));
+						rl.awards.addAll(user.addItem(aid, count, false, "邮件:" + mb.title + "," + mb.content));
 					}
 				});
 				mails.clear();
@@ -65,7 +65,7 @@ public class RequestReadMail extends BaseProtocol {
 					for (int i=0; (i+1) < fields.length; i += 2) {
 						int aid = Integer.parseInt(fields[i]);
 						long count = Long.parseLong(fields[i+1]);
-						rl.awards.addAll(user.addItem(aid, count, false, "邮件"));
+						rl.awards.addAll(user.addItem(aid, count, false, "邮件:" + mb.title + "," + mb.content));
 					}
 //				}
 

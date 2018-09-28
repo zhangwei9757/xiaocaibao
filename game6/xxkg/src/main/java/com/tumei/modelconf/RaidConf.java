@@ -1,9 +1,13 @@
 package com.tumei.modelconf;
 
+import com.tumei.common.Readonly;
+import com.tumei.common.fight.DirectHeroStruct;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/17 0017.
@@ -84,4 +88,65 @@ public class RaidConf {
 	public int increase;
 	public int reduce;
 
+	/**
+	 * 副本数据填充
+	 */
+	public List<DirectHeroStruct> makeSceneBattle(int ratio) {
+		List<DirectHeroStruct> rtn = new ArrayList<>();
+		for (int h : guard) {
+			if (h != 0) {
+				DirectHeroStruct shs = new DirectHeroStruct();
+				shs.hero = h;
+				shs.life = (long)(hp * (ratio / 100.0));
+				shs.attack = (int)(attack * (ratio / 100.0));
+				shs.def = (int)(defence1 * (ratio / 100.0));
+				shs.mdef = (int)(defence2 * (ratio / 100.0));
+				shs.critical = (int)(crit * (ratio / 100.0));
+				shs.aim = (int)(hit * (ratio / 100.0));
+				shs.antiCrit = (int)(critoff * (ratio / 100.0));
+				shs.dodge = (int)(dog * (ratio / 100.0));
+				shs.enHarm = (int)(increase * (ratio / 100.0));
+				shs.overHarm = (int)(reduce * (ratio / 100.0));
+				rtn.add(shs);
+			} else {
+				rtn.add(null);
+			}
+		}
+		return rtn;
+	}
+
+	/**
+	 * 矿区内单人战斗，副本数据填充, 但是英雄选择随机，仅固定传入一个英雄
+	 */
+	public List<DirectHeroStruct> makeMineBattle(int mainHero) {
+		List<DirectHeroStruct> rtn = new ArrayList<>();
+		List<Integer> heros = Readonly.getInstance().randHeros(guard.length);
+		heros.set(0, mainHero);
+
+		int i = 0;
+		for (int h : heros) {
+			if (h != 0) {
+				int ratio = details[i];
+				DirectHeroStruct shs = new DirectHeroStruct();
+				shs.hero = h;
+				shs.life = (long)(hp * (ratio / 100.0));
+				shs.attack = (int)(attack * (ratio / 100.0));
+				shs.def = (int)(defence1 * (ratio / 100.0));
+				shs.mdef = (int)(defence2 * (ratio / 100.0));
+				shs.critical = (int)(crit * (ratio / 100.0));
+				shs.aim = (int)(hit * (ratio / 100.0));
+				shs.antiCrit = (int)(critoff * (ratio / 100.0));
+				shs.dodge = (int)(dog * (ratio / 100.0));
+				shs.enHarm = (int)(increase * (ratio / 100.0));
+				shs.overHarm = (int)(reduce * (ratio / 100.0));
+				rtn.add(shs);
+			} else {
+				rtn.add(null);
+			}
+			++i;
+		}
+		return rtn;
+	}
 }
+
+

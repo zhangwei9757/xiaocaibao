@@ -125,8 +125,16 @@ public class Readonly {
 		public List<BossConf> bossConfs;
 		public List<BossrankConf> bossrankConfs;
 
+		public List<HolyexpConf> holyexps = new ArrayList<>();
+		public List<LeheupConf> leheups = new ArrayList<>();
+		public List<LhwcostConf> lhwcosts = new ArrayList<>();
+		public List<GlorychestConf> glorychests = new ArrayList<>();
+
 		public List<RecreturnConf> recreturnConfs;
 		public List<MissionConf> missions = new ArrayList<>();
+
+		// 圣物
+		public HashMap<Integer, HolyConf> holys = new HashMap<>();
 
 		public void initialize() {
 			List<BundleBean> bbs = centerTemplate.findAll(BundleBean.class);
@@ -745,6 +753,46 @@ public class Readonly {
 				return 0;
 			});
 
+			holyexps = mongoTemplate.findAll(HolyexpConf.class);
+			holyexps.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				} else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			leheups = mongoTemplate.findAll(LeheupConf.class);
+			leheups.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				} else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			lhwcosts = mongoTemplate.findAll(LhwcostConf.class);
+			lhwcosts.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				} else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
+			glorychests = mongoTemplate.findAll(GlorychestConf.class);
+			glorychests.sort((o1, o2) -> {
+				if (o1.key < o2.key) {
+					return -1;
+				} else if (o1.key > o2.key) {
+					return 1;
+				}
+				return 0;
+			});
+
 			recreturnConfs = mongoTemplate.findAll(RecreturnConf.class);
 			recreturnConfs.sort((o1, o2) -> {
 				if (o1.total1 < o2.total1) {
@@ -765,6 +813,13 @@ public class Readonly {
 				}
 				return 0;
 			});
+
+			{
+				List<HolyConf> bean = mongoTemplate.findAll(HolyConf.class);
+				for (HolyConf ib : bean) {
+					holys.put(ib.key, ib);
+				}
+			}
 		}
 	}
 
@@ -1765,6 +1820,7 @@ public class Readonly {
 	 * @return
 	 */
 	public  int[] pressCode(long uid, String code) {
+		code = code.toUpperCase();
 		// 检测code是否全局唯一码，并且该玩家没有领取过
 		if (mongoTemplate.exists(new Query(Criteria.where("id").is(code).and("uid").is(uid)), GlobalCRBean.class)) {
 			return null;
@@ -1785,6 +1841,17 @@ public class Readonly {
 		// 以上不满足的情况下，检测是否单独发送的码
 		CodeBean cb = mongoTemplate.findOne(new Query(Criteria.where("id").is(code)), CodeBean.class);
 		if (cb != null) {
+			// 单独码需要满足，该玩家没有领取过相同类型的码,判断mode
+			if (mongoTemplate.exists(new Query(Criteria.where("id").is(cb.getMode()).and("uid").is(uid)), GlobalCRBean.class)) {
+				return null;
+			}
+
+			GlobalCRBean gcrb = new GlobalCRBean();
+			gcrb.setId(cb.getMode());
+			gcrb.setUid(uid);
+			gcrb.setTime(new Date());
+			mongoTemplate.insert(gcrb);
+
 			int[] rtn = cb.getAwards();
 			mongoTemplate.remove(cb);
 			return rtn;
@@ -1975,6 +2042,44 @@ public class Readonly {
 		return conf.bossrankConfs;
 	}
 
+	/**
+	 * 根据等级,查询升级下一级所需的经验,如果是-1标识无限大
+	 *
+	 * @param level
+	 * @return
+	 */
+	public int findHolyexp(int level) {
+		--level;
+		if (level < 0 || level >= conf.holyexps.size()) {
+			return -2;
+		}
+
+		return conf.holyexps.get(level).cost1;
+	}
+
+	/**
+	 * 根据等级查询升级下一级所需的经验 如果是-1标识不能升级
+	 *
+	 * @param level
+	 * @return
+	 */
+	public LeheupConf findLeheup(int level) {
+		--level;
+		if (level < 0 || level >= conf.leheups.size()) {
+			return null;
+		}
+
+		return conf.leheups.get(level);
+	}
+
+	public LhwcostConf findLhwcost(int gift) {
+		if (gift < 0 || gift >= conf.lhwcosts.size()) {
+			return null;
+		}
+
+		return conf.lhwcosts.get(gift);
+	}
+
 	public List<RecreturnConf> getRecreturnConfs() { return conf.recreturnConfs; }
 
 	public List<DailyactlistConf> getDailyactlistConfs() { return festConf.dailyactlists; }
@@ -2015,6 +2120,10 @@ public class Readonly {
 		return ic;
 	}
 
+	public List<GlorychestConf> getGlorychests() {
+		return conf.glorychests;
+	}
+
 	public MissionConf findMission(int key) {
 		--key;
 		if (key < 0 || key >= conf.missions.size()) {
@@ -2026,6 +2135,10 @@ public class Readonly {
 
 	public List<MissionConf> getMissions() {
 		return conf.missions;
+	}
+
+	public HolyConf findHoly(int id) {
+		return conf.holys.getOrDefault(id, null);
 	}
 }
 

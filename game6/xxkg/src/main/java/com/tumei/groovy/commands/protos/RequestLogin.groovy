@@ -219,4 +219,7 @@ class ReturnLogin extends BaseProtocol {
     public int mineEnergy
 
     public int gid
+
+    // 今日已经使用钻石进行注灵的次数
+    public int relicCount
 }

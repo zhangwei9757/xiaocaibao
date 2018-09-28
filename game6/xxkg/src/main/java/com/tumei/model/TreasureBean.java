@@ -236,8 +236,5 @@ public class TreasureBean {
 
 	public void setDoubleBox(int doubleBox) {
 		this.doubleBox = doubleBox;
-		if (Defs.ISBT) {
-			this.doubleBox *= 20;
-		}
 	}
 }

@@ -107,4 +107,10 @@ public class NotifyMessage extends BaseProtocol {
 
 		user.send(nm);
 	}
+
+	public static List<MessageStruct> view() {
+		List<MessageStruct> mss = new ArrayList<>();
+		mss.addAll(cache);
+		return mss;
+	}
 }

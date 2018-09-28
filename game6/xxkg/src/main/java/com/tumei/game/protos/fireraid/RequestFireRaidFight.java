@@ -2,7 +2,7 @@ package com.tumei.game.protos.fireraid;
 
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightResult;
-import com.tumei.common.structs.SceneFightStruct;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.protos.structs.ChoiceStruct;
 import com.tumei.model.beans.AwardBean;
@@ -10,7 +10,6 @@ import com.tumei.websocket.SessionUser;
 import com.tumei.game.GameUser;
 import com.tumei.model.FireRaidBean;
 import com.tumei.model.HerosBean;
-import com.tumei.model.RoleBean;
 import com.tumei.modelconf.FireraidConf;
 import com.tumei.common.Readonly;
 import com.tumei.websocket.BaseProtocol;
@@ -91,16 +90,13 @@ public class RequestFireRaidFight extends BaseProtocol {
 
 			HerosBean hsb = user.getDao().findHeros(user.getUid());
 			SceneFightStruct arg = new SceneFightStruct();
-			arg.setUid(user.getUid());
+			arg.hss = hsb.createHerosStruct();
+			arg.right = fc.makeFireRaid();
+			arg.condition = fc.condition;
 
-			// 1. 填充左边
-			hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts());
-
-			arg.fillRightByGuard(fc);
-
-			// 2. 填充远征buff
-			arg.mergeBuffs(frb.getBuffs());
-			arg.setCondition(fc.condition);
+			frb.getBuffs().forEach((k, v) -> {
+				arg.hss.buffs.merge(k , v, (a, b) -> a + b);
+			});
 
 			FightResult r = RemoteService.getInstance().callSceneFight(arg);
 

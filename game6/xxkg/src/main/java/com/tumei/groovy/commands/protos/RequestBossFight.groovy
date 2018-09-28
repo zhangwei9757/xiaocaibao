@@ -4,9 +4,10 @@ import com.google.common.base.Strings
 import com.tumei.common.DaoService
 import com.tumei.common.Readonly
 import com.tumei.common.RemoteService
+import com.tumei.common.fight.HerosStruct
 import com.tumei.common.utils.Defs
 import com.tumei.common.webio.BattleResultStruct
-import com.tumei.common.webio.BattleStruct
+
 import com.tumei.game.GameUser
 import com.tumei.model.BossBean
 import com.tumei.model.HerosBean
@@ -60,19 +61,22 @@ class RequestBossFight extends BaseProtocol {
 
 
         HerosBean hsb = user.getDao().findHeros(user.getUid());
-        BattleStruct arg = new BattleStruct();
-
+        HerosStruct hss = hsb.createHerosStruct();
         BossConf bc = Readonly.instance.getBossConf(boss.level)
-        for (int i = 0; i < boss.courageIdx; ++i) {
-            int idx = boss.courage[i]
-            arg.buffs.put(bc.upatt[idx*2], bc.upatt[idx*2+1])
+
+        int bmax = boss.courageIdx
+        if (bmax > 5) {
+            bmax = 5
         }
 
-        // 1. 填充左边
-        hsb.fill(arg.lineups, arg.buffs, arg.roles, arg.arts);
-        arg.skin = hsb.getSkin();
+        for (int i = 0; i < bmax; ++i) {
+            int idx = boss.courage[i]
+            int key = bc.upatt[idx*2]
+            int val = bc.upatt[idx*2+1]
+            hss.buffs.merge(key, val, {a, b -> a + b})
+        }
 
-        BattleResultStruct rtn = RemoteService.instance.askBossFight(arg, user.getUid());
+        BattleResultStruct rtn = RemoteService.instance.askBossFight(hss);
         if (rtn == null) {
             rci.result = "首领战维护中，请稍后再战.";
         } else {

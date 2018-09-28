@@ -351,4 +351,14 @@ public class InvadingRequestController {
         return ranks;
     }
 
+    @ApiOperation(value = "模拟结算")
+    @RequestMapping(value = "/force", method = RequestMethod.GET)
+    public String termination() {
+        try {
+            LimitRankService.getInstance().flushLimitTask(true);
+            return "SUCCESS";
+        } catch (Exception ex) {
+            return "FAIL";
+        }
+    }
 }

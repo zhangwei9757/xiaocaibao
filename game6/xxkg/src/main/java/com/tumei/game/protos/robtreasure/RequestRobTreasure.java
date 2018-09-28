@@ -105,45 +105,29 @@ public class RequestRobTreasure extends BaseProtocol {
 		if (fast == 0) {
 			if (rs.getUid() == 0) { // Npc 战斗一定胜利, 只需要判断机率
 
-				HerosBean hsb = user.getDao().findHeros(user.getUid());
-				FightStruct arg = new FightStruct();
-				arg.setUid(user.getUid());
-				// 1. 填充左边
-				hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts1());
-
-				rs.fillHeros(arg.getRight());
-
-				FightResult fr = RemoteService.getInstance().callFight(arg);
-				rci.data = fr.data;
-
-				if (fr.win != 1) {
-					rci.win = 0;
+				int ratio = tc.rate[5 - ic.quality][1];
+				if (RandomUtil.getRandom() % 100 < ratio) {
+					rci.item = user.tmpRobItem;
 				}
-				else {
 
-					int ratio = tc.rate[5 - ic.quality][1];
-					if (RandomUtil.getRandom() % 100 < ratio) {
-						rci.item = user.tmpRobItem;
+				// 从tc中随机一个奖励出来
+				int total = 0;
+				int r = RandomUtil.getRandom() % 100;
+				int awd = tc.reward[0];
+				for (int i = 0; i < tc.reward.length; i += 2) {
+					total += tc.reward[i + 1];
+					if (r < total) {
+						awd = tc.reward[i];
+						break;
 					}
-
-					// 从tc中随机一个奖励出来
-					int total = 0;
-					int r = RandomUtil.getRandom() % 100;
-					int awd = tc.reward[0];
-					for (int i = 0; i < tc.reward.length; i += 2) {
-						total += tc.reward[i + 1];
-						if (r < total) {
-							awd = tc.reward[i];
-							break;
-						}
-					}
-
-					// 战胜奖励
-					rci.rewards.addAll(user.addItem(awd, 1, true, "抢碎片"));
-					ActivityBean ab = user.getDao().findActivity(user.getUid());
-					ab.flushCampaign();
-					ab.incCampaign2(1);
 				}
+
+				rci.win = 1;
+				// 战胜奖励
+				rci.rewards.addAll(user.addItem(awd, 1, true, "抢碎片"));
+				ActivityBean ab = user.getDao().findActivity(user.getUid());
+				ab.flushCampaign();
+				ab.incCampaign2(1);
 			}
 			else { // 抢夺玩家
 				RobBean robBean = user.findRob();
@@ -155,16 +139,12 @@ public class RequestRobTreasure extends BaseProtocol {
 
 				HerosBean hsb = user.getDao().findHeros(user.getUid());
 				FightStruct arg = new FightStruct();
-				arg.setUid(user.getUid());
-				// 1. 填充左边
-				hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts1());
+				arg.left = hsb.createHerosStruct();
 
 				HerosBean other = user.getDao().findHeros(pid);
-				// 2. 对手
-				other.fill(arg.getLineups2(), arg.getBuffs2(), arg.getRight(), arg.getArts2());
+				arg.right = other.createHerosStruct();
 
 				FightResult fr = RemoteService.getInstance().callFight(arg);
-
 				rci.data = fr.data;
 
 				if (fr.win != 1) { // 失败一定不会有奖励
@@ -224,11 +204,25 @@ public class RequestRobTreasure extends BaseProtocol {
 				user.send(rci);
 				return;
 			}
+			if (fast < 1 && fast > 100) {
+				rci.result = "连续扫荡不能大于一百次";
+				user.send(rci);
+				return;
+			}
 
 			int ratio = tc.rate[5 - ic.quality][1];
 
+			int need_spirit = fast * 2;
+			int has_spirit = pb.flushSpirit(0);
+			if (has_spirit < need_spirit) {
+				rci.result = ErrCode.活力不足.name();
+				user.send(rci);
+				return;
+			}
+
 			int num = 0;
-			for (int j = 0; j < 5; ++j) {
+
+			for (int j = 0; j < fast; ++j) {
 				if (RandomUtil.getRandom() % 100 < ratio) {
 					rci.item = user.tmpRobItem;
 				}

@@ -7,8 +7,7 @@ import com.tumei.common.Readonly
 import com.tumei.common.RemoteService
 import com.tumei.common.fight.FightResult
 import com.tumei.common.fight.FightStruct
-import com.tumei.common.fight.PowerStruct
-import com.tumei.common.structs.SceneFightStruct
+import com.tumei.common.fight.SceneFightStruct
 import com.tumei.common.utils.Defs
 import com.tumei.common.utils.ErrCode
 import com.tumei.common.utils.JsonUtil
@@ -422,12 +421,9 @@ class GroovyMineSystem implements IMineSystem {
             // 战斗，打人
             HerosBean hsb = DaoService.getInstance().findHeros(id)
             FightStruct arg = new FightStruct()
-
-            // 1. 填充左边
-            hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts1())
-
+            arg.left = hsb.createHerosStruct()
             HerosBean hsb2 = DaoService.getInstance().findHeros(peer)
-            hsb2.fill(arg.getLineups2(), arg.getBuffs(), arg.getRight(), arg.getArts2())
+            arg.right = hsb2.createHerosStruct()
 
             FightResult r = RemoteService.getInstance().callFight(arg)
 
@@ -1401,12 +1397,8 @@ class GroovyMineSystem implements IMineSystem {
 
                                 HerosBean hsb = user.getDao().findHeros(user.getUid())
                                 SceneFightStruct arg = new SceneFightStruct()
-                                // 1. 填充左边
-                                hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts())
-
-                                // 2. 根据当前scene 填充右边
-                                arg.fillRightInMine(rc, mts.hero)
-
+                                arg.hss = hsb.createHerosStruct()
+                                arg.right = rc.makeMineBattle(mts.hero)
                                 FightResult r = RemoteService.getInstance().callSceneFight(arg)
                                 rl.data = r.data
 
@@ -1589,8 +1581,7 @@ class MineRole {
         }
         this.grade = rb.getGrade()
 
-        PowerStruct ts = hsb.createTeamStruct()
-        this.power = RemoteService.getInstance().callPower(ts)
+        this.power = RemoteService.getInstance().callPower(hsb.createHerosStruct())
 
         reset(0)
     }

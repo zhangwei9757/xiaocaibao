@@ -373,7 +373,7 @@ public class ChargeBean {
 					}
 				}
 
-				if (rmb < 1000_00) { // 1000元以内的充值会有双倍激励
+//				if (rmb < 1000_00) { // 1000元以内的充值会有双倍激励
 					if (buff != 0) { // 进入活动的双倍计算中
 						// 判断活动日是否重复，清空活动记录
 						if (buff != buffDay) {
@@ -391,7 +391,7 @@ public class ChargeBean {
 							gem *= 2;
 						}
 					}
-				}
+//				}
 				break;
 		}
 

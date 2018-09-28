@@ -3,13 +3,13 @@ package com.tumei.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tumei.common.DaoService;
 import com.tumei.common.Readonly;
-import com.tumei.common.fight.ArtifactStruct;
 import com.tumei.common.fight.HeroStruct;
-import com.tumei.common.fight.PowerStruct;
+import com.tumei.common.fight.HerosStruct;
 import com.tumei.game.protos.structs.SkinStruct;
 import com.tumei.model.beans.ArtifactBean;
 import com.tumei.model.beans.EquipBean;
 import com.tumei.model.beans.HeroBean;
+import com.tumei.model.beans.RelicBean;
 import com.tumei.modelconf.ChainConf;
 import com.tumei.modelconf.HeroConf;
 import com.tumei.modelconf.MaskConf;
@@ -21,7 +21,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by leon on 2016/11/5.
@@ -96,6 +95,17 @@ public class HerosBean {
 	 * 转换选择的英雄
 	 */
 	private List<Integer> choise = new ArrayList<>();
+
+	/**
+	 * 圣物列表
+	 */
+	private HashMap<Integer, RelicBean> relics = new HashMap<>();
+
+	/**
+	 * 激活的圣物
+	 */
+	private int relicid;
+
 
 	public static HerosBean createNewHeros(long id) {
 		HerosBean hb = new HerosBean();
@@ -280,77 +290,76 @@ public class HerosBean {
 	}
 
 	/**
-	 * 创建计算战斗力 需要的结构
-	 *
+	 * 复制自己
 	 * @return
 	 */
-	public PowerStruct createTeamStruct() {
-		PowerStruct ts = new PowerStruct();
-		ts.setUid(this.id);
-		ts.setFasion(skin);
-		fill(ts.getLineups(), ts.getBuffs(), ts.getHeros(), ts.getArts());
-		return ts;
-	}
+	public HerosStruct createHerosStruct() {
+		HerosStruct hss = new HerosStruct();
+		hss.uid = this.id;
+		hss.fake = this.fakeHero;
+		hss.skin = this.skin;
+		this.skins.forEach((k, v) -> hss.skins.put(k, v.level));
+		hss.buffs.putAll(this.buffs);
 
-	/***
-	 * 战斗数据填充
-	 *
-	 * @param _lineups
-	 * @param _buffs
-	 * @param _heros
-	 */
-	public void fill(int[] _lineups, Map<Integer, Integer> _buffs, List<HeroStruct> _heros, List<ArtifactStruct> arts) {
-		int sl = 0;
-		SkinStruct ss = skins.getOrDefault(skin, null);
-		if (ss != null) {
-			sl = ss.level;
-		}
-
-		if (_buffs != null) {
-			this.buffs.forEach((k, v) -> _buffs.merge(k, v, (a, b) -> a + b));
+		for (int i = 0; i < lineups.length; ++i) {
+			hss.lineups[i] = this.lineups[i];
 		}
 
 		for (int i = 0; i < 6; ++i) {
-			if (_lineups != null) {
-				_lineups[i] = lineups[i];
+			HeroBean hb = heros[i];
+			if (hb != null) {
+				hss.heros[i] = hb.createHeroStruct();
+			} else {
+				hss.heros[i] = null;
 			}
 
-			if (heros[i] != null) {
-				HeroStruct hs = heros[i].createHeroStruct(skin, sl);
-				hs.assist = false;
-				_heros.add(hs);
-			}
-		}
-
-		for (int i = 0; i < 6; ++i) {
-			if (assists[i] != null) {
-				HeroStruct hs = assists[i].createHeroStruct();
-				hs.assist = true;
-				_heros.add(hs);
+			HeroBean ab = assists[i];
+			if (ab != null) {
+				hss.assists[i] = ab.getId();
 			}
 		}
 
-		if (arts != null) {
-			artifacts.forEach((k, v) -> arts.add(v.createStruct()));
+		if (relicid > 0) {
+			RelicBean rb = relics.getOrDefault(relicid, null);
+			if (rb != null) {
+				hss.relics.add(rb.createRelicStruct());
+			}
 		}
+
+		relics.forEach((k, v) -> {
+			if (k != relicid && v != null) {
+				hss.relics.add(v.createRelicStruct());
+			}
+		});
+
+		if (artifacts != null) {
+			artifacts.forEach((k, v) -> hss.arts.add(v.createStruct()));
+		}
+
+		return hss;
 	}
 
 	/**
-	 * 创建机器人需要的结构
-	 * @param _heros
+	 *
+	 * 激活圣物，如果没有就增加一个
+	 *
+	 * @param rid
 	 * @return
 	 */
-	public static PowerStruct createTeamStructForRobot(HeroBean[] _heros) {
-		PowerStruct ts = new PowerStruct();
-		ts.setFasion(0);
-
-		for (HeroBean hb : _heros) {
-			if (hb != null) {
-				HeroStruct hs = hb.createHeroStruct();
-				ts.getHeros().add(hs);
-			}
+	public RelicBean addRelic(int rid) {
+		RelicBean rb = relics.getOrDefault(rid, null);
+		if (rb == null) {
+			rb = new RelicBean(rid);
+			relics.put(rid, rb);
+		} else {
+			return null;
 		}
-		return ts;
+
+		if (relicid == 0) {
+			relicid = rid;
+		}
+
+		return rb;
 	}
 
 	public int getFakeHero() {
@@ -458,5 +467,71 @@ public class HerosBean {
 		}
 
 		return ab.promote();
+	}
+
+	public HashMap<Integer, RelicBean> getRelics() {
+		return relics;
+	}
+
+	public void setRelics(HashMap<Integer, RelicBean> relics) {
+		this.relics = relics;
+	}
+
+	/**
+	 * 查找指定的圣物id
+	 * @param _relic 圣物id
+	 * @return
+	 */
+	public RelicBean findRelic(int _relic) {
+		return relics.getOrDefault(_relic, null);
+	}
+
+	public int getRelicid() {
+		return relicid;
+	}
+
+	public void setRelicid(int relicid) {
+		this.relicid = relicid;
+	}
+
+	/***
+	 *
+	 * 注灵增加圣物的经验, 每次调用不会升2级，所以循环判断不用担心
+	 *
+	 * @param rb
+	 * @param total
+	 * @return
+	 */
+	public boolean addRelicExp(RelicBean rb, int total) {
+		int level_limit = rb.star * 20;
+		if (level_limit <= 0) {
+			return false;
+		}
+
+		int cost = Readonly.getInstance().findHolyexp(rb.level);
+		if (cost < 0) {
+			return false;
+		}
+
+		while (total > 0) {
+			int need = cost - rb.exp;
+			if (total >= need) {
+				// 本次注灵导致升级了，判断一下最高能到达的等级是否满足条件
+				if (rb.level >= level_limit) {
+					return false;
+				}
+
+				total -= need;
+				++rb.level;
+				cost = Readonly.getInstance().findHolyexp(rb.level);
+				if (cost < 0) { //证明之后已经无法升级
+					break;
+				}
+			} else {
+				rb.exp += total;
+				break;
+			}
+		}
+		return true;
 	}
 }

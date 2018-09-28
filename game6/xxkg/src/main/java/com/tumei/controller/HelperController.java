@@ -3,12 +3,10 @@ package com.tumei.controller;
 import com.tumei.common.DaoService;
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightStruct;
-import com.tumei.common.fight.PowerStruct;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameServer;
 import com.tumei.game.protos.notifys.NotifyRedPoint;
 import com.tumei.game.services.RobService;
-import com.tumei.groovy.contract.IMineSystem;
 import com.tumei.model.*;
 import com.tumei.model.beans.TaskItemBean;
 import com.tumei.modelconf.CodeBean;
@@ -141,8 +139,7 @@ public class HelperController {
 	@ApiImplicitParams({@ApiImplicitParam(name = "id", value = "玩家id", required = true, dataType = "long", paramType = "query"),})
 	public String getPower(long id) {
 		HerosBean hsb = dao.findHeros(id);
-		PowerStruct ts = hsb.createTeamStruct();
-		long power = rs.callPower(ts);
+		long power = rs.callPower(hsb.createHerosStruct());
 
 		return "战斗力:" + power;
 	}
@@ -244,12 +241,7 @@ public class HelperController {
 	})
 	public String simSelf(long uid) {
 		HerosBean hsb = DaoService.getInstance().findHeros(uid);
-		FightStruct arg = new FightStruct();
-		// 1. 填充左边
-		hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts1());
-
-		String result = rs.callSimSelf(arg);
-		return result;
+		return rs.callSimSelf(hsb.createHerosStruct());
 	}
 
 

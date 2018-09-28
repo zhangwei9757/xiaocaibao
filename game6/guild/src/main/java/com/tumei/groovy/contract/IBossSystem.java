@@ -1,7 +1,8 @@
 package com.tumei.groovy.contract;
 
+import com.tumei.common.fight.FightStruct;
+import com.tumei.common.fight.HerosStruct;
 import com.tumei.common.webio.BattleResultStruct;
-import com.tumei.common.webio.BattleStruct;
 import com.tumei.dto.boss.BossDto;
 import com.tumei.dto.boss.BossGuildDto;
 import com.tumei.dto.boss.BossRoleDto;
@@ -20,7 +21,7 @@ public interface IBossSystem {
 
 	long bossLife();
 
-	BattleResultStruct callFight(long uid, BattleStruct bs);
+	BattleResultStruct callFight(HerosStruct bs);
 
 	List<BossRoleDto> getRanks();
 

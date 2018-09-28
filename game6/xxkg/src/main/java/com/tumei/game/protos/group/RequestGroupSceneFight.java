@@ -3,7 +3,6 @@ package com.tumei.game.protos.group;
 import com.google.common.base.Strings;
 import com.tumei.common.RemoteService;
 import com.tumei.common.webio.BattleResultStruct;
-import com.tumei.common.webio.BattleStruct;
 import com.tumei.game.GameUser;
 import com.tumei.model.GroupBean;
 import com.tumei.model.HerosBean;
@@ -80,13 +79,7 @@ public class RequestGroupSceneFight extends BaseProtocol {
 				}
 
 				HerosBean hsb = user.getDao().findHeros(user.getUid());
-				BattleStruct arg = new BattleStruct();
-
-				// 1. 填充左边
-				hsb.fill(null, null, arg.roles, arg.arts);
-				arg.skin = hsb.getSkin();
-
-				BattleResultStruct rtn = RemoteService.getInstance().askGroupSceneFight(arg, gb.getGid(), user.getUid(), index);
+				BattleResultStruct rtn = RemoteService.getInstance().askGroupSceneFight(hsb.createHerosStruct(), gb.getGid(), index);
 				if (rtn == null) {
 					rl.result = "公会副本战斗服务维护中，请稍后再战.";
 				} else {

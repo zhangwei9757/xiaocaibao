@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationContext
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
 
 import javax.servlet.http.HttpServletRequest
 import java.util.concurrent.atomic.AtomicInteger
@@ -27,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * 给游戏服务器提供的接口:
  */
 class SimfightController {
-    private Log log = LogFactory.getLog(SimfightController.class)
+    private static final Log log = LogFactory.getLog(SimfightController.class)
 
     @Autowired
     private ApplicationContext ctx
@@ -107,9 +106,7 @@ class SimfightController {
         FightResult sfr = new FightResult()
         try {
             IFightSystem sb = ctx.getBean(IFightSystem.class)
-            sb.buildTeam(1, data)
-
-            return sb.debugLeft()
+            return sb.doBattle(data.left, data.right, data.weak)
         } catch (Exception ex) {
             log.error("战斗错误: " + ex.getMessage(), ex)
             ex.printStackTrace()
@@ -137,16 +134,7 @@ class SimfightController {
 
                 IFightSystem sb = ctx.getBean(IFightSystem.class)
 
-                sb.buildTeam(1, data)
-                sb.buildTeam(2, data)
-
-                if (data.getLeft().size() <= 0 || data.getRight().size() <= 0) {
-                    println("sim self troop null:" + s)
-                    sfr.win = -1
-                } else {
-                    sfr.win = sb.run()
-                    sfr.data = sb.getFightData()
-                }
+                sfr = sb.doBattle(data.left, data.right, data.weak)
 
                 if (countSim.incrementAndGet() % 100 == 0) {
                     debug()
@@ -183,18 +171,7 @@ class SimfightController {
                 SceneFightStruct data = JsonUtil.Unmarshal(s, SceneFightStruct.class)
                 IFightSystem sb = ctx.getBean(IFightSystem.class)
 
-                sb.buildSceneTeam(1, data)
-                sb.buildTeamByStruct(2, data.getRight())
-
-                if (data.getLeft().size() <= 0 || data.getRight().size() <= 0) {
-                    println("scene self troop null:" + s)
-                    sfr.win = -1
-                } else {
-                    sfr.win = sb.run()
-                    sfr.data = sb.getFightData()
-                }
-
-                return sfr
+                return sb.doSceneBattle(data.hss, data.right,  data.condition, data.isBoss, data.relic, data.star, data.legend, data.level);
             } catch (Exception ex) {
                 log.error(String.format("simScene战斗错误: %s", ex.getMessage()), ex)
                 for (StackTraceElement ste : ex.stackTrace) {
@@ -210,33 +187,23 @@ class SimfightController {
 
     @ApiOperation(value = "公会副本战斗模拟")
     @RequestMapping(value = "/simGroup", method = RequestMethod.POST)
-    @ApiImplicitParams([@ApiImplicitParam(name = "data", value = "战斗数据", required = true, dataType = "GroupFightStruct", paramType = "parameter")])
+    @ApiImplicitParams([@ApiImplicitParam(name = "data", value = "战斗数据", required = true, dataType = "SceneFightStruct", paramType = "parameter")])
     @ResponseBody
-    GroupFightResult simGroup(HttpServletRequest request) {
+    FightResult simGroup(HttpServletRequest request) {
         if (countSimGroup.incrementAndGet() % 100 == 0) {
             debug()
         }
 
-        GroupFightResult sfr = new GroupFightResult()
+        FightResult sfr = new FightResult()
 
         String s = getBody(request)
         if (Strings.isNullOrEmpty(s)) {
             sfr.data = "参数无法获取"
         } else {
             try {
-                GroupFightStruct data = JsonUtil.Unmarshal(s, GroupFightStruct.class) as GroupFightStruct
-                if (data.getLeft().size() <= 0 || data.getRight().size() <= 0) {
-                    sfr.win = -1
-                } else {
-                    IFightSystem sb = ctx.getBean(IFightSystem.class)
-
-                    sb.buildGroupTeam(1, data)
-                    sb.buildTeamByStruct(2, data.getRight())
-                    sfr.win = sb.run()
-                    sfr.data = sb.getFightData()
-                    sfr.lifes = sb.getRightLifes()
-                }
-                return sfr
+                SceneFightStruct data = JsonUtil.Unmarshal(s, SceneFightStruct.class)
+                IFightSystem sb = ctx.getBean(IFightSystem.class)
+                return sb.doSceneBattle(data.hss, data.right,  data.condition, data.isBoss, data.relic, data.star, data.legend, data.level);
             } catch (Exception ex) {
                 log.error("simScene战斗错误: " + ex.getMessage(), ex)
                 ex.printStackTrace()
@@ -250,7 +217,7 @@ class SimfightController {
 
     @ApiOperation(value = "计算给定的队伍的战斗力")
     @RequestMapping(value = "/calcPower", method = RequestMethod.POST)
-    @ApiImplicitParams([@ApiImplicitParam(name = "data", value = "战斗数据", required = true, dataType = "PowerStruct", paramType = "parameter")])
+    @ApiImplicitParams([@ApiImplicitParam(name = "data", value = "战斗数据", required = true, dataType = "HerosStruct", paramType = "parameter")])
     @ResponseBody
     long calcPower(HttpServletRequest request) {
         if (countCalcPower.incrementAndGet() % 100 == 0) {
@@ -263,10 +230,9 @@ class SimfightController {
         }
 
         try {
-            PowerStruct data = JsonUtil.Unmarshal(s, PowerStruct.class) as PowerStruct
+            HerosStruct data = JsonUtil.Unmarshal(s, HerosStruct.class)
             IFightSystem sb = ctx.getBean(IFightSystem.class)
-
-            return sb.calcPower(data)
+            return sb.calc_power(data)
         } catch (Exception ex) {
             log.error("计算发生错误: " + ex.getMessage(), ex)
         }

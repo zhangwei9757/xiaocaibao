@@ -2,12 +2,14 @@ package com.tumei.groovy.commands
 
 import com.tumei.common.RemoteService
 import com.tumei.common.fight.DirectHeroStruct
-import com.tumei.common.fight.GroupFightResult
-import com.tumei.common.fight.GroupFightStruct
+import com.tumei.common.fight.FightResult
+import com.tumei.common.fight.FightStruct
+import com.tumei.common.fight.HerosStruct
+import com.tumei.common.fight.SceneFightStruct
 import com.tumei.common.utils.Defs
 import com.tumei.common.utils.TimeUtil
 import com.tumei.common.webio.BattleResultStruct
-import com.tumei.common.webio.BattleStruct
+
 import com.tumei.controller.GroupService
 import com.tumei.dto.boss.BossDto
 import com.tumei.dto.boss.BossGuildDto
@@ -44,7 +46,7 @@ import java.time.ZoneOffset
  *
  */
 class BossService implements IBossSystem {
-    static final Log log = LogFactory.getLog(BossService.class)
+    private static final Log log = LogFactory.getLog(BossService.class)
 
     // 个人最大排名
     static final int maxrank = 99
@@ -275,18 +277,20 @@ class BossService implements IBossSystem {
             for (BossGuildBean brb : gRanks) {
                 // 根据brb的id也就是公会id，找到公会所有玩家id
                 GroupBean gb = groupService.find(brb.id)
-                for (long uid :gb.roles.keySet()) {
-                    int zone = 1
-                    if (uid > 10000) {
-                        zone = sr.chooseZone(uid)
-                    }
+                if (gb != null) {
+                    for (long uid :gb.roles.keySet()) {
+                        int zone = 1
+                        if (uid > 10000) {
+                            zone = sr.chooseZone(uid)
+                        }
 
-                    Map<Long, Integer> ls = grk[zone]
-                    if (ls == null) {
-                        ls = new HashMap<>()
-                        grk.put(zone, ls)
+                        Map<Long, Integer> ls = grk[zone]
+                        if (ls == null) {
+                            ls = new HashMap<>()
+                            grk.put(zone, ls)
+                        }
+                        ls.put(uid, rank)
                     }
-                    ls.put(uid, rank)
                 }
 
                 ++rank
@@ -500,14 +504,14 @@ class BossService implements IBossSystem {
         }
     }
 
-    public synchronized BattleResultStruct callFight(long uid, BattleStruct bs) {
+    public synchronized BattleResultStruct callFight(HerosStruct bs) {
         BattleResultStruct rl = new BattleResultStruct();
         if (!running) {
             rl.result = "首领战休战中"
             return rl
         }
 
-        BossRoleBean role  = users.getOrDefault(uid, null)
+        BossRoleBean role  = users.getOrDefault(bs.uid, null)
         if (role == null) {
             rl.result = "请重新进入首领战界面，提交今日信息参战."
             return rl
@@ -517,14 +521,11 @@ class BossService implements IBossSystem {
             rl.result = "首领已被击杀";
         } else {
             try {
-                GroupFightStruct arg = new GroupFightStruct();
-                arg.setLeft(bs.roles)
-                arg.setBuffs(bs.buffs)
-                arg.setArts(bs.arts)
-                arg.setLineups(bs.lineups)
-                arg.setRightArray(bossBean.peers)
+                SceneFightStruct arg = new SceneFightStruct();
+                arg.hss = bs
+                arg.right = bossBean.peers
 
-                GroupFightResult r = remoteService.callFight(arg);
+                FightResult r = remoteService.callFight(arg);
 
                 if (r == null) {
                     rl.result = "战斗服务器维护中";
@@ -535,7 +536,7 @@ class BossService implements IBossSystem {
 
                         log.info("结果:" + r.win)
                         if (r.win == 1) {
-                            bossBean.killTime = (long)(System.currentTimeMillis() / 1000) - startTime
+                            bossBean.killTime = (int)(System.currentTimeMillis() / 1000 - startTime)
                             rl.kill = 1;
                         }
 

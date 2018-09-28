@@ -2,7 +2,7 @@ package com.tumei.game.protos.daily;
 
 import com.tumei.common.RemoteService;
 import com.tumei.common.fight.FightResult;
-import com.tumei.common.structs.SceneFightStruct;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.utils.Defs;
 import com.tumei.game.GameUser;
 import com.tumei.model.DailySceneBean;
@@ -96,13 +96,8 @@ public class RequestDailySceneFight extends BaseProtocol {
 		// 2. 根据当前scene 填充右边
 		HerosBean hsb = user.getDao().findHeros(user.getUid());
 		SceneFightStruct arg = new SceneFightStruct();
-		arg.setUid(user.getUid());
-
-		// 1. 填充左边
-		hsb.fill(arg.getLineups(), arg.getBuffs(), arg.getLeft(), arg.getArts());
-
-		// 2. 填充右边
-		arg.fillRightByDailyScene(fc);
+		arg.hss = hsb.createHerosStruct();
+		arg.right = fc.makeDailyScene();
 
 		FightResult r = RemoteService.getInstance().callSceneFight(arg);
 

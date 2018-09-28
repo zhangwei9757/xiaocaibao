@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Heroskills")
 public class HeroSkillConf {
 	@Id
-	public String ObjectId;
+	public String objectId;
 
 	/**
 	 * 英雄ID
@@ -141,4 +141,8 @@ public class HeroSkillConf {
 	 * 缘分 1 效果 被动
 	 */
 	public int[] gk8eff;
+	/**
+	 * 武装技能效果
+	 */
+	public int[] skillzeff;
 }

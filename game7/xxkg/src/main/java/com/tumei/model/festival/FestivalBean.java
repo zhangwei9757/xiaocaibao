@@ -114,197 +114,197 @@ public class FestivalBean {
 	 */
 	public void flush() {
 		int today = TimeUtil.getToday();
-			// 查看今日是不是在某个节日开始和结束之间
-			int stMode = -1;
+        // 查看今日是不是在某个节日开始和结束之间
+        int stMode = -1;
 
-			FestivalConf thisFc = null;
-			List<FestivalConf> fcs = Readonly.getInstance().getFestivalConfs();
-			for (FestivalConf fc : fcs) {
-				if (today >= fc.start && today <= fc.last) { // ok
+        FestivalConf thisFc = null;
+        List<FestivalConf> fcs = Readonly.getInstance().getFestivalConfs();
+        for (FestivalConf fc : fcs) {
+            if (today >= fc.start && today <= fc.last) { // ok
 
-					stMode = fc.mode;
-					thisFc = fc;
-					break;
-				}
-			}
+                stMode = fc.mode;
+                thisFc = fc;
+                break;
+            }
+        }
 
-			// 如果是新的模式,标识进入了一个新的周期
-			if (stMode != mode) {
+        // 如果是新的模式,标识进入了一个新的周期
+        if (stMode != mode) {
 
-				// 将背包中的上次的货币删除
-				if (coins != null && coins.length > 0) {
-					PackBean pb = DaoGame.getInstance().findPack(this.id);
-					for (int i = 0; i < coins.length; ++i) {
-						pb.delItem(coins[i]);
-					}
-				}
+            // 将背包中的上次的货币删除
+            if (coins != null && coins.length > 0) {
+                PackBean pb = DaoGame.getInstance().findPack(this.id);
+                for (int i = 0; i < coins.length; ++i) {
+                    pb.delItem(coins[i]);
+                }
+            }
 
-				mode = stMode;
-				spend = 0;
-				cum = 0;
-				festLogons.clear();
-				festSingles.clear();
-				festSpends.clear();
-				festSales.clear();
-				festCums.clear();
+            mode = stMode;
+            spend = 0;
+            cum = 0;
+            festLogons.clear();
+            festSingles.clear();
+            festSpends.clear();
+            festSales.clear();
+            festCums.clear();
 
-				if (mode != -1) { // 如果在活动中则新建活动规则
-					this.start = thisFc.start;
-					this.end = thisFc.last;
-					this.flag = thisFc.flag;
+            if (mode != -1) { // 如果在活动中则新建活动规则
+                this.start = thisFc.start;
+                this.end = thisFc.last;
+                this.flag = thisFc.flag;
 
-					if (thisFc.flag == 0) {
-						//货币调整
-						coins = thisFc.fesdrop;
+                if (thisFc.flag == 0) {
+                    //货币调整
+                    coins = thisFc.fesdrop;
 
-						this.b1 = thisFc.bonus1;
-						this.b2 = thisFc.bonus2;
+                    this.b1 = thisFc.bonus1;
+                    this.b2 = thisFc.bonus2;
 
-						List<FestivalLogonConf> flcs = Readonly.getInstance().getFestivalLogonConfs();
-						int logDay = 0;
-						for (FestivalLogonConf flc : flcs) {
-							if (++logDay > thisFc.num) {
-								break;
-							}
-							if (flc.rewards.length > 0) {
-								FestivalLogon item = new FestivalLogon();
-								item.key = flc.key;
-								int[] rwd = new int[flc.rewards.length];
-								for (int i = 0; i < flc.rewards.length; i += 2) {
-									int fid = flc.rewards[i];
-									if (fid < 0) {
-										if (fid == -1) {
-											fid = coins[0];
-										} else {
-											fid = coins[1];
-										}
-									}
+                    List<FestivalLogonConf> flcs = Readonly.getInstance().getFestivalLogonConfs();
+                    int logDay = 0;
+                    for (FestivalLogonConf flc : flcs) {
+                        if (++logDay > thisFc.num) {
+                            break;
+                        }
+                        if (flc.rewards.length > 0) {
+                            FestivalLogon item = new FestivalLogon();
+                            item.key = flc.key;
+                            int[] rwd = new int[flc.rewards.length];
+                            for (int i = 0; i < flc.rewards.length; i += 2) {
+                                int fid = flc.rewards[i];
+                                if (fid < 0) {
+                                    if (fid == -1) {
+                                        fid = coins[0];
+                                    } else {
+                                        fid = coins[1];
+                                    }
+                                }
 
-									rwd[i] = fid;
-									rwd[i + 1] = flc.rewards[i + 1];
-								}
+                                rwd[i] = fid;
+                                rwd[i + 1] = flc.rewards[i + 1];
+                            }
 
-								item.rewards = rwd;
-								festLogons.add(item);
-							}
-						}
+                            item.rewards = rwd;
+                            festLogons.add(item);
+                        }
+                    }
 
-						List<FestivalSingleConf> fscs = Readonly.getInstance().getFestivalSingleConfs();
-						for (FestivalSingleConf fsc : fscs) {
-							FestivalSingle item = new FestivalSingle();
-							item.cost = fsc.cost;
-							item.limit = fsc.limit;
+                    List<FestivalSingleConf> fscs = Readonly.getInstance().getFestivalSingleConfs();
+                    for (FestivalSingleConf fsc : fscs) {
+                        FestivalSingle item = new FestivalSingle();
+                        item.cost = fsc.cost;
+                        item.limit = fsc.limit;
 
-							int[] rwd = new int[fsc.reward.length];
-							for (int i = 0; i < fsc.reward.length; i += 2) {
-								int fid = fsc.reward[i];
-								if (fid < 0) {
-									if (fid == -1) {
-										fid = coins[0];
-									} else {
-										fid = coins[1];
-									}
-								}
+                        int[] rwd = new int[fsc.reward.length];
+                        for (int i = 0; i < fsc.reward.length; i += 2) {
+                            int fid = fsc.reward[i];
+                            if (fid < 0) {
+                                if (fid == -1) {
+                                    fid = coins[0];
+                                } else {
+                                    fid = coins[1];
+                                }
+                            }
 
-								rwd[i] = fid;
-								rwd[i + 1] = fsc.reward[i + 1];
-							}
+                            rwd[i] = fid;
+                            rwd[i + 1] = fsc.reward[i + 1];
+                        }
 
-							item.reward = rwd;
-							festSingles.add(item);
-						}
+                        item.reward = rwd;
+                        festSingles.add(item);
+                    }
 
-						List<FestivalSaleConf> fslcs = Readonly.getInstance().getFestivalSaleConfs();
-						for (FestivalSaleConf fsc : fslcs) {
-							FestivalSale item = new FestivalSale();
+                    List<FestivalSaleConf> fslcs = Readonly.getInstance().getFestivalSaleConfs();
+                    for (FestivalSaleConf fsc : fslcs) {
+                        FestivalSale item = new FestivalSale();
 
-							{
-								int[] rwd = new int[fsc.price.length];
-								for (int i = 0; i < fsc.price.length; i += 2) {
-									int fid = fsc.price[i];
-									if (fid < 0) {
-										if (fid == -1) {
-											fid = coins[0];
-										} else {
-											fid = coins[1];
-										}
-									}
+                        {
+                            int[] rwd = new int[fsc.price.length];
+                            for (int i = 0; i < fsc.price.length; i += 2) {
+                                int fid = fsc.price[i];
+                                if (fid < 0) {
+                                    if (fid == -1) {
+                                        fid = coins[0];
+                                    } else {
+                                        fid = coins[1];
+                                    }
+                                }
 
-									rwd[i] = fid;
-									rwd[i + 1] = fsc.price[i + 1];
-								}
+                                rwd[i] = fid;
+                                rwd[i + 1] = fsc.price[i + 1];
+                            }
 
-								item.price = rwd;
-							}
-							{
-								int[] rwd = new int[fsc.goods.length];
-								for (int i = 0; i < fsc.goods.length; i += 2) {
-									int fid = fsc.goods[i];
-									if (fid < 0) {
-										if (fid == -1) {
-											fid = coins[0];
-										} else {
-											fid = coins[1];
-										}
-									}
+                            item.price = rwd;
+                        }
+                        {
+                            int[] rwd = new int[fsc.goods.length];
+                            for (int i = 0; i < fsc.goods.length; i += 2) {
+                                int fid = fsc.goods[i];
+                                if (fid < 0) {
+                                    if (fid == -1) {
+                                        fid = coins[0];
+                                    } else {
+                                        fid = coins[1];
+                                    }
+                                }
 
-									rwd[i] = fid;
-									rwd[i + 1] = fsc.goods[i + 1];
-								}
+                                rwd[i] = fid;
+                                rwd[i + 1] = fsc.goods[i + 1];
+                            }
 
-								item.goods = rwd;
-							}
+                            item.goods = rwd;
+                        }
 
-							item.limit = fsc.limit;
-							festSales.add(item);
-						}
+                        item.limit = fsc.limit;
+                        festSales.add(item);
+                    }
 
-						List<FestivalSpendConf> fspcs = Readonly.getInstance().getFestivalSpendConfs();
-						int spendNum = 0;
-						for (FestivalSpendConf fsc : fspcs) {
-							if (++spendNum > thisFc.costnum) {
-								break;
-							}
+                    List<FestivalSpendConf> fspcs = Readonly.getInstance().getFestivalSpendConfs();
+                    int spendNum = 0;
+                    for (FestivalSpendConf fsc : fspcs) {
+                        if (++spendNum > thisFc.costnum) {
+                            break;
+                        }
 
-							FestivalSpend item = new FestivalSpend();
-							item.spend = fsc.spend;
+                        FestivalSpend item = new FestivalSpend();
+                        item.spend = fsc.spend;
 
-							int[] rwd = new int[fsc.reward.length];
-							for (int i = 0; i < fsc.reward.length; i += 2) {
-								int fid = fsc.reward[i];
-								if (fid < 0) {
-									if (fid == -1) {
-										fid = coins[0];
-									} else {
-										fid = coins[1];
-									}
-								}
+                        int[] rwd = new int[fsc.reward.length];
+                        for (int i = 0; i < fsc.reward.length; i += 2) {
+                            int fid = fsc.reward[i];
+                            if (fid < 0) {
+                                if (fid == -1) {
+                                    fid = coins[0];
+                                } else {
+                                    fid = coins[1];
+                                }
+                            }
 
-								rwd[i] = fid;
-								rwd[i + 1] = fsc.reward[i + 1];
-							}
+                            rwd[i] = fid;
+                            rwd[i + 1] = fsc.reward[i + 1];
+                        }
 
-							item.reward = rwd;
-							festSpends.add(item);
-						}
-					} else { // 神器活动
-						List<FestivalCumConf> fscs = Readonly.getInstance().getFestivalCumConfs();
-						for (FestivalCumConf fsc : fscs) {
-							FestivalCum item = new FestivalCum();
-							item.cost = fsc.cost;
+                        item.reward = rwd;
+                        festSpends.add(item);
+                    }
+                } else { // 神器活动
+                    List<FestivalCumConf> fscs = Readonly.getInstance().getFestivalCumConfs();
+                    for (FestivalCumConf fsc : fscs) {
+                        FestivalCum item = new FestivalCum();
+                        item.cost = fsc.cost;
 
-							int[] rwd = new int[fsc.reward.length];
-							for (int i = 0; i < fsc.reward.length; i += 2) {
-								rwd[i] = fsc.reward[i];
-								rwd[i + 1] = fsc.reward[i + 1];
-							}
+                        int[] rwd = new int[fsc.reward.length];
+                        for (int i = 0; i < fsc.reward.length; i += 2) {
+                            rwd[i] = fsc.reward[i];
+                            rwd[i + 1] = fsc.reward[i + 1];
+                        }
 
-							item.reward = rwd;
-							festCums.add(item);
-						}
-					}
-				}
-			}
+                        item.reward = rwd;
+                        festCums.add(item);
+                    }
+                }
+            }
+        }
 
 		if (today != lastDay) { // 每天检查一次 节日活动是否发生变更
 			if (mode != -1) {

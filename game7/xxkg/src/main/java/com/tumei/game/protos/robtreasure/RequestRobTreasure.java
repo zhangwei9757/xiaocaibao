@@ -102,8 +102,6 @@ public class RequestRobTreasure extends BaseProtocol {
 
 		if (fast == 0) {
 			if (rs.getUid() == 0) { // Npc 战斗一定胜利, 只需要判断机率
-				HerosBean hsb = user.getDao().findHeros(user.getUid());
-
 				int ratio = tc.rate[5 - ic.quality][1];
 				if (RandomUtil.getRandom() % 100 < ratio) {
 					rci.item = user.tmpRobItem;

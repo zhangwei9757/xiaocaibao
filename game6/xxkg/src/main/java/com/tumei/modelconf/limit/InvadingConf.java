@@ -41,4 +41,8 @@ public class InvadingConf {
      * 击杀一次领取奖励（首次奖励随机，每次奖励数量均随机）
      */
     public int[][] reward;
+    /**
+     * 特定活动使用的专属物品id
+     */
+    public int actgood;
 }

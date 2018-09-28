@@ -124,6 +124,9 @@ public class ActivityBean {
 	// vip礼包
 	private int[] vipBundles = new int[20];
 
+	// 今日钻石炼化次数
+	private int relicActivate = 0;
+
 	// 英雄福利，等级福利与登录福利
 	// key:登录的天数，value = 1表示满足未领取 2表示已经领取
 	private HashMap<Integer, Integer> logoFuli = new HashMap<>();
@@ -217,6 +220,8 @@ public class ActivityBean {
 			goldTree = 0;
 			goldIndex = 0;
 			vipDailyBag = 0;
+
+			relicActivate = 0;
 
 			flushLogDays();
 		}
@@ -1268,6 +1273,14 @@ public class ActivityBean {
 
 	public void setVipWeekBags(int[] vipWeekBag) {
 		this.vipWeekBags = vipWeekBag;
+	}
+
+	public int getRelicActivate() {
+		return relicActivate;
+	}
+
+	public void setRelicActivate(int relicActivate) {
+		this.relicActivate = relicActivate;
 	}
 
 	/**

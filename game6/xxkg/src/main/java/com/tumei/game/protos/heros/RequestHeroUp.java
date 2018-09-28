@@ -51,6 +51,8 @@ public class RequestHeroUp extends BaseProtocol {
 		public int fate;
 		public int fateexp;
 
+		public int fateCost;
+
 		public List<Integer> heros = new ArrayList<>();
 
 		/**
@@ -239,6 +241,7 @@ public class RequestHeroUp extends BaseProtocol {
 
 			rci.fate = hb.getFate();
 			rci.fateexp = hb.getFateexp();
+			rci.fateCost = hb.getFateCost();
 		}
 	}
 }

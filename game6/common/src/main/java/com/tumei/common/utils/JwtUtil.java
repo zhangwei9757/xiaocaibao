@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by Leon on 2017/11/20 0020.
  */
 public class JwtUtil {
-	static final long EXPIRATIONTIME = 432_000_000; // 5天
+	static final long EXPIRATIONTIME = 832_000_000; // 5天
 	static final String SECRET = "XcbGame!sVeryG0od";
 	static final String TOKEN_PREFIX = "Bearer";
 

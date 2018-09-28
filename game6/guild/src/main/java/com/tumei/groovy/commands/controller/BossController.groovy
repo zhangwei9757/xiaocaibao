@@ -1,8 +1,9 @@
 package com.tumei.groovy.commands.controller
 
+import com.tumei.common.fight.HerosStruct
 import com.tumei.common.utils.JsonUtil
 import com.tumei.common.webio.BattleResultStruct
-import com.tumei.common.webio.BattleStruct
+
 import com.tumei.dto.boss.BossDto
 import com.tumei.dto.boss.BossGuildDto
 import com.tumei.dto.boss.BossRoleDto
@@ -67,12 +68,10 @@ class BossController {
     @ApiOperation(value = "测试攻击boss")
     @RequestMapping(value = "/boss/callFight", method = RequestMethod.POST)
     @ApiImplicitParams([
-            @ApiImplicitParam(name = "uid", value = "玩家ID", required = true, dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "bs", value = "战斗数据", required = true, dataType = "BattleStruct", paramType = "parameter"),
+            @ApiImplicitParam(name = "bs", value = "战斗数据", required = true, dataType = "HerosStruct", paramType = "parameter"),
     ])
     @ResponseBody
     BattleResultStruct bossTestFight(HttpServletRequest request) {
-        long uid = Long.parseLong(request.getParameter("uid"))
         // 获取BattleStruct 从body中
         String line = null;
         StringBuffer sb = new StringBuffer();
@@ -81,8 +80,8 @@ class BossController {
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-            BattleStruct bs = JsonUtil.Unmarshal(sb.toString(), BattleStruct.class)
-            return bossSystem.callFight(uid, bs)
+            HerosStruct bs = JsonUtil.Unmarshal(sb.toString(), HerosStruct.class)
+            return bossSystem.callFight(bs)
         } catch (Exception ex) {
             log.error("战斗错误:" + ex.message)
         }

@@ -83,10 +83,6 @@ public class InvadingBean {
      */
     private long resurgence;
     /**
-     * 次元碎片数量
-     */
-    private int debris;
-    /**
      * 购买次元碎片单价
      */
     private int price;
@@ -110,6 +106,14 @@ public class InvadingBean {
      * 购买总次数，新的一天重置次数
      */
     private int buyTotal;
+    /**
+     * 最后一次参加的活动日期，下次新活动刷新标识
+     */
+    private long begin;
+    /**
+     * 记录当前活动特定的物品ID
+     */
+    private int actgood;
 
     public InvadingBean() {}
 
@@ -142,6 +146,7 @@ public class InvadingBean {
                 }
                 ild.awards = list;
                 ild.resign = ics.addcost[i];
+                ild.ddagain = ics.ddagain[i];
                 rtn.add(ild);
             }
         }
@@ -150,65 +155,114 @@ public class InvadingBean {
     }
 
     /**
+     * 新的活动时会清掉缓存旧的记录，保证数据实时正确性
+     */
+    public void clear() {
+        // 当前是新的活动，上次参加的记录清掉
+        ChargeTotal = 0;
+        awd.clear();
+        loginAwardsStatus.clear();
+        debrisList.clear();
+        killList.clear();
+        blood = 0;
+        kill = 0;
+        resurgence = 0;
+        price = 0;
+        lastFlushDebris = 0;
+        firstLogin = false;
+        lastDay = 0;
+        ranking = false;
+        buyTotal = 0;
+        // 清掉背包
+        PackBean pb = DaoService.getInstance().findPack(id);
+        // 不论特定活动物品id是否一样，新的活动期间时，上次的背包此物品要清掉
+        pb.getItems().remove(actgood);
+    }
+
+    /**
+     * 初始化加载玩家信息
+     */
+    public void init() {
+        int today = TimeUtil.getToday();
+        long now = System.currentTimeMillis() / 1000;
+
+        LimitRankService lrs = LimitRankService.getInstance();
+        InvadingConf ic = Readonly.getInstance().findInvadingConf(lrs.key);
+        begin = lrs.begin;
+        actgood = ic.actgood;
+        lastFlushDebris = now;
+        lastDay = today;
+        blood = Defs.怪兽入侵血量上限;
+        price = Defs.怪兽入侵次元碎片单价;
+        // 活动时长
+        int ends = ic.end - ic.start;
+        // 填充登陆奖励领取状态列表
+        for (int i = 0; i <= ends; ++i) {
+            loginAwardsStatus.add(0);
+        }
+        // 今天与开活动的差值,小于这个值的下标全部为-1，表示奖励过期，待补签
+        int diff = today - ic.start;
+        if (diff > 0) {
+            for (int i = 0; i < diff; ++i) {
+                // 过期日期全部标识为 -1
+                loginAwardsStatus.set(i, -1);
+            }
+        }
+        for (int i = diff + 1; i <= ends; ++i) {
+            // 活动未开日期全部标识为 3
+            loginAwardsStatus.set(i, 3);
+        }
+        // 首次加载把碎片击杀可得所有奖励填充,下标对应次数的奖励
+        for (int i = 0; i < ic.reward.length; ++i) {
+            List<AwardBean> one = new ArrayList<>();
+            for (int j = 0; j < ic.reward[i].length; j += 3) {
+                one.add(new AwardBean(ic.reward[i][j], 0));
+            }
+            killList.add(one);
+        }
+        // 默认所有档位累计充值奖励均未达标,要把角转化为分
+        Readonly.getInstance().getInvtotalConfs().forEach(f -> awd.put(f.cost * 100, -1));
+        firstLogin = true;
+    }
+
+    /**
      * 刷新次元碎片
      */
     public void flushDebris() {
+        LimitRankService lrs = LimitRankService.getInstance();
+        if (!lrs.isActive()) {
+            // 如果不在活动期间，或者上次活动已过期，直接不刷新，防止配置表读取不到，因为key不存在了
+            // 如果下次有活动，在刷新前会自动刷新过期数据，初始化活动信息
+            return;
+        }
+        if (lrs.begin != begin) {
+            // 新的活动清掉上次记录
+            clear();
+        }
         int today = TimeUtil.getToday();
         long now = System.currentTimeMillis() / 1000;
-        int key = LimitRankService.getInstance().key;
-        InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
+        InvadingConf ic = Readonly.getInstance().findInvadingConf(lrs.key);
+
         // 活动期间首次登陆
         if (!firstLogin) {
-            lastFlushDebris = now;
-            lastDay = today;
-            blood = Defs.怪兽入侵血量上限;
-            price = Defs.怪兽入侵次元碎片单价;
-            // 活动时长
-            int ends = ic.end - ic.start;
-            // 填充登陆奖励领取状态列表
-            for (int i = 0; i <= ends; ++i) {
-                loginAwardsStatus.add(0);
-            }
-            // 今天与开活动的差值,小于这个值的下标全部为-1，表示奖励过期，待补签
-            int diff = today - ic.start;
-            if (diff > 0) {
-                for (int i = 0; i < diff; ++i) {
-                    // 过期日期全部标识为 -1
-                    loginAwardsStatus.set(i, -1);
-                }
-            }
-
-            for (int i = diff + 1; i <= ends; ++i) {
-                // 活动未开日期全部标识为 3
-                loginAwardsStatus.set(i, 3);
-            }
-            // 首次加载把碎片击杀可得所有奖励填充,下标对应次数的奖励
-            for (int i = 0; i < ic.reward.length; ++i) {
-                List<AwardBean> one = new ArrayList<>();
-                for (int j = 0; j < ic.reward[i].length; j += 3) {
-                    one.add(new AwardBean(ic.reward[i][j], 0));
-                }
-                killList.add(one);
-            }
-            // 默认所有档位累计充值奖励均未达标,要把角转化为分
-            Readonly.getInstance().getInvtotalConfs().forEach(f -> awd.put(f.cost * 100, -1));
-            // 首次登陆，记录自己uid
-            LimitRankService.getInstance().put(id, key);
-            firstLogin = true;
+            // 首次登陆初始化玩家信息
+            init();
         }
 
         long diff = (now - lastFlushDebris) / Defs.怪兽入侵碎片生成时间;
         if (diff > 0) {
             // 如果本身碎片未达上限，可以累加生成，已达上限，不生成
+            int debris = getDebris();
             if (debris < Defs.怪兽入侵碎片上限) {
                 debris += diff;
                 lastFlushDebris = now - (diff % Defs.怪兽入侵碎片生成时间);
-
                 if (debris >= Defs.怪兽入侵碎片上限) {
                     // 碎片上限50个
-                    debris = Defs.怪兽入侵碎片上限;
+                    diff = Defs.怪兽入侵碎片上限 - getDebris();
                     lastFlushDebris = 0;
                 }
+                // 生成碎片后，添加进背包
+                updateDebris((int) diff);
             } else {
                 lastFlushDebris = 0;
             }
@@ -241,44 +295,34 @@ public class InvadingBean {
             List<InvrankConf> invrankConfs = Readonly.getInstance().getInvrankConfs();
             // 最低上榜配置要求
             InvrankConf rank = invrankConfs.get(invrankConfs.size() - 1);
-            if (kill >= rank.limit) {
-                if (!ranking) {
-                    // 刚好达标上榜，添加记录，用真实次数创建记录
-                    LimitRankService.getInstance().put(uid, name, kill, LimitRankService.getInstance().key);
-                    // 上榜后标识
-                    ranking = true;
-                } else {
-                    // 已经添加过记录，追加击杀次数1次即可
-                    LimitRankService.getInstance().put(uid, name, 1L, LimitRankService.getInstance().key);
-                }
 
-            }
+            // 击杀后就直接上榜
+            LimitRankService.getInstance().put(uid, name, 1L, LimitRankService.getInstance().key);
             long now = System.currentTimeMillis() / 1000;
             resurgence = now + Defs.怪兽入侵复活间隔;
             int key = LimitRankService.getInstance().key;
             InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
-            // 左id--中下限--右上限
-            int[] receive = new int[3];
-            if (kill == 1) {
-                // 第一次击杀待随机的所有奖励
-                int[] ints = ic.reward[0];
-                int max = ints.length / 3 - 1;
-                int index = RandomUtil.getBetween(0, max);
-                // 物品id
-                receive[0] = ints[index * 3];
-                // 数量下限
-                receive[1] = ints[index * 3 + 1];
-                // 数量上限
-                receive[2] = ints[index * 3 + 2];
-            } else if (kill <= ic.reward.length) {
+            // 左id--中下限--右上限,是一多个奖励待随机
+            int[] receive = null;
+            if (kill <= ic.reward.length) {
                 receive = ic.reward[kill - 1];
             } else {
                 receive = ic.reward[ic.reward.length - 1];
             }
+            // 击杀待随机的所有奖励,从对应次数奖励中随便机1个
+            int max = receive.length / 3 - 1;
+            int index = RandomUtil.getBetween(0, max);
+            int[] realReceive = new int[3];
+            // 物品id
+            realReceive[0] = receive[index * 3];
+            // 数量下限
+            realReceive[1] = receive[index * 3 + 1];
+            // 数量上限
+            realReceive[2] = receive[index * 3 + 2];
             // 随机数量
-            int count = RandomUtil.getBetween(receive[1], receive[2]);
+            int count = RandomUtil.getBetween(realReceive[1], realReceive[2]);
 
-            return new int[]{receive[0], count};
+            return new int[]{realReceive[0], count};
         }
         return new int[]{-1};
     }
@@ -295,8 +339,9 @@ public class InvadingBean {
             // 怪兽已死亡待复活状态
             return new int[]{-999, 0};
         }
-        int[] award = new int[2];
+
         // 碎片数量足够
+        int debris = getDebris();
         if (debris >= count) {
             // 血量 > 使用数量
             if (blood >= count) {
@@ -307,22 +352,27 @@ public class InvadingBean {
                 count = blood;
                 blood = 0;
             }
+            // 碎片使用，修改背包
+            updateDebris(-count);
         } else {
             // 碎片数量不足时，所需要购买碎片数量
             int diff = debris - count;
-            award[1] = diff;
-            return award;
+            return new int[]{0, diff};
         }
         int key = LimitRankService.getInstance().key;
         InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
         int[] awards = ic.usecrystal;
 
+        int[] award = new int[count * 2];
         int max = (awards.length / 2) - 1;
-        int index = RandomUtil.getBetween(0, max);
 
-        // 获取随机领取的奖励
-        award[0] = awards[index * 2];
-        award[1] = awards[index * 2 + 1] * count;
+        for (int i = 0; i < award.length; ++i) {
+            int index = RandomUtil.getBetween(0, max);
+            // 获取随机领取的奖励
+            award[i] = awards[index * 2];
+            award[++i] = awards[index * 2 + 1];
+        }
+
 
         if (debris < Defs.怪兽入侵碎片上限 && lastFlushDebris == 0) {
             lastFlushDebris = System.currentTimeMillis() / 1000;
@@ -332,28 +382,25 @@ public class InvadingBean {
 
     /**
      * 为指定奖励累计次数
-     * @param debriss
+     * @param target
      */
-    public void addList(List<AwardBean> target, List<AwardBean> debriss) {
-        if (debriss != null) {
-            boolean flag = false;
-            for (AwardBean ass : target) {
-                flag = false;
-                for (AwardBean ab : debriss) {
-                    if (ab.id == ass.id) {
-                        // 历史追加过此奖励，直接累加奖励次数
-                        ab.count += ass.count;
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if (!flag) {
-                    // 确实未有添加过这条记录，新追加一条
-                    debriss.add(ass);
+    public void addList(List<AwardBean> target) {
+        boolean flag = false;
+        for (AwardBean t : target) {
+            flag = false;
+            for (AwardBean ab : debrisList) {
+                if (ab.id == t.id) {
+                    // 历史追加过此奖励，直接累加奖励次数
+                    ab.count += t.count;
+                    flag = true;
+                    break;
                 }
             }
 
+            if (!flag) {
+                // 确实未有添加过这条记录，新追加一条
+                debrisList.add(new AwardBean(t.id, t.count, t.hid));
+            }
         }
     }
 
@@ -365,6 +412,7 @@ public class InvadingBean {
      */
     public int buyDebris(long uid, int count) {
         flushDebris();
+        int debris = getDebris();
         if (debris >= Defs.怪兽入侵碎片上限) {
             lastFlushDebris = 0;
         }
@@ -389,6 +437,8 @@ public class InvadingBean {
         }
 
         pb.payItem(Defs.钻石, gem, "购买次元碎片");
+        // 购买成功，添加背包数量
+        updateDebris(count);
         debris += count;
         buyTotal += count;
         if (debris >= Defs.怪兽入侵碎片上限) {
@@ -472,13 +522,11 @@ public class InvadingBean {
             int[] receive = ic.logindd[position];
             rtn[0] = receive;
             rtn[1] = new int[]{gem};
-            return rtn;
         } else if (index == 0) { // 表示待领取
             // 领取后标识
             loginAwardsStatus.set(position, 1);
             int[] receive = ic.logindd[position];
             rtn[0] = receive;
-            return rtn;
         } else if (index == 1) { // 表示已领取，待购买
             gem = ic.ddagain[position];
             PackBean pb = DaoService.getInstance().findPack(uid);
@@ -493,12 +541,13 @@ public class InvadingBean {
             int[] receive = ic.logindd[position];
             rtn[0] = receive;
             rtn[1] = new int[]{gem};
-            return rtn;
         } else if (index == 2) { // 已购买，无法有任何操作
             return null;
         } else if (index == 3) { // 在活动期间，但未到日期，不可任何操作
             return null;
         }
+
+
         return rtn;
     }
 
@@ -606,5 +655,32 @@ public class InvadingBean {
         // 今天所在活动周期中第？天,对应是下标值 0-6
         int day = today - ic.start + 1;
         return day;
+    }
+
+    /**
+     * 新增，使用，次元碎片
+     * @param debris
+     */
+    public void updateDebris(int debris) {
+        PackBean pb = DaoService.getInstance().findPack(id);
+        int key = LimitRankService.getInstance().key;
+        InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
+        if (debris > 0) {
+            // 背包添加碎片
+            pb.addItem(ic.actgood, debris, "新增怪兽入侵活动次元碎片");
+        } else {
+            pb.payItem(ic.actgood, -debris, "使用怪兽入侵活动次元碎片");
+        }
+    }
+
+    /**
+     * 获取背包碎片数量
+     * @return
+     */
+    public int getDebris() {
+        int key = LimitRankService.getInstance().key;
+        InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
+        PackBean pb = DaoService.getInstance().findPack(id);
+        return pb.getItemCount(ic.actgood);
     }
 }

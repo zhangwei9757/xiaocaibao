@@ -105,14 +105,16 @@ public class RankBean {
 	 * 战斗的时候填充这个FightStruct
 	 * @param _fs
 	 */
-	public void fillHeros(List<HeroStruct> _fs) {
-		// 主力
-		Arrays.stream(formation).forEach(hb -> {
+	public void fillHeros(HeroStruct[] _fs) {
+		for (int i = 0; i < 6; ++i) {
+			HeroBean hb = formation[i];
 			if (hb != null) {
-				HeroStruct hs = hb.createHeroStruct(this.fashion, 0);
-				_fs.add(hs);
+				HeroStruct hs = hb.createHeroStruct();
+				_fs[i] = hs;
+			} else {
+				_fs[i] = null;
 			}
-		});
+		}
 	}
 
 	/**

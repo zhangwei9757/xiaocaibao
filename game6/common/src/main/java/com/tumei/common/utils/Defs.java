@@ -11,6 +11,7 @@ public class Defs {
 	public static final int 橙色 = 4;
 	public static final int 红色 = 5;
 
+	public static final int 圣物之魂 = 3;
 	public static final int 荣誉勋章 = 4;
 	public static final int 勇士币 = 5;
 	public static final int 夺宝魂币 = 6;
@@ -72,7 +73,9 @@ public class Defs {
 	public static final int 神秘宝藏等级 = 62;
 	public static final int 跨服竞技等级 = 68;
 	public static final int 符文副本等级 = 70;
-	public static final int 神器等级 = 90;
+	public static final int 神器等级 = 80;
+
+	public static final int 圣灵石 = 160;
 
 	public static final String 绿色字段 = "<color=#20ff2d>%s</color>";
 	public static final String 蓝色字段 = "<color=#1ad2ff>%s</color>";
@@ -127,6 +130,12 @@ public class Defs {
 	//public static final int 怪兽入侵次元碎片单价 = 10;
 	//public static final int 怪兽入侵次元碎片价格累加 = 5;
 	//public static final int 怪兽入侵次元碎片价格上限 = 50;
+	//public static final int 战争学院日常任务每日上限 = 16;
+	//public static final int 战争学院夜间任务开始时间 = 22;
+	//public static final int 战争学院夜间任务结束时间 = 3;
+	//public static final int 战争学院紧急任务生成等级限制 = 75;
+	//public static final int 战争学院紧急任务生成机率 = 50;
+	//public static final int 圣物之魂钻石倍数 = 1;
 
 	//BT模式
 	public static final int 英雄转换 = 5000;
@@ -160,14 +169,20 @@ public class Defs {
 	public static final int 今日月卡奖励 = 100 * 50;
 	public static final int 今日高级月卡奖励 = 200 * 50;
 	public static final int 今日年卡奖励 = 150 * 50;
-	public static final int 怪兽入侵碎片生成时间 = 60;// 20 * 60
+	public static final int 怪兽入侵碎片生成时间 = 20 * 60;// 20 * 60
 	public static final int 怪兽入侵碎片上限 = 50;
-	public static final int 怪兽入侵血量上限 = 10;// 300
-	public static final int 怪兽入侵复活间隔 = 60;// 6 * 60 * 60
+	public static final int 怪兽入侵血量上限 = 300;// 300
+	public static final int 怪兽入侵复活间隔 = 6 * 60 * 60;// 6 * 60 * 60
 	public static final int 怪兽入侵复活费用 = 500 * 20;// BT 20倍
 	public static final int 怪兽入侵次元碎片单价 = 10 * 20;// BT 20倍
 	public static final int 怪兽入侵次元碎片价格累加 = 5 * 20;// BT 20倍
 	public static final int 怪兽入侵次元碎片价格上限 = 50 * 20;// BT 20倍
+	public static final int 战争学院日常任务每日上限 = 16;
+	public static final int 战争学院夜间任务开始时间 = 22;
+	public static final int 战争学院夜间任务结束时间 = 3;
+	public static final int 战争学院紧急任务生成等级限制 = 75;
+	public static final int 战争学院紧急任务生成机率 = 50;
+	public static final int 圣物之魂钻石倍数 = 50;// BT 50倍
 
 	public static String getColorString(int grade, String name) {
 		String fm = "%s";

@@ -1,6 +1,7 @@
 package com.tumei.model;
 
 import com.tumei.common.Readonly;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.model.beans.war.WarTask;
@@ -83,7 +84,7 @@ public class WarBean {
 		if (today != day) {
 			day = today;
 
-			dailyCount = 16;
+			dailyCount = Defs.战争学院日常任务每日上限;
 			flushConstTasks(level, true);
 		}
 
@@ -112,9 +113,9 @@ public class WarBean {
 		if (yejian <= 0) {
 			LocalDateTime ldt = LocalDateTime.now();
 			long expire = 0;
-			if (ldt.getHour() >= 22) {
+			if (ldt.getHour() >= Defs.战争学院夜间任务开始时间) {
                 expire = LocalDateTime.of(ldt.getYear(), ldt.getMonth(), ldt.getDayOfMonth(), 3, 0).plusDays(1).toEpochSecond(ZoneOffset.ofHours(8));
-			} else if (ldt.getHour() < 3) {
+			} else if (ldt.getHour() < Defs.战争学院夜间任务结束时间) {
 				expire = LocalDateTime.of(ldt.getYear(), ldt.getMonth(), ldt.getDayOfMonth(), 3, 0).toEpochSecond(ZoneOffset.ofHours(8));
 			}
 

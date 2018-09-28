@@ -84,6 +84,21 @@ public class RunnerBean implements ExitCodeGenerator {
 		groovyLoader.registerProtocol(mod, "RequestInvadingLoginAward");
 		groovyLoader.registerProtocol(mod, "RequestInvadingRanksInfo");
 
+		// 战争学院
+		groovyLoader.registerProtocol(mod, "RequestWarCancel");
+		groovyLoader.registerProtocol(mod, "RequestWarComplete");
+		groovyLoader.registerProtocol(mod, "RequestWarStart");
+		groovyLoader.registerProtocol(mod, "RequestWarTasks");
+
+		// 圣物模块
+		groovyLoader.registerProtocol(mod, "RequestRelicActivate");
+		groovyLoader.registerProtocol(mod, "RequestRelicChange");
+		groovyLoader.registerProtocol(mod, "RequestRelicHeroUp");
+		groovyLoader.registerProtocol(mod, "RequestRelicOn");
+		groovyLoader.registerProtocol(mod, "RequestRelicSummon");
+		groovyLoader.registerProtocol(mod, "RequestRelicSummonBuy");
+		groovyLoader.registerProtocol(mod, "RequestRelicUp");
+
 		log.info(this.getClass().getName() + " init.");
 	}
 

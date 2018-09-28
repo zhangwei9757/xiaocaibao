@@ -3,14 +3,13 @@ package com.tumei.common;
 import com.google.common.base.Strings;
 import com.tumei.common.fight.FightResult;
 import com.tumei.common.fight.FightStruct;
-import com.tumei.common.fight.PowerStruct;
+import com.tumei.common.fight.HerosStruct;
+import com.tumei.common.fight.SceneFightStruct;
 import com.tumei.common.group.*;
 import com.tumei.common.service.BaseRemoteService;
-import com.tumei.common.structs.SceneFightStruct;
 import com.tumei.common.utils.Defs;
 import com.tumei.common.webio.AwardStruct;
 import com.tumei.common.webio.BattleResultStruct;
-import com.tumei.common.webio.BattleStruct;
 import com.tumei.common.webio.RankStruct;
 import com.tumei.dto.arena.*;
 import com.tumei.dto.boss.BossDto;
@@ -101,7 +100,7 @@ public class RemoteService extends BaseRemoteService {
 		return reply;
 	}
 
-	public String callSimSelf(FightStruct arg) {
+	public String callSimSelf(HerosStruct arg) {
 		try {
 			String url = Defs.SIMFIGHT_PREFIX + "/simSelf";
 			return restTemplate.postForEntity(url, arg, String.class).getBody();
@@ -117,7 +116,7 @@ public class RemoteService extends BaseRemoteService {
 	 * @param arg
 	 * @return
 	 */
-	public long callPower(PowerStruct arg) {
+	public long callPower(HerosStruct arg) {
 		int reply = 0;
 		try {
 			String url = Defs.SIMFIGHT_PREFIX + "/calcPower";
@@ -327,9 +326,9 @@ public class RemoteService extends BaseRemoteService {
 		return null;
 	}
 
-	public BattleResultStruct askGroupSceneFight(BattleStruct bs, long gid, long role, int index) {
+	public BattleResultStruct askGroupSceneFight(HerosStruct bs, long gid, int index) {
 		try {
-			String url = Defs.GUILD_PREFIX + "/sceneFight?role=" + role + "&gid=" + gid + "&index=" + index;
+			String url = Defs.GUILD_PREFIX + "/sceneFight?gid=" + gid + "&index=" + index;
 			return restTemplate.postForObject(url, bs, BattleResultStruct.class);
 		} catch (Exception ex) {
 			log.error("askGroupSceneFight error:" + ex.getMessage());
@@ -434,13 +433,12 @@ public class RemoteService extends BaseRemoteService {
 	/**
 	 * 参加boss战斗
 	 * @param bs 战斗数据
-	 * @param uid
 	 * @return
 	 */
-	public BattleResultStruct askBossFight(BattleStruct bs, long uid) {
+	public BattleResultStruct askBossFight(HerosStruct bs) {
 		try {
-			String url = Defs.GUILD_PREFIX + "/boss/callFight?uid={uid}";
-			return restTemplate.postForObject(url, bs, BattleResultStruct.class, uid);
+			String url = Defs.GUILD_PREFIX + "/boss/callFight";
+			return restTemplate.postForObject(url, bs, BattleResultStruct.class);
 		} catch (Exception ex) {
 			log.error("调用boss战斗 error:" + ex.getMessage());
 		}

@@ -215,6 +215,9 @@ class RequestLogin extends BaseProtocol {
             if (sb.getScene() > 0) {
                 sb.harvest(user, rl.offawards, 0)
             }
+            if (sb.cumerate < 0) {
+                sb.cumerate = 0
+            }
 
 //			user.info("************** before,返回的等级:" + rb.getLevel() + " exp:" + rb.getExp() + " coin:" + rl.pack.getCoin())
 

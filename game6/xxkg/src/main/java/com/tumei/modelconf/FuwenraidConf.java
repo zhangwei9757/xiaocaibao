@@ -1,7 +1,12 @@
 package com.tumei.modelconf;
 
+import com.tumei.common.fight.DirectHeroStruct;
+import com.tumei.common.utils.RandomUtil;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/17 0017.
@@ -34,4 +39,34 @@ public class FuwenraidConf {
 	public int increase;
 	public int reduce;
 	public int[][] rankreward;
+
+	public List<DirectHeroStruct> makeRune() {
+		List<DirectHeroStruct> rtn = new ArrayList<>();
+
+		int idx = RandomUtil.getRandom() % this.guard.length;
+		int[] guard = this.guard[idx];
+
+		for (int h : guard) {
+			if (h != 0) {
+				int ratio = 100;
+				DirectHeroStruct shs = new DirectHeroStruct();
+				shs.hero = h;
+				shs.life = (long)(hp * (ratio / 100.0));
+				shs.attack = (int)(attack * (ratio / 100.0));
+				shs.def = (int)(defence1 * (ratio / 100.0));
+				shs.mdef = (int)(defence2 * (ratio / 100.0));
+				shs.critical = (int)(crit * (ratio / 100.0));
+				shs.aim = (int)(hit * (ratio / 100.0));
+				shs.antiCrit = (int)(critoff * (ratio / 100.0));
+				shs.dodge = (int)(dog * (ratio / 100.0));
+				shs.enHarm = (int)(increase * (ratio / 100.0));
+				shs.overHarm = (int)(reduce * (ratio / 100.0));
+				rtn.add(shs);
+			} else {
+				rtn.add(null);
+			}
+		}
+		return rtn;
+	}
+
 }

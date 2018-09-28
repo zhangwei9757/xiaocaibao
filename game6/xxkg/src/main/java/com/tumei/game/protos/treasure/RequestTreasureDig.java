@@ -1,6 +1,7 @@
 package com.tumei.game.protos.treasure;
 
 import com.tumei.GameConfig;
+import com.tumei.common.utils.Defs;
 import com.tumei.common.utils.ErrCode;
 import com.tumei.game.GameUser;
 import com.tumei.model.PackBean;

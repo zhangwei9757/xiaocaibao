@@ -22,4 +22,6 @@ public class InvadingLoginDto {
      * 当天补签所需要的钻石费用
      */
     public int resign;
+
+    public int ddagain;
 }

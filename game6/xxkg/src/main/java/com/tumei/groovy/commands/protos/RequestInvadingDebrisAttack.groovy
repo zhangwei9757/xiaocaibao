@@ -59,12 +59,12 @@ class RequestInvadingDebrisAttack extends BaseProtocol {
                         rci.result = "怪兽已死亡待复活状态中"
                     } else {
                         List<AwardBean> list = user.addItems(awds, true, "次元碎片攻击奖励")
-                        rci.awards.addAll(list)
-                        ib.addList(list, ib.debrisList)
+                        ib.addList(list)
+                        rci.awards = list
                         // 额外获取击杀奖励
-                        awds = ib.getKillAward(user.uid, user.name)
-                        if (awds[0] != -1) {
-                            rci.killAwards.addAll(user.addItems(awds, true, "怪兽击杀奖励"))
+                        int[] kills = ib.getKillAward(user.uid, user.name)
+                        if (kills[0] != -1) {
+                            rci.killAwards.addAll(user.addItems(kills, false, "怪兽击杀奖励"))
                         }
                     }
                 } else {

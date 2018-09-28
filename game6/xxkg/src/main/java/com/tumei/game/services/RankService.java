@@ -3,7 +3,6 @@ package com.tumei.game.services;
 import com.tumei.common.DaoService;
 import com.tumei.common.Readonly;
 import com.tumei.common.RemoteService;
-import com.tumei.common.fight.PowerStruct;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.game.GameServer;
 import com.tumei.game.protos.structs.RankStruct;
@@ -109,10 +108,10 @@ public class RankService {
 								hbs[j] = hb;
 							}
 
-							PowerStruct ts = HerosBean.createTeamStructForRobot(hbs);
-							long power = remoteService.callPower(ts);
+							HerosBean hsb = new HerosBean();
+							hsb.setHeros(hbs);
+							long power = remoteService.callPower(hsb.createHerosStruct());
 							rb.setPower(power);
-
 							rk.add(rb);
 							rankBeanRepository.save(rb);
 						}
@@ -321,8 +320,7 @@ public class RankService {
 					rb.setFormation(hsb.getHeros());
 					rb.setFashion(hsb.getFakeHero());
 
-					PowerStruct ts = hsb.createTeamStruct();
-					long power = remoteService.callPower(ts);
+					long power = remoteService.callPower(hsb.createHerosStruct());
 					rb.setPower(power);
 				}
 

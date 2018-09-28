@@ -569,10 +569,10 @@ class ArenaService implements IArenaSystem {
                 }
                 selfGroup = self.group
 
-                if (trc.limit <= self.rank) {
-                    result.reason = "跨服竞技场排名不满足条件，无法挑战"
-                    return result
-                }
+//                if (trc.limit <= self.rank) {
+//                    result.reason = "跨服竞技场排名不满足条件，无法挑战"
+//                    return result
+//                }
                 selfName = self.name
                 selfGrade = self.grade
 
@@ -648,10 +648,10 @@ class ArenaService implements IArenaSystem {
                 }
                 selfGroup = self.group
 
-                if (trc.limit <= self.rank) {
-                    result.reason = "跨服竞技场排名不满足条件，无法挑战"
-                    return result
-                }
+//                if (trc.limit <= self.rank) {
+//                    result.reason = "跨服竞技场排名不满足条件，无法挑战"
+//                    return result
+//                }
 
                 long target = arenaData.getSlotGroupRole(self.slot, group, index)
                 if (target != pid) {

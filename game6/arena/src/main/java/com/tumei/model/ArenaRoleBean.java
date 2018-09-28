@@ -2,6 +2,7 @@ package com.tumei.model;
 
 import com.tumei.common.fight.ArtifactStruct;
 import com.tumei.common.fight.HeroStruct;
+import com.tumei.common.fight.HerosStruct;
 import com.tumei.dto.arena.ArenaItemDto;
 import com.tumei.dto.arena.ArenaRoleDto;
 import com.tumei.dto.arena.LadderSimpleDto;
@@ -43,23 +44,8 @@ public class ArenaRoleBean {
 	// 战斗力
 	private long power;
 
-	//
-	private int[] lineups = new int[6];
 
-	/**
-	 * 阵形
-	 */
-	private List<HeroStruct> formation = new ArrayList<HeroStruct>();
-
-	/**
-	 * 各种战斗buff
-	 */
-	private Map<Integer, Integer> buffs = new HashMap<Integer, Integer>();
-
-	/**
-	 * 神器
-	 */
-	private List<ArtifactStruct> arts = new ArrayList<>();
+	private HerosStruct info;
 
 	/***
 	 * 天梯赛相关数据
@@ -122,12 +108,8 @@ public class ArenaRoleBean {
 		level = dto.level;
 		icon = dto.icon;
 		grade = dto.grade;
-		fashion = dto.fashion;
+		info = dto.info;
 		power = dto.power;
-		lineups = dto.lineups;
-		formation = dto.formation;
-		buffs = dto.buffs;
-		arts = dto.arts;
 	}
 
 	/**
@@ -146,9 +128,11 @@ public class ArenaRoleBean {
 		dto.power = power;
 		dto.rank = rank;
 
-		for (HeroStruct hs : formation) {
-			if (hs != null && !hs.assist) {
-				dto.formation.add(new HeroStruct(hs));
+		if (info != null) {
+			for (HeroStruct hs : info.heros) {
+				if (hs != null && !hs.assist) {
+					dto.formation.add(new HeroStruct(hs));
+				}
 			}
 		}
 

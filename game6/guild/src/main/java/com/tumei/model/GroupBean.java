@@ -3,9 +3,7 @@ package com.tumei.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Strings;
 import com.tumei.common.RemoteService;
-import com.tumei.common.fight.DirectHeroStruct;
-import com.tumei.common.fight.GroupFightResult;
-import com.tumei.common.fight.GroupFightStruct;
+import com.tumei.common.fight.*;
 import com.tumei.common.group.GroupMessage;
 import com.tumei.common.group.GroupRoleMessage;
 import com.tumei.common.group.GroupSceneRoleStruct;
@@ -16,7 +14,6 @@ import com.tumei.common.utils.RandomUtil;
 import com.tumei.common.utils.TimeUtil;
 import com.tumei.common.webio.AwardStruct;
 import com.tumei.common.webio.BattleResultStruct;
-import com.tumei.common.webio.BattleStruct;
 import com.tumei.controller.GroupService;
 import com.tumei.controller.struct.*;
 import com.tumei.controller.struct.notify.GroupTextNotifyStruct;
@@ -25,7 +22,6 @@ import com.tumei.modelconf.GuildraidConf;
 import com.tumei.modelconf.Readonly;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -938,17 +934,16 @@ public class GroupBean {
 	 * @param index
 	 * @param rl
 	 */
-	public synchronized void callFight(GroupRole role, BattleStruct bs, int index, BattleResultStruct rl) {
+	public synchronized void callFight(GroupRole role, HerosStruct bs, int index, BattleResultStruct rl) {
 		List<DirectHeroStruct> peers = scene.peers.get(index - 1);
 
 		// 如果对手全部死亡了，直接返回结束
 		if (peers.stream().noneMatch((dhs) -> dhs.life > 0)) {
 			rl.result = "关卡Boss已经被其他成员击杀";
 		} else {
-			GroupFightStruct arg = new GroupFightStruct();
-			arg.setLeft(bs.roles);
-			arg.setRight(peers);
-			arg.setArts(bs.arts);
+			SceneFightStruct arg = new SceneFightStruct();
+			arg.hss = bs;
+			arg.right = peers;
 
 			GroupSceneRoleStruct gsrs = scene.roles.get(role.id);
 			if (gsrs == null) {
@@ -963,9 +958,7 @@ public class GroupBean {
 			rl.rCon = RandomUtil.getBetween(grc.reward1[0], grc.reward1[1]);
 
 			try {
-				GroupFightResult r = GroupService.getInstance().callRemote((RemoteService rs, GroupFightStruct fa) -> {
-					return rs.callFight(fa);
-				}, arg);
+				FightResult r = GroupService.getInstance().callRemote(RemoteService::callFight, arg);
 
 				if (r == null) {
 					rl.result = "战斗服务器维护中";

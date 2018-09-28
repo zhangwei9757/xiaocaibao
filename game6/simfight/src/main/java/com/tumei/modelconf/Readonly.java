@@ -26,7 +26,7 @@ public class Readonly {
         return _instance;
     }
 
-	private Log log = LogFactory.getLog(Readonly.class);
+	private static final Log log = LogFactory.getLog(Readonly.class);
 
 	@Autowired
 	@Qualifier("confTemplate")
@@ -46,6 +46,9 @@ public class Readonly {
 		public HashMap<Integer, ArtpartConf> artparts = new HashMap<>();
 		public HashMap<Integer, ArtifactConf> artifacts = new HashMap<>();
 		public List<ArtpartstupConf> artpartstups = new ArrayList<>();
+		// 圣物
+		public HashMap<Integer, HolyConf> holys = new HashMap<>();
+		public HashMap<Integer, LegendHero> legendHeros = new HashMap<>();
 
 		public void initialize() {
 			{
@@ -126,6 +129,19 @@ public class Readonly {
 				}
 				return 0;
 			});
+
+			{
+				List<HolyConf> bean = mongoTemplate.findAll(HolyConf.class);
+				for (HolyConf ib : bean) {
+					holys.put(ib.key, ib);
+				}
+			}
+			{
+				List<LegendHero> bean = mongoTemplate.findAll(LegendHero.class);
+				for (LegendHero ib : bean) {
+					legendHeros.put(ib.key, ib);
+				}
+			}
 		}
 	}
 
@@ -305,5 +321,11 @@ public class Readonly {
 		}
 
 		return conf.artpartstups.get(level);
+	}
+	public HolyConf findHoly(int id) {
+		return conf.holys.getOrDefault(id, null);
+	}
+	public LegendHero findLegendHero(int id) {
+		return conf.legendHeros.getOrDefault(id, null);
 	}
 }

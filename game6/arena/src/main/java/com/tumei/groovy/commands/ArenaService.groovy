@@ -315,14 +315,7 @@ class ArenaService implements IArenaSystem {
             }
 
             // 1. 填充左边
-            int[] lu = self.getLineups()
-            for (int i = 0; i < 6; ++i) {
-                arg.lineups[i] = lu[i]
-            }
-
-            arg.setBuffs(self.getBuffs())
-            arg.setLeft(self.getFormation())
-            arg.setArts1(self.getArts())
+            arg.left = self.info.copy()
 
             if (peerRank < 0 || peerRank >= arenaData.rankSize()) {
                 result.reason = "挑战的名次参数错误"
@@ -335,17 +328,24 @@ class ArenaService implements IArenaSystem {
                 return result
             }
             pid = peer.id
-            arg.setLineups2(peer.getLineups())
-            arg.setBuffs2(peer.getBuffs())
-            arg.setRight(peer.getFormation())
-            arg.setArts2(peer.getArts())
+
+            if (peer.info != null) {
+                arg.right = peer.info.copy()
+            }
         }
 
-        FightResult r = remoteService.callFight(arg)
+        boolean win = false
+        if (arg.right != null) {
+            FightResult r = remoteService.callFight(arg)
+            result.data = r.data
+            if (r.win == 1) {
+                win = true
+            }
+        } else {
+            win = true // 如果对方玩家长久没上线，info信息不会获取，则能随意被人击败
+        }
 
-        result.data = r.data
-
-        if (r.win == 1) { // 胜利
+        if (win) { // 胜利
             result.win = true
 
             // 1. 交换2个人的排名
@@ -357,8 +357,6 @@ class ArenaService implements IArenaSystem {
                 result.rank = peerRank
                 result.up = rtn
             }
-        } else { // 失败
-//            log.warn("挑战失败")
         }
 
         return result
@@ -445,9 +443,11 @@ class ArenaService implements IArenaSystem {
             rnd = true
         }
 
-        // 参数错误
-        if (slot < 0 || slot > 6) {
-            return -2
+        int segment = readonly.findTopRankConf(1).groupnum
+        int szone = uid % 1000
+        slot = (int) ((szone - 1) / segment)
+        if (slot >= arenaData.slotsSize()) {
+            slot = arenaData.slotsSize() - 1
         }
 
         arb.setSlot(slot)
@@ -527,10 +527,9 @@ class ArenaService implements IArenaSystem {
                 selfGrade = self.grade
 
                 // 1. 填充左边
-                arg.setLineups(self.getLineups())
-                arg.setBuffs(self.getBuffs())
-                arg.setLeft(self.getFormation())
-                arg.setArts1(self.getArts())
+                if (self.info != null) {
+                    arg.left = self.info.copy()
+                }
 
                 ArenaRoleBean peer = arenaData.findUser(pid)
                 if (peer == null) {
@@ -545,25 +544,28 @@ class ArenaService implements IArenaSystem {
 
                 groupTime = peer.groupTime
 
-                arg.setLineups2(peer.getLineups())
-                arg.setBuffs2(peer.getBuffs())
-                arg.setRight(peer.getFormation())
-                arg.setArts2(peer.getArts())
+                if (peer.info != null) {
+                    arg.right = peer.info.copy()
+                }
             }
 
             // 根据所在的天梯分组，增加个人的buff
             // 1. 自己的
             TopRankConf strc = Readonly.getInstance().findTopRankConf(selfGroup + 1)
             if (strc != null) {
-                for (int i = 0; i < strc.attadd.length; i += 2) {
-                    arg.getBuffs().merge(strc.attadd[i], strc.attadd[i+1], {a, b -> a + b})
+                if (arg.left != null) {
+                    for (int i = 0; i < strc.attadd.length; i += 2) {
+                        arg.left.buffs.merge(strc.attadd[i], strc.attadd[i+1], {a, b -> a + b})
+                    }
                 }
             }
             // 2. 对方的
             if (trc != null) {
+
 //                for (int i = 0; i < trc.attadd.length; i += 2) {
 //                    arg.getBuffs2().merge(trc.attadd[i], trc.attadd[i+1], {a, b -> a + b})
 //                }
+
                 // 3. 对方的衰弱
                 if (groupTime != 0) {
                     long now = System.currentTimeMillis() / 1000
@@ -578,25 +580,27 @@ class ArenaService implements IArenaSystem {
                 }
             }
 
-
-            FightResult r = remoteService.callFight(arg)
-            result.data = r.data
-            if (r.win == 1) { // 胜利
-                result.win = true
+            if (arg.right == null) {
+                result.win = true // 旧的数据没有info,也就没有对方的信息，只要对方不上线，没有信息，就直接被击败。
             } else {
-                result.win = false
-            }
+                FightResult r = remoteService.callFight(arg)
+                result.data = r.data
+                if (r.win == 1) { // 胜利
+                    result.win = true
+                } else {
+                    result.win = false
+                }
 
-            // 挑战成功后需要给被挑战者增加失败视频记录
-            synchronized (this) {
-                ArenaRoleBean peer = arenaData.findUser(pid)
-                if (peer != null) {
-                    int z = sr.chooseZone(uid)
-                    peer.addViedo(z, selfName, selfGrade, r.data, r.win)
-                    arenaData.dirty(pid)
+                // 挑战成功后需要给被挑战者增加失败视频记录
+                synchronized (this) {
+                    ArenaRoleBean peer = arenaData.findUser(pid)
+                    if (peer != null) {
+                        int z = sr.chooseZone(uid)
+                        peer.addViedo(z, selfName, selfGrade, r.data, r.win)
+                        arenaData.dirty(pid)
+                    }
                 }
             }
-
         } else {
             int selfGroup = 6;
             SceneFightStruct arg = new SceneFightStruct()
@@ -618,18 +622,14 @@ class ArenaService implements IArenaSystem {
                     result.reason = "对手排名发生变化，请重新发起挑战"
                     return result
                 } else {
-                    // 1. 填充左边
-                    arg.setLineups(self.getLineups())
-                    arg.setBuffs(self.getBuffs())
-                    arg.setLeft(self.getFormation())
-                    arg.setArts(self.getArts())
+                    arg.hss = self.info.copy()
                 }
             }
             // 1. 自己的
             TopRankConf strc = Readonly.getInstance().findTopRankConf(selfGroup + 1)
             if (strc != null) {
                 for (int i = 0; i < strc.attadd.length; i += 2) {
-                    arg.getBuffs().merge(strc.attadd[i], strc.attadd[i+1], {a, b -> a + b})
+                    arg.hss.buffs.merge(strc.attadd[i], strc.attadd[i+1], {a, b -> a + b})
                 }
             }
 
@@ -678,7 +678,7 @@ class ArenaService implements IArenaSystem {
                         arenaData.setSlotGroupRole(self.slot, group, index, self.id)
                         self.group = group
                         self.gindex = index
-                        self.groupTime = System.currentTimeMillis() / 1000
+                        self.groupTime = (long) (System.currentTimeMillis() / 1000)
                         arenaData.dirty(self.id)
 
                         if (oldGroup < 6) { // 只有不是青铜守卫的情况才需要交换怪物的位置

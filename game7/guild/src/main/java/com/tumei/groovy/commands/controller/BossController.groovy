@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest
  * boss战的输入输出
  */
 class BossController {
-    static final Log log = LogFactory.getLog(BossController.class)
+    private static final Log log = LogFactory.getLog(BossController.class)
 
     @Autowired
     private IBossSystem bossSystem

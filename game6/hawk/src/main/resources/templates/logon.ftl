@@ -104,6 +104,7 @@
         	topacc: [], 	// 查询最高充值
         	toplogs: [],	// 最近操作日志
         	topscene: [],   // 最高关卡
+        	chats: [],      // 所有聊天信息
 
         	logged: false,
         	today: null,    // 总体信息查询日期
@@ -419,6 +420,19 @@
 								this.$message.error("错误:" + response);
 							})
       	},
+      	viewChat() {
+			var url = "http://" + this.serverhost + "/cmd/chat?xtkn=" + this.jwt
+			this.loading = true;
+			this.$http.get(url, {emulateJSON: true})
+							.then((response) => {
+								this.loading = false;
+								this.chats = response.data
+							})
+							.catch(function(response) {
+								this.loading = false;
+								this.$message.error("错误:" + response);
+							})
+      	},
 
       	forbidRole() {
       		var vm = this;
@@ -434,10 +448,16 @@
                                 vm.$message.error("错误:" + response);
                             })
       	},
-
-      	forbidSay() {
+      	forbidSay(o, u, v) {
       		var vm = this;
-			var url = "http://" + vm.serverhost + "/role/forbidSay?xtkn=" + vm.jwt + "&id=" + vm.uid + "&val=" + vm.user.fs
+      	    if (u == null) {
+      	        u = vm.uid
+      	    }
+      	    if (v == null) {
+      	        v = vm.user.fs
+      	    }
+
+			var url = "http://" + vm.serverhost + "/role/forbidSay?xtkn=" + vm.jwt + "&id=" + u + "&val=" + v
       		this.loading = true;
       		this.$http.get(url, {emulateJSON: true})
                             .then((response) => {
