@@ -13,6 +13,7 @@ import com.tumei.modelconf.VipConf
 import com.tumei.websocket.BaseProtocol
 import com.tumei.websocket.SessionUser
 
+import java.util.stream.Collector
 import java.util.stream.Collectors
 
 /**
@@ -112,8 +113,8 @@ class RequestArtSummon extends BaseProtocol {
             for (int i = 0; i < 5; ++i) {
                 ab.artTotal += 1
                 if (i == 0) { // 五连抽第一个必定是紫色,如果第一个也满足金色,就标记之后再发
-                    def list = ascs.stream().filter({asc -> asc.team >= 3 && asc.team < 4}).collect(Collectors.toList())
-                    int idx = RandomUtil.getRandom() % list.size()
+                    def list = ascs.stream().filter({asc -> asc.team >= 3 && asc.team < 4}).collect(Collectors.toList() as Collector<? super ArtsummonConf, Object, Object>)
+                    int idx = (int) (RandomUtil.getRandom() % list.size())
                     ArtsummonConf asc = list.get(idx) as ArtsummonConf
                     rci.awards.addAll(user.addItems(asc.good, false, "神器召唤"))
                     if (ab.artTotal % 20 == 0) {

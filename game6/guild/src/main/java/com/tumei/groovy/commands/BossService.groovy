@@ -3,24 +3,18 @@ package com.tumei.groovy.commands
 import com.tumei.common.RemoteService
 import com.tumei.common.fight.DirectHeroStruct
 import com.tumei.common.fight.FightResult
-import com.tumei.common.fight.FightStruct
 import com.tumei.common.fight.HerosStruct
 import com.tumei.common.fight.SceneFightStruct
 import com.tumei.common.utils.Defs
 import com.tumei.common.utils.TimeUtil
 import com.tumei.common.webio.BattleResultStruct
-
 import com.tumei.controller.GroupService
 import com.tumei.dto.boss.BossDto
 import com.tumei.dto.boss.BossGuildDto
 import com.tumei.dto.boss.BossRoleDto
-import com.tumei.groovy.contract.IServiceRouter
 import com.tumei.groovy.contract.IBossSystem
-import com.tumei.model.BossBean
-import com.tumei.model.BossBeanRepository
-import com.tumei.model.BossGuildBean
-import com.tumei.model.BossRoleBean
-import com.tumei.model.GroupBean
+import com.tumei.groovy.contract.IServiceRouter
+import com.tumei.model.*
 import com.tumei.modelconf.BossConf
 import com.tumei.modelconf.Readonly
 import org.apache.commons.logging.Log
@@ -94,7 +88,6 @@ class BossService implements IBossSystem {
 
     private HashMap<Long, BossGuildBean> gUsers = new HashMap<>();
 
-
     /**
      * 今天boss战的开启时间
      */
@@ -126,7 +119,7 @@ class BossService implements IBossSystem {
      */
     void checkNextStartTime() {
         def today = LocalDate.now()
-        def that = today.atStartOfDay().plusHours(19).plusMinutes(30 );
+        def that = today.atStartOfDay().plusHours(19).plusMinutes(30);
         def time = that.toEpochSecond(ZoneOffset.ofHours(8))
         if (time != startTime) {
             log.info("+++++ 今日首领战启动时间为:" + that.toString());
@@ -134,7 +127,6 @@ class BossService implements IBossSystem {
             startTime = time
         }
     }
-
 
     /**
      * 新的一天需要创建新的boss,老的boss不要删除,用于查看历史记录
@@ -278,7 +270,7 @@ class BossService implements IBossSystem {
                 // 根据brb的id也就是公会id，找到公会所有玩家id
                 GroupBean gb = groupService.find(brb.id)
                 if (gb != null) {
-                    for (long uid :gb.roles.keySet()) {
+                    for (long uid : gb.roles.keySet()) {
                         int zone = 1
                         if (uid > 10000) {
                             zone = sr.chooseZone(uid)
@@ -297,7 +289,7 @@ class BossService implements IBossSystem {
             }
         }
 
-        rk.forEach({zone, ls ->
+        rk.forEach({ zone, ls ->
             // 1. 根据游戏区
             // 2. 根据奖励类型
             if (ls.size() > 0) {
@@ -305,7 +297,7 @@ class BossService implements IBossSystem {
             }
         })
 
-        grk.forEach({zone, ls ->
+        grk.forEach({ zone, ls ->
             // 1. 根据游戏区
             // 2. 根据奖励类型
             if (ls.size() > 0) {
@@ -511,7 +503,7 @@ class BossService implements IBossSystem {
             return rl
         }
 
-        BossRoleBean role  = users.getOrDefault(bs.uid, null)
+        BossRoleBean role = users.getOrDefault(bs.uid, null)
         if (role == null) {
             rl.result = "请重新进入首领战界面，提交今日信息参战."
             return rl
@@ -524,6 +516,7 @@ class BossService implements IBossSystem {
                 SceneFightStruct arg = new SceneFightStruct();
                 arg.hss = bs
                 arg.right = bossBean.peers
+                arg.isBoss = true
 
                 FightResult r = remoteService.callFight(arg);
 
@@ -536,7 +529,7 @@ class BossService implements IBossSystem {
 
                         log.info("结果:" + r.win)
                         if (r.win == 1) {
-                            bossBean.killTime = (int)(System.currentTimeMillis() / 1000 - startTime)
+                            bossBean.killTime = (int) (System.currentTimeMillis() / 1000 - startTime)
                             rl.kill = 1;
                         }
 

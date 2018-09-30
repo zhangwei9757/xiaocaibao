@@ -515,6 +515,7 @@ public class HerosBean {
 
 		while (total > 0) {
 			int need = cost - rb.exp;
+
 			if (total >= need) {
 				// 本次注灵导致升级了，判断一下最高能到达的等级是否满足条件
 				if (rb.level >= level_limit) {
@@ -523,6 +524,7 @@ public class HerosBean {
 
 				total -= need;
 				++rb.level;
+				rb.exp = 0;
 				cost = Readonly.getInstance().findHolyexp(rb.level);
 				if (cost < 0) { //证明之后已经无法升级
 					break;

@@ -6,6 +6,9 @@ import com.tumei.game.GameUser;
 import com.tumei.modelconf.*;
 import com.tumei.modelconf.festival.*;
 import com.tumei.modelconf.happy.SoulrankConf;
+import com.tumei.modelconf.limit.InvadingConf;
+import com.tumei.modelconf.limit.InvrankConf;
+import com.tumei.modelconf.limit.InvtotalConf;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -913,6 +916,10 @@ public class Readonly extends IReadonly {
         public List<FestivalSaleConf> festivalSaleConfs;
         public List<FestivalCumConf> festivalCumConfs;
 
+        public List<InvadingConf> invadingConfs;
+        public List<InvrankConf> invrankConfs;
+        public List<InvtotalConf> invtotalConfs;
+
         public List<SoulrankConf> soulrankConfs;
         public List<CrazylistConf> crazylistConfs;
 
@@ -993,6 +1000,39 @@ public class Readonly extends IReadonly {
                 if (o1.key < o2.key) {
                     return -1;
                 } else if (o1.key > o2.key) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            invadingConfs = mongoTemplate.findAll(InvadingConf.class);
+            invadingConfs.sort((o1, o2) -> {
+                if (o1.key < o2.key) {
+                    return -1;
+                }
+                else if (o1.key > o2.key) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            invrankConfs = mongoTemplate.findAll(InvrankConf.class);
+            invrankConfs.sort((o1, o2) -> {
+                if (o1.key < o2.key) {
+                    return -1;
+                }
+                else if (o1.key > o2.key) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            invtotalConfs = mongoTemplate.findAll(InvtotalConf.class);
+            invtotalConfs.sort((o1, o2) -> {
+                if (o1.key < o2.key) {
+                    return -1;
+                }
+                else if (o1.key > o2.key) {
                     return 1;
                 }
                 return 0;
@@ -1965,6 +2005,42 @@ public class Readonly extends IReadonly {
 
     public List<MissionConf> getMissions() {
         return conf.missions;
+    }
+
+    public List<InvadingConf> getInvadingConfs() { return festConf.invadingConfs; }
+
+    public InvadingConf findInvadingConf(int key) {
+        InvadingConf ic = null;
+        if (festConf.invadingConfs.size() <= 0) {
+            return ic;
+        }
+        return festConf.invadingConfs.get(key - 1);
+    }
+
+    public List<InvrankConf> getInvrankConfs() { return festConf.invrankConfs; }
+
+    public InvrankConf findInvrankConf(int key) {
+        InvrankConf ic = null;
+        if (festConf.invrankConfs.size() <= 0) {
+            return ic;
+        }
+        return festConf.invrankConfs.get(key - 1);
+    }
+
+    public List<InvtotalConf> getInvtotalConfs() { return festConf.invtotalConfs; }
+
+    public InvtotalConf findInvtotalConfs(int rmb) {
+        InvtotalConf ic = null;
+        if (festConf.invtotalConfs.size() <= 0) {
+            return ic;
+        }
+        for (InvtotalConf invtotalConf : festConf.invtotalConfs) {
+            if (invtotalConf.cost == rmb) {
+                ic = invtotalConf;
+                break;
+            }
+        }
+        return ic;
     }
 }
 

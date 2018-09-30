@@ -552,6 +552,8 @@ public class GameUser extends SessionUser {
 					GameServer.getInstance().pushServerMsg("<color=red>" + name + "</color>获得神器部件" + Defs.getColorString(acf.quality, acf.name));
 				}
 			}
+			rl.add(new AwardBean(id, (int)count, 0));
+			return rl;
 		} else {
 			//查找宝箱记录，然后拆开宝箱
 			if (auto) {

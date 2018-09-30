@@ -944,6 +944,7 @@ public class GroupBean {
 			SceneFightStruct arg = new SceneFightStruct();
 			arg.hss = bs;
 			arg.right = peers;
+			arg.isBoss = true;
 
 			GroupSceneRoleStruct gsrs = scene.roles.get(role.id);
 			if (gsrs == null) {

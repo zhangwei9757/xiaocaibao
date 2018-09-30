@@ -114,7 +114,7 @@ class RequestLogin extends BaseProtocol {
             rl.role.sex = rb.getSex()
             rl.role.vip = rb.getVip()
             rl.role.vipexp = rb.getVipexp()
-            rl.role.create = rb.getCreatetime().getTime() / 1000
+            rl.role.create = (long) rb.getCreatetime().getTime() / 1000
             rl.role.gm = user.isGm() ? 1 : 0
 
             if (TimeUtil.getDay(rb.getCreatetime()) == today) { // new guy
@@ -126,8 +126,8 @@ class RequestLogin extends BaseProtocol {
 
             ChargeBean cb = user.getDao().findCharge(uid)
             cb.checkSendCards()
+            ActivityBean ab = user.getDao().findActivity(uid)
             if (cb.getTotal() > 0) {
-                ActivityBean ab = user.getDao().findActivity(uid)
                 if (ab.getFirstAward() != 0) {
                     rl.first = 2
                 }
@@ -135,6 +135,9 @@ class RequestLogin extends BaseProtocol {
                     rl.first = 1
                 }
             }
+
+            ab.flush()
+            rl.relicCount = ab.relicActivate
 
             GroupBean gb = user.getDao().findGroup(uid)
             long gid = gb.getGid()

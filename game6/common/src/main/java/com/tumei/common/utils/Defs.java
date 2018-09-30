@@ -74,6 +74,7 @@ public class Defs {
 	public static final int 跨服竞技等级 = 68;
 	public static final int 符文副本等级 = 70;
 	public static final int 神器等级 = 80;
+	public static final int 圣物等级 = 90;
 
 	public static final int 圣灵石 = 160;
 
@@ -136,6 +137,7 @@ public class Defs {
 	//public static final int 战争学院紧急任务生成等级限制 = 75;
 	//public static final int 战争学院紧急任务生成机率 = 50;
 	//public static final int 圣物之魂钻石倍数 = 1;
+	//public static final int 首领战鼓舞价格 = 50;
 
 	//BT模式
 	public static final int 英雄转换 = 5000;
@@ -183,6 +185,8 @@ public class Defs {
 	public static final int 战争学院紧急任务生成等级限制 = 75;
 	public static final int 战争学院紧急任务生成机率 = 50;
 	public static final int 圣物之魂钻石倍数 = 50;// BT 50倍
+	public static final int 首领战鼓舞价格 = 1500;
+
 
 	public static String getColorString(int grade, String name) {
 		String fm = "%s";

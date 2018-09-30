@@ -204,6 +204,9 @@ public class ChargeBean {
 		} else {
 			dayCharges.add(new ChargeDayBean(today, rmb));
 		}
+
+		// 限时活动怪兽入侵累计充值
+		DaoGame.getInstance().findInvading(id).doChargeAdd(rmb);
 	}
 
 	/**

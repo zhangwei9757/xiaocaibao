@@ -2921,7 +2921,7 @@ class Roler {
     /**
      * 怒气
      */
-    int anger = 0
+    int anger = 1
     /**
      * 回怒
      */
@@ -4637,7 +4637,9 @@ class 小龙女 extends Roler {
         long h = target.max_life * hc.skillzeff[0] / 100
         List<Roler> peers = battle.getTeam(side % 2 + 1)
         for (Roler r : peers) {
-            r.fixLife(null, -h, BuffInfo.中毒伤害, false)
+            if (!r.isDead()) {
+                r.fixLife(null, -h, BuffInfo.中毒伤害, false)
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ class RequestBossCourage extends BaseProtocol {
                 rci.key = bc.upatt[idx*2]
                 rci.val = bc.upatt[idx*2 + 1]
 
-                pb.payItem(Defs.钻石, 50, "鼓励")
+                pb.payItem(Defs.钻石, Defs.首领战鼓舞价格, "鼓励")
                 boss.doCourage()
             }
         }
