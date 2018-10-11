@@ -2,7 +2,7 @@ package com.tumei.controller
 
 import com.google.common.base.Strings
 import com.tumei.centermodel.*
-import com.tumei.centermodel.beans.ServerBean
+
 import com.tumei.centermodel.beans.UserRoleBean
 import com.tumei.common.DaoUtils
 import com.tumei.common.Readonly
@@ -85,7 +85,7 @@ class CmdController {
     }
 
     @Autowired
-    private ServersBeanRepository serversBeanRepository
+    private ServerBeanRepository serverBeanRepository
 
     @ApiOperation(value = "查看网页支付活动id")
     @RequestMapping(value = "/cmd/infoWebBuff", method = RequestMethod.GET)
@@ -99,7 +99,18 @@ class CmdController {
     @ApiOperation(value = "获取所有Game服务器列表")
     @RequestMapping(value = "/cmd/getServers", method = RequestMethod.GET)
     public @ResponseBody List<ServerBean> getServers() {
-        return serversBeanRepository.findAll().get(0).servers
+        List<ServerBean> sbs = serverBeanRepository.findAll()
+
+        long now = new Date().getTime()
+        sbs.forEach({ sb ->
+            long diff = now - sb.start.getTime();
+            if (diff > 3600 * 24 * 2 * 1000) {
+                sb.status = "火爆"
+                serverBeanRepository.save(sb)
+            }
+        });
+
+        return sbs
     }
 
     @ApiOperation(value = "调整服务器,包括开服")
@@ -118,16 +129,7 @@ class CmdController {
             return "无法获取参数"
         }
 
-        ServersBean ssb = serversBeanRepository.findAll().get(0);
-
-        boolean has = ssb.servers.stream().anyMatch({sb -> sb.id == data.id })
-        if (has) {
-            return "重复的服务器区"
-        }
-
-        ssb.servers.add(data)
-        serversBeanRepository.save(ssb)
-
+        serverBeanRepository.save(data)
         return "成功"
     }
 
@@ -140,10 +142,10 @@ class CmdController {
         int oid = Integer.parseInt(request.getParameter("oid"))
         log.info("准备删除服务器:" + oid)
 
-        ServersBean ssb = serversBeanRepository.findAll().get(0);
+        List<ServerBean> ssb = serverBeanRepository.findAll()
 
-        ssb.servers.removeIf({sb -> sb.id == oid })
-        serversBeanRepository.save(ssb)
+        ServerBean sb = ssb.find ({sb -> sb.id == oid })
+        serverBeanRepository.delete(sb)
 
         return "成功"
     }
@@ -418,15 +420,19 @@ class CmdController {
 
     @Async
     @ApiOperation(value = "修改公告")
-    @RequestMapping(value = "/cmd/fixBulletin", method = RequestMethod.GET)
+    @RequestMapping(value = "/cmd/fixBulletin", method = RequestMethod.POST)
     @ApiImplicitParams([
             @ApiImplicitParam(name = "file", value = "文件地址", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "data", value = "公告内容", required = true, dataType = "String", paramType = "query")
     ])
     @ResponseBody String fixBulletin(HttpServletRequest request) {
         log.info("fixBulletin.")
         String file = request.getParameter("file")
-        String data = request.getParameter("data")
+
+        String data = getBody(request)
+        if (data == null) {
+            return "无法获取参数"
+        }
+
         try {
             for (char c in file.toCharArray()) {
                 if (!c.letterOrDigit) {

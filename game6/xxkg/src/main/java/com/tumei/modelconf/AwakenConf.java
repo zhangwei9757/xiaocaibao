@@ -33,6 +33,6 @@ public class AwakenConf {
 
 	@Override
 	public String toString() {
-		return "AwakenConf{" + "ObjectId='" + ObjectId + '\'' + ", key=" + key + ", fwcost1=" + Arrays.toString(fwcost1) + ", fwcost2=" + Arrays.toString(fwcost2) + ", levelup=" + Arrays.toString(levelup) + '}';
+		return "AwakenConf{" + "objectId='" + ObjectId + '\'' + ", key=" + key + ", fwcost1=" + Arrays.toString(fwcost1) + ", fwcost2=" + Arrays.toString(fwcost2) + ", levelup=" + Arrays.toString(levelup) + '}';
 	}
 }

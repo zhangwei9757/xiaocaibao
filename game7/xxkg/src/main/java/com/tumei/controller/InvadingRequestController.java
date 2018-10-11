@@ -334,8 +334,7 @@ public class InvadingRequestController {
 
             // 排行填充对应排名奖励
             for (int i = 0; i < ics.size(); ++i) {
-                List<AwardStruct> ass;
-                ass = new ArrayList<>();
+                List<AwardStruct> ass = new ArrayList<>();
                 for (int j = 0; j < ics.get(i).reward.length; ++j) {
                     ass.add(new AwardStruct(ics.get(i).reward[j], ics.get(i).reward[++j]));
                 }

@@ -75,7 +75,7 @@ public class GameServer implements ISessionServer {
 	}
 
 	// 暂存所有消息
-	private List<String> msgs = new LinkedList<>();
+	private final List<String> msgs = new LinkedList<>();
 
 	public void pushServerMsg(String msg) {
 		synchronized (msgs) {
@@ -120,13 +120,13 @@ public class GameServer implements ISessionServer {
 		Map<String, BaseProtocol> pts = sysContext.getBeansOfType(BaseProtocol.class);
 		pts.values().stream().forEach(pt -> {
 			Class cls = pt.getClass();
-			if (cls.getName().indexOf("ReturnLogin") != -1) {
+			if (cls.getName().contains("ReturnLogin")) {
 				debugClass(cls, 1);
 			}
 		});
 	}
 
-	public void debugClass(Class cls, int deep) {
+	private void debugClass(Class cls, int deep) {
 		log.info("+++ 类(" + cls.getName() + ") 属性:");
 		Field[] fields = cls.getDeclaredFields();
 		for (Field f : fields) {
@@ -222,6 +222,7 @@ public class GameServer implements ISessionServer {
 	 * @return
 	 */
 	public boolean send(long id, BaseProtocol proto) {
+	    id -= (id % 1000);
 		GameUser gu = sessions.getOrDefault(id, null);
 		if (gu != null) {
 			gu.send(proto);
@@ -253,6 +254,7 @@ public class GameServer implements ISessionServer {
 
 			if (data != null) {
 				users.forEach((u) -> {
+					u -= (u % 1000);
 					GameUser su = sessions.getOrDefault(u, null);
 					if (su != null) {
 						su.send(proto.getProtoType(), data);
@@ -272,6 +274,7 @@ public class GameServer implements ISessionServer {
 	 * @param id
 	 */
 	public void close(Long id) {
+		id -= (id % 1000);
 		GameUser s = sessions.get(id);
 		if (s != null) {
 			s.close();
@@ -289,7 +292,7 @@ public class GameServer implements ISessionServer {
 		s.authenticate(_session);
 
 		_session.getAttributes().put("USER", s);
-		GameUser old = sessions.put(s.getUid(), s);
+		GameUser old = sessions.put(s.getUidTrim(), s);
 		if (old != null) {
 //            log.debug("老的帐号存在 踢;");
 			old.close();
@@ -308,7 +311,7 @@ public class GameServer implements ISessionServer {
 //			GameUser user = (GameUser) sysContext.getBean("GameUser");
 			if (user != null) {
 //                log.debug("on del ~~~session:" + user.hashCode());
-				if (sessions.remove(user.getUid(), user)) {
+				if (sessions.remove(user.getUidTrim(), user)) {
 					user.onDelete();
 				}
 			}
@@ -333,10 +336,12 @@ public class GameServer implements ISessionServer {
 	}
 
 	public GameUser find(long id) {
+	    id -= (id % 1000);
 		return sessions.get(id);
 	}
 
 	public boolean exists(long id) {
+		id -= (id % 1000);
 		return sessions.containsKey(id);
 	}
 
@@ -360,6 +365,8 @@ public class GameServer implements ISessionServer {
 		MailsBean msb = dao.findMails(uid);
 		msb.addAwardMail(title, content, awards);
 
+
+		uid -= (uid % 1000);
 		GameUser user = sessions.get(uid);
 		if (user != null) {
 			NotifyRedPoint nrp = new NotifyRedPoint();
@@ -379,6 +386,7 @@ public class GameServer implements ISessionServer {
 		MailsBean msb = dao.findMails(uid);
 		msb.addInfoMail(title, content);
 
+		uid -= (uid % 1000);
 		GameUser user = sessions.get(uid);
 		if (user != null) {
 			NotifyRedPoint nrp = new NotifyRedPoint();

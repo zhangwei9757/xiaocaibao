@@ -2100,17 +2100,17 @@ class GroovyBattle implements IBattle {
     private void doCure(long baseHarm, Roler self, Roler peer, int mode) throws GameOverException {
         // 1. 计算伤害
         // 根据攻击方的模式，选择被攻击方的防御属性
-        long h = baseHarm
+        double h = baseHarm
 
         h = h * (getRandom() % 10 + 95) / 100
 
         // 3. 计算暴击率
-        int critical = self.crit - peer.anti_crit
+        double critical = self.crit / (self.crit + 4000)
+
         boolean crit = false
         if (critical > 0) {
-            if (getRandom1000() <= critical) {
+            if (randDouble() <= critical) {
                 crit = true
-                // 4. 计算暴击伤害
                 h = (150 + self.crit_harm) * h / 100
             }
         }
@@ -2120,10 +2120,19 @@ class GroovyBattle implements IBattle {
                 h *= 2
             }
         }
-        peer.tempHarm = h
-        peer.fixLife(null, h, mode, crit)
 
-        self.afterDoHarm(peer, h, false, false, crit)
+        double er = self.en_harm
+        /**
+         * h = h * (1 + er/(2000 + |er|)
+         */
+        h *= (1.0 + er / (Math.abs(er) + 2000.0))
+
+        long hm = (long)h
+
+        peer.tempHarm = hm
+        peer.fixLife(null, hm, mode, crit)
+
+        self.afterDoHarm(peer, hm, false, false, crit)
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.List;
  * 1. 可以根据findByXXX 方法的签名来提供 查询条件
  * 2. 可以提供@Query注解来查询
  */
-public interface InvadingBeanRepository extends MongoRepository<InvadingRankBean, Long> {
-    List<InvadingRankBean> findAll();
-    InvadingRankBean findById(Long id);
+public interface InvadingBeanRepository extends MongoRepository<InvadingBean, Long> {
+    List<InvadingBean> findAll();
+    InvadingBean findById(Long id);
 }

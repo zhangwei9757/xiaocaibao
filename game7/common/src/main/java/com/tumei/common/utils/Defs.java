@@ -97,11 +97,11 @@ public class Defs {
 	public static final int 怪兽入侵次元碎片价格累加 = 5;
 	public static final int 怪兽入侵次元碎片价格上限 = 50;
 
-	//BT模式
-	//public static final int 怪兽入侵碎片生成时间 = 20 * 60;// 20 * 60
+	// BT模式
+	//public static final int 怪兽入侵碎片生成时间 = 20 * 60;
 	//public static final int 怪兽入侵碎片上限 = 50;
-	//public static final int 怪兽入侵血量上限 = 300;// 300
-	//public static final int 怪兽入侵复活间隔 = 6 * 60 * 60;// 6 * 60 * 60
+	//public static final int 怪兽入侵血量上限 = 300;
+	//public static final int 怪兽入侵复活间隔 = 6 * 60 * 60;
 	//public static final int 怪兽入侵复活费用 = 500 * 20;// BT 20倍
 	//public static final int 怪兽入侵次元碎片单价 = 10 * 20;// BT 20倍
 	//public static final int 怪兽入侵次元碎片价格累加 = 5 * 20;// BT 20倍

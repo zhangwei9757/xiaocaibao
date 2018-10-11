@@ -22,13 +22,23 @@ import com.tumei.websocket.SessionUser
  */
 class RequestLogin extends BaseProtocol {
     public int seq
+    // 选择登录的服务器
+    public int zone
 
     @Override
     void onProcess(SessionUser session) {
         GameUser user = (GameUser) session
 
+        // 在登录的时候绑定正确的uid
         long uid = user.getUid()
-        long now = System.currentTimeMillis() / 1000
+
+        // 如果进入到我们新的选择服务器的模式下，则在RequestLogin之前uid保存的是账号id*1000,并没有明确的登录服务器id
+        if ((uid % 1000) == 0) {
+            uid += zone
+            user.setUid(uid)
+        }
+
+        long now = (long) System.currentTimeMillis() / 1000
 
         ReturnLogin rl = new ReturnLogin()
         rl.seq = seq
@@ -221,7 +231,7 @@ class ReturnLogin extends BaseProtocol {
     // 矿区行动力
     public int mineEnergy
 
-    public int gid
+    public long gid
 
     // 今日已经使用钻石进行注灵的次数
     public int relicCount

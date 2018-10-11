@@ -182,7 +182,7 @@ public class GameUser extends SessionUser {
 		/**
 		 * 帐号id * 1000 + 服务器id == 角色id
 		 */
-		uid = (Long) socketSession.getAttributes().get("uid") * 1000 + server.getZone();
+		uid = (Long) socketSession.getAttributes().get("uid") * 1000;// + server.getZone();
 
 		log.warn("***** 建立websocket连接, session:" + p.getName() + " uid:" + uid);
 	}
@@ -693,9 +693,11 @@ public class GameUser extends SessionUser {
 	 *
 	 * @param star
 	 */
-	public void fixFireRaidRank(int star) {
-		raidRanks.fixRank(this.uid, this.name, star);
-		openRankService.putStar(uid, star);
+	public void fixFireRaidRank(int star, boolean changed) {
+		raidRanks.fixRank(this.uid, this.name, star, changed);
+		if (changed) {
+			openRankService.putStar(uid, star);
+		}
 	}
 
 	public Map<Integer, Integer> getArenaStoreLimit() {

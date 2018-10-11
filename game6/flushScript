@@ -29,5 +29,7 @@ else
 		cp -i -u --preserve -fr scripts/arena/* pub/commands/
 		echo "开始替换xxkg模块下的脚本..."
 		cp -i -u --preserve -fr scripts/xxkg/* pub/commands/
+		echo "开始替换guild模块下的脚本..."
+		cp -i -u --preserve -fr scripts/guild/* pub/commands/
 	fi
 fi

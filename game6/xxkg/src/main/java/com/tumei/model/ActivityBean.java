@@ -143,7 +143,6 @@ public class ActivityBean {
 	 */
 	private int dbDay = 0; // 用于记录每天消耗,
 	private int dbLevel = 1; // 当前夺宝聚魂的等级，从1到4，4之后变为1
-	private int dbRound = -1; // 夺宝的回合，根据这个数字比较得到当前日期是否进入了新的周期，服务器开启第一日就进入夺宝周期
 	private int dbLocalRound = -1; // 新的夺宝回合记录，以免影响老玩家
 	private int dbSpend = 0;
 	private int coupleType = 0;
@@ -428,17 +427,6 @@ public class ActivityBean {
 
 		Date open = LocalService.getInstance().getOpenDate();
 		int days = TimeUtil.pastDays(open);
-
-		if (this.dbRound != -1) { // 证明已经开始使用dbRound, 此时继续走他们的dbRound
-			int left = days - this.dbRound;
-			if (left >= GameConfig.getInstance().getDbPeriod()) {
-				this.dbRound = -1; // 标记该玩家为-1,以后都不再使用dbRound,改为统一周期
-			} else {
-				return left;
-			}
-		}
-
-		// 新号，或者dbRound已经不再使用，则使用全局round
 		int dr = LocalService.getInstance().getDbRound();
 		if (dbLocalRound != dr) {
 			dbLocalRound = dr;
@@ -903,12 +891,7 @@ public class ActivityBean {
 	public void flushSingle() {
 		int last = LocalService.getInstance().getSingleCur();
 
-//		if (lastIndex != -1) {
-//			lastIndex = lastIndex - (lastIndex % GameConfig.getInstance().getSinglePeriod());
-//		}
-
 		if (lastIndex == -1 || ((last - lastIndex) >= GameConfig.getInstance().getSinglePeriod())) {
-//			if (lastIndex == -1 || ((last % GameConfig.getInstance().getSinglePeriod() == 0) && lastIndex != last)) {
 			lastIndex = last - (last % GameConfig.getInstance().getSinglePeriod());
 			singleChargeAwards.clear();
 			List<SinglerechargeConf> scs = Readonly.getInstance().getSingleConfs();
@@ -931,7 +914,6 @@ public class ActivityBean {
 	public void flushCum() {
 		int last = LocalService.getInstance().getCumCur();
 		if (lastCumIdx == -1 || ((last - lastCumIdx) >= GameConfig.getInstance().getCumPeriod())) {
-//			if (lastCumIdx == -1 || ((last % GameConfig.getInstance().getCumPeriod() == 0) && lastCumIdx != last)) {
 			lastCumIdx = last - (last % GameConfig.getInstance().getCumPeriod());
 			cumChargeAwards.clear();
 			cumContents.clear();
@@ -944,9 +926,7 @@ public class ActivityBean {
 				cumChargeAwards.add(0);
 				int [] arr = new int[cc.reward.length + 1];
 				arr[0] = cc.cost;
-				for (int j = 0; j < cc.reward.length; ++j) {
-					arr[j + 1] = cc.reward[j];
-				}
+				System.arraycopy(cc.reward, 0, arr, 1, cc.reward.length);
 				cumContents.add(arr);
 			}
 		}
@@ -1367,14 +1347,6 @@ public class ActivityBean {
 
 	public void setDbLevel(int dbLevel) {
 		this.dbLevel = dbLevel;
-	}
-
-	public int getDbRound() {
-		return dbRound;
-	}
-
-	public void setDbRound(int dbRound) {
-		this.dbRound = dbRound;
 	}
 
 	public List<Integer> getDbsingles() {

@@ -46,7 +46,7 @@ public class InvadingRankService {
     private LocalService localService;
 
     @Autowired
-    private InvadingBeanRepository invadingBeanRepository;
+    private InvadingRankBeanRepository invadingRankBeanRepository;
 
     // 时间段排行统计开始
     public long begin;
@@ -81,7 +81,7 @@ public class InvadingRankService {
     synchronized void init() {
         _instance = this;
 
-        List<InvadingRankBean> lrbs = invadingBeanRepository.findAll();
+        List<InvadingRankBean> lrbs = invadingRankBeanRepository.findAll();
         // 先根据排名进行一次排序，然后再插入，否则相同分数的先后顺序可能会被毁掉
         lrbs.sort((a, b) -> {
             if (a.getTs() < b.getTs()) {
@@ -167,7 +167,7 @@ public class InvadingRankService {
         InvadingConf thisFc = null;
 
         List<InvadingConf> vcs = readonly.getInvadingConfs();
-        int lastKey = localService.getLimitday();
+        int lastKey = localService.getInvadingday();
 
         for (InvadingConf fest : vcs) {
             if (today >= fest.start && today <= fest.end) {
@@ -191,8 +191,8 @@ public class InvadingRankService {
                 // 将所有排行数据都重置
                 users.clear();
                 skipList = new SkipList<>(0L);
-                localService.setLimitday(thisFc.key);
-                this.invadingBeanRepository.deleteAll();
+                localService.setInvadingday(thisFc.key);
+                this.invadingRankBeanRepository.deleteAll();
                 // 如果不清掉，动态修改配置时，这个值判断的是错误的上次区间
                 begin = 0;
                 end = 0;
@@ -204,8 +204,8 @@ public class InvadingRankService {
                 // 将所有排行数据都重置
                 users.clear();
                 skipList = new SkipList<>(0L);
-                localService.setLimitday(0);
-                this.invadingBeanRepository.deleteAll();
+                localService.setInvadingday(0);
+                this.invadingRankBeanRepository.deleteAll();
                 begin = 0;
                 end = 0;
             }
@@ -265,7 +265,7 @@ public class InvadingRankService {
         changes.forEach((uid) -> {
             InvadingRankBean orb = users.getOrDefault(uid, null);
             if (orb != null) {
-                invadingBeanRepository.save(orb);
+                invadingRankBeanRepository.save(orb);
             }
         });
         changes.clear();

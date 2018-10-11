@@ -24,7 +24,7 @@ import java.util.*;
  */
 @Service
 public class FireRaidRankService {
-	private Log log = LogFactory.getLog(FireRaidRankService.class);
+	private final Log log = LogFactory.getLog(FireRaidRankService.class);
 
 	@Autowired
 	private DaoService dao;
@@ -125,12 +125,15 @@ public class FireRaidRankService {
 	 * @param id
 	 * @param star
 	 */
-	public synchronized void fixRank(long id, String name, int star) {
+	public synchronized void fixRank(long id, String name, int star, boolean changed) {
 		RaidRankBean rb = users.getOrDefault(id, null);
 		if (rb == null) { // 玩家不存在则直接增加,排名为当前总长度
 			rb = new RaidRankBean(id, ranks.size(), star);
 			ranks.add(rb);
 			users.put(id, rb);
+		} else if (!changed) {
+			// 如果数据已经存在，但是星没有发生变化，就不在继续进行了
+			return;
 		}
 
 		// 此时根据当前的星星数查找对应的位置进行挪动

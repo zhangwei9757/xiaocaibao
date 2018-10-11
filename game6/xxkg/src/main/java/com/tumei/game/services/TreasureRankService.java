@@ -27,8 +27,9 @@ import java.util.*;
  */
 @Service
 public class TreasureRankService {
+	private final static Log log = LogFactory.getLog(TreasureRankService.class);
+
 	private static TreasureRankService _instance;
-	private Log log = LogFactory.getLog(TreasureRankService.class);
 
 	public static TreasureRankService getInstance() {
 		return _instance;
@@ -56,7 +57,7 @@ public class TreasureRankService {
 	@PostConstruct
 	void init() {
 		_instance = this;
-		log.warn("读取 远征历史星数排名数据，启动的时候从数据库中读取，每隔5分钟进行一次保存");
+		log.warn("读取 神秘宝藏排名数据，启动的时候从数据库中读取，每隔5分钟进行一次保存");
 		List<TreasureRankBean> rk = treasureRankBeanRepository.findAll(new Sort("rank"));
 
 		synchronized (this) {

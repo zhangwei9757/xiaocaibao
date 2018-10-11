@@ -51,4 +51,6 @@ public class ServerInfoBean {
 
 	// 是否上次limitday的id没有被清除，需要发送奖励进行结算
 	public int limitday = 0;
+	// 是否上次invadingday的id没有被清除，需要发送奖励进行结算
+	public int invadingday = 0;
 }

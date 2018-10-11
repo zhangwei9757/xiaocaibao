@@ -2,7 +2,7 @@ package com.tumei.controller
 
 import com.google.common.base.Strings
 import com.tumei.centermodel.*
-import com.tumei.centermodel.beans.ServerBean
+
 import com.tumei.common.DaoUtils
 import com.tumei.common.RemoteService
 import com.tumei.common.utils.HttpUtils
@@ -46,7 +46,7 @@ class AibeiController {
     private ReceiptBeanRepository receiptBeanRepository
 
     @Autowired
-    private ServersBeanRepository serversBeanRepository
+    private ServerBeanRepository serverBeanRepository
 
     @Autowired
     @Qualifier(value = "centerTemplate")
@@ -67,7 +67,7 @@ class AibeiController {
 
         List<ServerInfo> servers = new ArrayList<>();
         try {
-            List<ServersBean> ssbs = serversBeanRepository.findAll();
+            List<ServerBean> ssbs = serverBeanRepository.findAll();
             ServersBean ssb;
             if (ssbs.size() != 0) {
                 ssb = ssbs.get(0);

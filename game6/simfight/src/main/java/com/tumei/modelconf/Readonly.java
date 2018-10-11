@@ -257,7 +257,7 @@ public class Readonly {
 					if (rb.trestr.length == 0) {
 						return selected;
 					}
-					if (rb != null && level >= rb.trestr[0][0]) {
+					if (level >= rb.trestr[0][0]) {
 						selected = rb.trestr[1];
 					} else {
 						break;

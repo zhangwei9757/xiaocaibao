@@ -1,9 +1,12 @@
 package com.tumei.common;
 
 import com.tumei.GameConfig;
+import com.tumei.centermodel.ServerBean;
+import com.tumei.centermodel.ServerBeanRepository;
 import com.tumei.common.utils.TimeUtil;
-import com.tumei.model.ServerBean;
-import com.tumei.model.ServerBeanRepository;
+import com.tumei.game.GameServer;
+import com.tumei.model.ServerInfoBean;
+import com.tumei.model.ServerInfoBeanRepository;
 import com.tumei.modelconf.CumrechargeConf;
 import com.tumei.modelconf.ExchangeConf;
 import com.tumei.modelconf.SaleConf;
@@ -32,7 +35,7 @@ public class LocalService {
 		return _instance;
 	}
 
-	private Log log = LogFactory.getLog(LocalService.class);
+	private static final Log log = LogFactory.getLog(LocalService.class);
 
 	@Autowired
 	private Readonly readonly;
@@ -44,8 +47,12 @@ public class LocalService {
 	 * 充值活动和一些与服务器开服时间同步的活动需要全局配置
 	 **/
 	@Autowired
+	private ServerInfoBeanRepository serverInfoBeanRepository;
+	private ServerInfoBean serverInfoBean;
+
+	@Autowired
 	private ServerBeanRepository serverBeanRepository;
-	private ServerBean serverBean;
+
 
 	/**
 	 * 注册各种缓存与数据库的对应
@@ -55,14 +62,20 @@ public class LocalService {
 		log.warn(this.getClass().getName() + " 初始化中...");
 		_instance = this;
 
-		ServerBean sb = serverBeanRepository.findByKey(1);
+		ServerInfoBean sb = serverInfoBeanRepository.findByKey(1);
 		if (sb == null) {
-			sb = new ServerBean();
+			// 找到当前服务器在中心服务器上注册的结构
+			ServerBean s = serverBeanRepository.findById(GameServer.getInstance().getZone());
+			sb = new ServerInfoBean();
 			sb.key = 1;
-			sb.open = new Date();
-			serverBeanRepository.save(sb);
+			if (s == null) {
+				sb.open = new Date();
+			} else {
+				sb.open = s.start;
+			}
+			serverInfoBeanRepository.save(sb);
 		}
-		this.serverBean = sb;
+		this.serverInfoBean = sb;
 		scheduleThings();
 	}
 
@@ -77,7 +90,7 @@ public class LocalService {
 	@Scheduled(cron = "1 0 0 * * *")
 	void scheduleThings() {
 		Date now = new Date();
-		if (now.before(this.serverBean.open)) {
+		if (now.before(this.serverInfoBean.open)) {
 			// 当前时间还没有到开服时间，不要进行定时运算
 			return;
 		}
@@ -93,14 +106,14 @@ public class LocalService {
 	public synchronized void updateSingle() {
 		log.info("----------- 更新单冲活动() -------");
 		int today = TimeUtil.getToday();
-		ServerBean sb = this.serverBean;
+		ServerInfoBean sb = this.serverInfoBean;
 
 		/** 插入夺宝的日期更新 **/
 		Date open = LocalService.getInstance().getOpenDate();
 		int days = TimeUtil.pastDays(open);
 		if ((days - sb.dbRound) >= gameConfig.getDbPeriod()) {
 			sb.dbRound = days;
-			this.serverBeanRepository.save(sb);
+			this.serverInfoBeanRepository.save(sb);
 		}
 		/** End 插入夺宝的日期更新 **/
 
@@ -109,7 +122,6 @@ public class LocalService {
 		}
 		try {
 			sb.singleChargeUpdateDay = today;
-
 
 			if (sb.singleEnd != -1 && (++sb.singleCur % gameConfig.getSinglePeriod()) != 0) {
 				return;
@@ -137,17 +149,15 @@ public class LocalService {
 				}
 			}
 			sb.singleEnd = i - 1;
-			// 记录结束的日期
-//			sb.singleCur = 0;
 		} finally {
-			this.serverBeanRepository.save(sb);
+			this.serverInfoBeanRepository.save(sb);
 		}
 	}
 
 	public synchronized void updateCum() {
 		log.info("----------- 更新累冲活动 -------");
 		int today = TimeUtil.getToday();
-		ServerBean sb = this.serverBean;
+		ServerInfoBean sb = this.serverInfoBean;
 		if (today == sb.cumChargeUpdateDay) {
 			return;
 		}
@@ -179,14 +189,14 @@ public class LocalService {
 			}
 			sb.cumEnd = i - 1;
 		} finally {
-			this.serverBeanRepository.save(sb);
+			this.serverInfoBeanRepository.save(sb);
 		}
 	}
 
 	public synchronized void updateDc() {
 		log.info("----------- 更新折扣活动 -------");
 		int today = TimeUtil.getToday();
-		ServerBean sb = this.serverBean;
+		ServerInfoBean sb = this.serverInfoBean;
 		if (today == sb.dcUpdateDay) {
 			return;
 		}
@@ -236,103 +246,103 @@ public class LocalService {
 			}
 			sb.ecEnd = i - 1;
 		} finally {
-			this.serverBeanRepository.save(sb);
+			this.serverInfoBeanRepository.save(sb);
 		}
 	}
 
 	public synchronized int getSingleCur() {
-		return this.serverBean.singleCur;
+		return this.serverInfoBean.singleCur;
 	}
 
 	public synchronized int getSingleBeginIdx() {
-		return this.serverBean.singleBegin;
+		return this.serverInfoBean.singleBegin;
 	}
 
 	public int getSingleEndIdx() {
-		return this.serverBean.singleEnd;
+		return this.serverInfoBean.singleEnd;
 	}
 
 	public synchronized int getCumCur() {
-		return this.serverBean.cumCur;
+		return this.serverInfoBean.cumCur;
 	}
 
 	public synchronized int getCumBeginIdx() {
-		return this.serverBean.cumBegin;
+		return this.serverInfoBean.cumBegin;
 	}
 
 	public synchronized int getCumEndIdx() {
-		return this.serverBean.cumEnd;
+		return this.serverInfoBean.cumEnd;
 	}
 
 	public synchronized int getDcCur() {
-		return this.serverBean.dcCur;
+		return this.serverInfoBean.dcCur;
 	}
 
 	public synchronized int getDcBeginIdx() {
-		return this.serverBean.dcBegin;
+		return this.serverInfoBean.dcBegin;
 	}
 
 	public synchronized int getDcEndIdx() {
-		return this.serverBean.dcEnd;
+		return this.serverInfoBean.dcEnd;
 	}
 
 	public synchronized int getEcBeginIdx() {
-		return this.serverBean.ecBegin;
+		return this.serverInfoBean.ecBegin;
 	}
 
 	public synchronized int getEcEndIdx() {
-		return this.serverBean.ecEnd;
+		return this.serverInfoBean.ecEnd;
 	}
 
 	/**
 	 * 保存服务器信息
 	 */
 	public synchronized void incFundCount() {
-		++this.serverBean.fund;
-		serverBeanRepository.save(this.serverBean);
+		++this.serverInfoBean.fund;
+		serverInfoBeanRepository.save(this.serverInfoBean);
 	}
 
 	public synchronized int getFundCount() {
-		return this.serverBean.fund;
+		return this.serverInfoBean.fund;
 	}
 
 	public synchronized Date getOpenDate() {
-		return this.serverBean.open;
+		return this.serverInfoBean.open;
 	}
 
 	public synchronized int getDbRound() {
-		return this.serverBean.dbRound;
+		return this.serverInfoBean.dbRound;
 	}
 
 	public synchronized boolean getDay3() {
-		return this.serverBean.day3;
+		return this.serverInfoBean.day3;
 	}
 	public synchronized boolean getDay5() {
-		return this.serverBean.day5;
+		return this.serverInfoBean.day5;
 	}
 	public synchronized boolean getDay7() {
-		return this.serverBean.day7;
+		return this.serverInfoBean.day7;
 	}
 
 	public synchronized void setDay3() {
-		this.serverBean.day3 = true;
-		serverBeanRepository.save(this.serverBean);
+		this.serverInfoBean.day3 = true;
+		serverInfoBeanRepository.save(this.serverInfoBean);
 	}
 	public synchronized void setDay5() {
-		this.serverBean.day5 = true;
-		serverBeanRepository.save(this.serverBean);
+		this.serverInfoBean.day5 = true;
+		serverInfoBeanRepository.save(this.serverInfoBean);
 	}
 	public synchronized void setDay7() {
-		this.serverBean.day7 = true;
-		serverBeanRepository.save(this.serverBean);
+		this.serverInfoBean.day7 = true;
+		serverInfoBeanRepository.save(this.serverInfoBean);
 	}
 
 	public synchronized int getLimitday() {
-		return this.serverBean.limitday;
+		return this.serverInfoBean.limitday;
 	}
 
 	public synchronized void setLimitday(int taskid) {
-		this.serverBean.limitday = taskid;
-		serverBeanRepository.save(this.serverBean);
+		this.serverInfoBean.limitday = taskid;
+		serverInfoBeanRepository.save(this.serverInfoBean);
 	}
 }

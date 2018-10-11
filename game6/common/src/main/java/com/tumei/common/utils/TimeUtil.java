@@ -2,6 +2,7 @@ package com.tumei.common.utils;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -94,4 +95,12 @@ public class TimeUtil {
 
 		return (int)(today.toEpochDay() - ld.toEpochDay());
 	}
+
+	/**
+	 * 计算二个指定日期的相差天数
+	 * @param start 开始日期 格式：20181008
+	 * @param end 结束日期 格式：20181008
+	 * @return 相差天数
+	 */
+	public static int fromDuration(int start, int end) { return (int) ChronoUnit.DAYS.between(fromDay(start), fromDay(end)); }
 }

@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class TreasureRankBean {
 	@JsonIgnore
 	@Id
-	private String ObjectId;
+	private String objectId;
 	@Field("id")
 	private Long id;
 	/**
@@ -44,11 +44,11 @@ public class TreasureRankBean {
 	}
 
 	public String getObjectId() {
-		return ObjectId;
+		return objectId;
 	}
 
 	public void setObjectId(String objectId) {
-		ObjectId = objectId;
+		this.objectId = objectId;
 	}
 
 	public Long getId() {

@@ -279,16 +279,16 @@
                             })
       	},
       	fixBulletin() {
-			var url = "/cmd/fixBulletin?xtkn=" + this.jwt + "&data=" + encodeURI(this.bulletin) + "&file=" + this.bulletin_path
-      		this.loading = true;
-      		this.$http.get(url, {emulateJSON: true})
-                            .then((response) => {
-      							this.loading = false;
-      							this.bulletin = response.bodyText
-                            })
-                            .catch(function(response) {
-      							this.loading = false;
-                            })
+			var url = "/cmd/fixBulletin?xtkn=" + this.jwt + "&file=" + this.bulletin_path
+                  		this.loading = true;
+            			this.$http.post(url, this.bulletin, {})
+                                        .then((response) => {
+                  							this.loading = false;
+                  							this.bulletin = response.bodyText
+                                        })
+                                        .catch(function(response) {
+                  							this.loading = false;
+                                        })
       	},
 
       	checkGuildReloadable(mode) {

@@ -12,9 +12,9 @@ import java.util.Date;
  *
  */
 @Document(collection = "Server.Info")
-public class ServerBean {
+public class ServerInfoBean {
 	@Id
-	public String ObjectId;
+	public String objectId;
 
 	public int key;
 	// 服务器开服时间

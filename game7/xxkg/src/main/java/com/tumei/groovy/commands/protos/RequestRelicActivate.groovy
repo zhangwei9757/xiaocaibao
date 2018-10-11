@@ -88,7 +88,7 @@ class RequestRelicActivate extends BaseProtocol {
                 if (ab.relicActivate >= vc.dailyglory) {
                     rci.result = ErrCode.今日钻石注灵次数已达上限
                 } else {
-                    ++ab.relicActivate
+
                     int need = ab.relicActivate * 10 + 20
                     if (need > 200) {
                         need = 200
@@ -98,7 +98,7 @@ class RequestRelicActivate extends BaseProtocol {
                         rci.result = ErrCode.钻石不足
                     } else {
                         user.payItem(Defs.钻石, need, "钻石炼化")
-
+                        ++ab.relicActivate
                         // 钻石注灵，记录一次次数
                         LimitRankService.instance.put(user.uid,user.name,1,2)
                     }

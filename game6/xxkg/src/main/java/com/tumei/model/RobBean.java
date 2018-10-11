@@ -85,6 +85,6 @@ public class RobBean {
 
 	@Override
 	public String toString() {
-		return "RobBean{" + "ObjectId='" + ObjectId + '\'' + ", id=" + id + ", frags=" + frags + ", time=" + time + '}';
+		return "RobBean{" + "objectId='" + ObjectId + '\'' + ", id=" + id + ", frags=" + frags + ", time=" + time + '}';
 	}
 }

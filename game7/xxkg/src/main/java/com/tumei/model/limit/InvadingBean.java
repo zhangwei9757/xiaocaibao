@@ -21,7 +21,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -161,7 +164,7 @@ public class InvadingBean {
         loginAwardsStatus.clear();
         debrisList.clear();
         killList.clear();
-        blood = 0;
+        blood = Defs.怪兽入侵血量上限;
         kill = 0;
         resurgence = 0;
         price = 0;
@@ -191,13 +194,13 @@ public class InvadingBean {
         blood = Defs.怪兽入侵血量上限;
         price = Defs.怪兽入侵次元碎片单价;
         // 活动时长
-        int ends = ic.end - ic.start;
+        int ends = TimeUtil.fromDuration(ic.start, ic.end);
         // 填充登陆奖励领取状态列表
         for (int i = 0; i <= ends; ++i) {
             loginAwardsStatus.add(0);
         }
         // 今天与开活动的差值,小于这个值的下标全部为-1，表示奖励过期，待补签
-        int diff = today - ic.start;
+        int diff = TimeUtil.fromDuration(ic.start, today);
         if (diff > 0) {
             for (int i = 0; i < diff; ++i) {
                 // 过期日期全部标识为 -1
@@ -273,7 +276,7 @@ public class InvadingBean {
             price = Defs.怪兽入侵次元碎片单价;
             buyTotal = 0;
             // 要动态修改真实当天状态
-            int position = today - ic.start;
+            int position = TimeUtil.fromDuration(ic.start, today);
             loginAwardsStatus.set(position, 0);
         }
     }
@@ -505,7 +508,7 @@ public class InvadingBean {
         InvadingConf ic = Readonly.getInstance().findInvadingConf(InvadingRankService.getInstance().key);
         int today = TimeUtil.getToday();
         // 今天所在活动周期中第？天,对应是下标值 0-6
-        int diff = today - ic.start;
+        int diff = TimeUtil.fromDuration(ic.start, today);
         if (position > diff) {
             // 活动周期中，只能领取今天及今天以前的奖励，补签后一样规则
             return null;
@@ -655,7 +658,7 @@ public class InvadingBean {
         InvadingConf ic = Readonly.getInstance().findInvadingConf(key);
         int today = TimeUtil.getToday();
         // 今天所在活动周期中第？天,对应是下标值 0-6
-        int day = today - ic.start + 1;
+        int day = TimeUtil.fromDuration(ic.start, today) + 1;
         return day;
     }
 

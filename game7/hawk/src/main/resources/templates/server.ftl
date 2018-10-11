@@ -23,7 +23,6 @@
             stripe
             highlight-current-row
             max-height=300
-            @current-change="onServerChangeTable"
             style="width: 100%">
 
         <el-table-column
@@ -83,6 +82,11 @@
 
         <el-table-column label="操作"> min-width="240">
             <template slot-scope="scope">
+
+                <el-button
+                        size="mini"
+                        @click="onServerChangeTable(scope.row)">切换
+                </el-button>
                 <el-button
                         size="mini"
                         @click="saveServer(scope.row)">保存

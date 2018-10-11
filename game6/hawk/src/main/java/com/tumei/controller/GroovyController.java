@@ -3,8 +3,8 @@ package com.tumei.controller;
 import com.google.common.base.Strings;
 import com.mongodb.*;
 import com.tumei.centermodel.ProductBean;
+import com.tumei.centermodel.ServerBean;
 import com.tumei.centermodel.ServersBean;
-import com.tumei.centermodel.beans.ServerBean;
 import com.tumei.common.utils.RandomUtil;
 import com.tumei.configs.MongoTemplateConfig;
 import com.tumei.groovy.GroovyLoader;
@@ -78,9 +78,7 @@ public class GroovyController {
 				return "奖励的内容应该以半角逗号分割，并且数量为偶数，ID,COUNT的形式。";
 			}
 
-			int[] arr = Arrays.stream(fields).mapToInt((s) -> {
-				return Integer.parseInt(s);
-			}).toArray();
+			int[] arr = Arrays.stream(fields).mapToInt(Integer::parseInt).toArray();
 			cb.setAwards(arr);
 			codeBeanRepository.save(cb);
 			return "新增优惠码:" + code;
@@ -96,7 +94,7 @@ public class GroovyController {
 	@ApiImplicitParam(name = "count", value = "个数", required = true, dataType = "int", paramType = "query")
 	})
 	public String addCodes(String content, int count) {
-		String codes = "";
+		StringBuilder codes = new StringBuilder();
 		for (int i = 0; i < count; ++i) {
 			CodeBean cb = new CodeBean();
 			try {
@@ -108,18 +106,16 @@ public class GroovyController {
 					return "奖励的内容应该以半角逗号分割，并且数量为偶数，ID,COUNT的形式。";
 				}
 
-				int[] arr = Arrays.stream(fields).mapToInt((s) -> {
-					return Integer.parseInt(s);
-				}).toArray();
+				int[] arr = Arrays.stream(fields).mapToInt(Integer::parseInt).toArray();
 				cb.setAwards(arr);
 				codeBeanRepository.save(cb);
-				codes += code + "\n";
+				codes.append(code).append("\n");
 			} catch (Exception ex) {
 				log.info("新增优惠码错误:" + ex.getMessage());
 			}
 		}
 
-		return codes;
+		return codes.toString();
 	}
 
 
@@ -635,38 +631,66 @@ public class GroovyController {
 
 	@ApiImplicitParams( {
 			@ApiImplicitParam(name = "uid", value = "账号", required = true, dataType = "Long", paramType = "query"),
-			@ApiImplicitParam(name = "from", value = "准备合区 x1", defaultValue = "tm6-1", required = true, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "to", value = "目的合区 x2", required = true, defaultValue = "tm6-2", dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "zone", value = "目的合区", required = true, dataType = "int", paramType = "query"),
+			@ApiImplicitParam(name = "from", value = "准备合区 1", required = true, dataType = "int", paramType = "query"),
+			@ApiImplicitParam(name = "to", value = "目的合区 2", required = true, dataType = "int", paramType = "query"),
+			@ApiImplicitParam(name = "prefix", value = "数据库前缀", required = true, dataType = "String", paramType = "query"),
 	})
 
-	public String migrate(long uid, String from, String to, int zone) {
+	public String migrate(long uid, int from, int to, String prefix) {
 		try {
 			// 预处理，删除所有待合成的数据库中的数据表
 //			mongoTemplateConfig.dropDb(to);
-			MongoTemplate dest = mongoTemplateConfig.otherTemplate(to);
+			MongoTemplate dest = mongoTemplateConfig.otherTemplate(prefix + to);
 
-			long a = uid * 1000 + Long.parseLong(from.split("x")[1]);
-			long b = uid * 1000 + zone;
+			long a = uid * 1000 + from;
 
-			String[] fss = from.split(",");
-			for (String fs : fss) {
-				MongoTemplate source = mongoTemplateConfig.otherTemplate(fs);
+			{
+				MongoTemplate source = mongoTemplateConfig.otherTemplate(prefix + from);
 
 				// 2. 对于以上分析合成的roles,只有uid/1000满足以上roles的其他表中的数据，才会合并到目的数据库中
-
-
 				String[] colls = new String[]{
-				        "Role", "Role.Charge", "Role.Heros", "Role.FireRaid", "Role.Mails", "Role.Package", "Role.Scene", "Role.Summon"
+						"Role",
+						"Role.Activity",
+						"Role.Charge",
+						"Role.DailyScene",
+//						"Role.Festival",
+						"Role.FireRaid",
+                        "Role.Friends",
+						"Role.Group",
+                        "Role.Heros",
+						"Role.Invading",
+                        "Role.Mails",
+						"Role.Package",
+						"Role.Robs",
+						"Role.Rune",
+						"Role.Scene",
+						"Role.Sta",
+						"Role.Star",
+						"Role.Store",
+						"Role.Summon",
+						"Role.Tasks",
+						"Role.Treasure",
+						"Role.War",
+						"Role.boss"
 				};
 
 				for (String name : colls) {
-				    log.info("准备转移角色数据表:" + name + " a:" + a + " to b:" + b);
+				    log.info("准备转移角色数据表:" + name + " from:" + from + " to " + to);
 					DBObject dbo = source.findOne(Query.query(Criteria.where("id").is(a)), DBObject.class, name);
 					if (dbo != null) {
-						dbo.removeField("_id");
-						dbo.put("id", b);
-						dest.upsert(Query.query(Criteria.where("id").is(b)), Update.fromDBObject(dbo), name);
+//						dbo.removeField("_id");
+//						dbo.put("id", b);
+
+						if (name.equalsIgnoreCase("Role.Activity")) {
+							dbo.put("lastIndex", -1);
+							dbo.put("lastCumIdx", -1);
+							dbo.put("lastDcIdx", -1);
+							dbo.put("campaignRound", -1);
+							dbo.put("dbLocalRound", -1);
+						}
+
+                        dest.remove(Query.query(Criteria.where("id").is(a)), name);
+						dest.upsert(Query.query(Criteria.where("id").is(a)), Update.fromDBObject(dbo), name);
 					}
 				}
 			}

@@ -3,7 +3,7 @@ package com.tumei.controller
 import com.google.common.base.Strings
 import com.tumei.MobService
 import com.tumei.centermodel.*
-import com.tumei.centermodel.beans.ServerBean
+
 import com.tumei.centermodel.beans.UserRoleBean
 import com.tumei.common.DaoUtils
 import com.tumei.common.ErrCode
@@ -56,6 +56,9 @@ class TestController {
     private AccountBeanRepository accountBeanRepository
 
     @Autowired
+    private ServerBeanRepository serverBeanRepository
+
+    @Autowired
     private ServersBeanRepository serversBeanRepository
 
     /**
@@ -98,37 +101,38 @@ class TestController {
      * @return
      */
     private List<ServerBean> getServers(boolean isGm) {
-        List<ServersBean> ssbs = serversBeanRepository.findAll()
-        ServersBean ssb
-        if (ssbs.size() == 0) {
-            ssb = new ServersBean()
-            ssb.setDescrition("首次自动生成的公告信息")
-            if (true) {
-                ServerBean sb = new ServerBean()
-                sb.id = 1
-                sb.name = "测试服务器[自动生成]"
-                sb.host = "ws://192.168.1.222:5001/ws"
-                sb.status = "开服"
-                ssb.getServers().add(sb)
+        List<ServerBean> ssbs = serverBeanRepository.findAll()
+        if (ssbs.size() <= 0) {
+
+            boolean flag = false;
+            List<ServersBean> tmp = serversBeanRepository.findAll()
+            if (tmp.size() > 0) {
+                ServersBean ssb = tmp.get(0);
+                if (ssb.servers.size() > 0) {
+
+                    for (int i = 0; i < ssb.servers.size(); ++i) {
+                        ServerBean sb = ssb.servers.get(i);
+                        serverBeanRepository.save(sb);
+                    }
+
+                    flag = true;
+                }
             }
-            ssbs.add(ssb)
-            serversBeanRepository.save(ssbs)
-        } else {
-            ssb = ssbs.get(0)
-            if (ssb.getServers().size() <= 0) {
+
+            if (!flag) {
                 ServerBean sb = new ServerBean()
                 sb.id = 1
-                sb.name = "测试服务器[自动生成]"
-                sb.host = "ws://192.168.1.222:5001/ws"
-                sb.status = "开服"
-                ssb.getServers().add(sb)
-                serversBeanRepository.save(ssbs)
+                sb.name = "1区"
+                sb.host = "192.168.1.223:5001"
+                sb.status = "新服"
+                sb.start = new Date()
+                serverBeanRepository.save(sb)
+                ssbs.add(sb)
             }
         }
 
-        List<ServerBean> sbs = ssb.getServers()
         long now = System.currentTimeMillis()
-        return sbs.stream().filter({ sb ->
+        return ssbs.stream().filter({ sb ->
             // 有日期描述的时候，并且日期小于当前时间，显示
             if (sb.start != null) {
                 if (sb.start.getTime() > now && !isGm) {
@@ -137,7 +141,7 @@ class TestController {
                 }
             }
             return true
-        }).collect(Collectors.toList())
+        }).collect(Collectors.toList()) as List<ServerBean>
     }
 
     @ApiOperation(value = "登录")

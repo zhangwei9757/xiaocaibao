@@ -325,6 +325,9 @@ public class LocalService {
 	public synchronized int getLimitday() {
 		return this.serverBean.limitday;
 	}
+	public synchronized int getInvadingday() {
+		return this.serverBean.invadingday;
+	}
 
 	public synchronized void setDay3() {
 		this.serverBean.day3 = true;
@@ -343,6 +346,11 @@ public class LocalService {
 
 	public synchronized void setLimitday(int taskid) {
 		this.serverBean.limitday = taskid;
+		serverInfoBeanRepository.save(this.serverBean);
+	}
+
+	public synchronized void setInvadingday(int taskid) {
+		this.serverBean.invadingday = taskid;
 		serverInfoBeanRepository.save(this.serverBean);
 	}
 }

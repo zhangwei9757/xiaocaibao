@@ -94,7 +94,18 @@ public class RunnerBean implements ExitCodeGenerator {
 
 				// 公会红包
 				("RequestGuildbag"),
-				("RequestGuildbagReceive")
+				("RequestGuildbagReceive"),
+
+				// 怪兽入侵
+				("RequestBuyDebris"),
+				("RequestBuyResurgence"),
+				("RequestInvadingChargeAward"),
+				("RequestInvadingChargeAwardInfo"),
+				("RequestInvadingDebrisAttack"),
+				("RequestInvadingDebrisAttackInfo"),
+				("RequestInvadingInfo"),
+				("RequestInvadingLoginAward"),
+				("RequestInvadingRanksInfo")
 		};
 
 		for (String n : ps) {

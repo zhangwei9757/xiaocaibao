@@ -1,6 +1,5 @@
 package com.tumei.centermodel;
 
-import com.tumei.centermodel.beans.ServerBean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @Document(collection = "Servers")
 public class ServersBean {
     @Id
-    private String ObjectId;
+    private String objectId;
 
     /**
      * 公告
@@ -29,11 +28,11 @@ public class ServersBean {
     private List<ServerBean> servers = new ArrayList<>();
 
     public String getObjectId() {
-        return ObjectId;
+        return objectId;
     }
 
     public void setObjectId(String objectId) {
-        ObjectId = objectId;
+        this.objectId = objectId;
     }
 
     public String getDescrition() {

@@ -180,6 +180,9 @@ public class IReadonly {
 			case 0: {
 				int[] selected = null;
 				for (ResonanceConf rb : bc.resonances) {
+					if (rb.equstr.length == 0) {
+						return selected;
+					}
 					if (level >= rb.equstr[0][0]) {
 						selected = rb.equstr[1];
 					}
@@ -192,6 +195,10 @@ public class IReadonly {
 			case 1: {
 				int[] selected = null;
 				for (ResonanceConf rb : bc.resonances) {
+					if (rb.equref.length == 0) {
+						return selected;
+					}
+
 					if (level >= rb.equref[0][0]) {
 						selected = rb.equref[1];
 					}
@@ -204,6 +211,9 @@ public class IReadonly {
 			case 2: {
 				int[] selected = null;
 				for (ResonanceConf rb : bc.resonances) {
+					if (rb.trestr.length == 0) {
+						return selected;
+					}
 					if (level >= rb.trestr[0][0]) {
 						selected = rb.trestr[1];
 					}
@@ -216,6 +226,9 @@ public class IReadonly {
 			case 3: {
 				int[] selected = null;
 				for (ResonanceConf rb : bc.resonances) {
+					if (rb.treref.length == 0) {
+						return selected;
+					}
 					if (level >= rb.treref[0][0]) {
 						selected = rb.treref[1];
 					}

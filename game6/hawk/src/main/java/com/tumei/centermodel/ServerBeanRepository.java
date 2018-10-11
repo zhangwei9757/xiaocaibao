@@ -1,18 +1,17 @@
-package com.tumei.model;
+package com.tumei.centermodel;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
 /**
- * Created by zw on 2018/08/03
- * <p>
+ * Created by leon on 2016/11/5.
+ *
  * spring jpa的特性：
  * 1. 可以根据findByXXX 方法的签名来提供 查询条件
  * 2. 可以提供@Query注解来查询
+ *
  */
-public interface GuildbagBeanRepository extends MongoRepository<GuildbagBean, Long> {
-    List<GuildbagBean> findAll();
-
-    GuildbagBean findById(Long id);
+public interface ServerBeanRepository extends MongoRepository<ServerBean, String> {
+    List<ServerBean> findAll();
 }

@@ -543,15 +543,20 @@ class CmdController {
 
     @Async
     @ApiOperation(value = "修改公告")
-    @RequestMapping(value = "/cmd/fixBulletin", method = RequestMethod.GET)
+    @RequestMapping(value = "/cmd/fixBulletin", method = RequestMethod.POST)
     @ApiImplicitParams([
             @ApiImplicitParam(name = "file", value = "文件地址", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "data", value = "公告内容", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "data", value = "公告内容", required = true, dataType = "String", paramType = "body")
     ])
     @ResponseBody String fixBulletin(HttpServletRequest request) {
         log.info("fixBulletin.")
         String file = request.getParameter("file")
-        String data = request.getParameter("data")
+
+        String data = getBody(request)
+        if (data == null) {
+            return "无法获取参数"
+        }
+
         try {
             for (char c in file.toCharArray()) {
                 if (!c.letterOrDigit) {

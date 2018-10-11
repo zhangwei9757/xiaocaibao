@@ -39,6 +39,10 @@ public class SessionUser {
         return uid;
     }
 
+    public long getUidTrim() {
+        return uid - (uid % 1000);
+    }
+
     public void setUid(Long uid) {
         this.uid = uid;
     }

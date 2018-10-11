@@ -120,7 +120,7 @@ public class RequestFireRaidFight extends BaseProtocol {
 				if (total > frb.getPeekStars()) {
 					frb.setPeekStars(total);
 					// 更新星星排名
-					user.fixFireRaidRank(total);
+					user.fixFireRaidRank(total, true);
 				}
 
 				// 3. 如果是3星难度，则看是否更新最高三星关卡
@@ -173,6 +173,7 @@ public class RequestFireRaidFight extends BaseProtocol {
 			user.pushDailyTask(5, 1);
 		}
 		else { // 直接胜利
+			user.fixFireRaidRank(frb.getTotalStars(), false);
 			int scene = frb.getScene();
 			// 判断最高3星难度是否把本章节搞定了
 			int fn = (scene - 1) / 3 * 3 + 3; // 这个是当前关卡所在章节的最后一关
