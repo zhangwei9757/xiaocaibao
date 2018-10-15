@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: guild
+    cloud:
+        config:
+            profile: ${profile}
+            label: v008
+            uri: http://leon:noel@115.159.149.238:11112
