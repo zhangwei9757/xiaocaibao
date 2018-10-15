@@ -9,7 +9,12 @@ class ServiceRouter implements IServiceRouter {
 
     @Override
     int chooseZone(long uid) {
-        return uid % 1000
+        int zone = uid % 1000
+        if (zone <= 5) {
+            return 1
+        }
+
+        return zone
     }
 
     @Override

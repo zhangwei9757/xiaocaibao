@@ -53,7 +53,7 @@ class RequestInvadingLoginAward extends BaseProtocol {
                     rci.gem = receive[1][0]
                 } else {
                     rci.gem = receive[1][0]
-                    rci.awards.addAll(user.addItems(receive[0], false, "限时活动累计充值奖励"))
+                    rci.awards.addAll(user.addItems(receive[0], false, "限时活动登陆奖励"))
                 }
             } else {
                 rci.result = "不符合条件"

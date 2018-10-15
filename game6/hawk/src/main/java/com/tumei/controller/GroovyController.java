@@ -9,6 +9,7 @@ import com.tumei.common.utils.RandomUtil;
 import com.tumei.configs.MongoTemplateConfig;
 import com.tumei.groovy.GroovyLoader;
 import com.tumei.model.GroupBean;
+import com.tumei.model.RoleBean;
 import com.tumei.model.structs.GroupRole;
 import com.tumei.modelconf.CodeBean;
 import com.tumei.modelconf.CodeBeanRepository;
@@ -460,162 +461,76 @@ public class GroovyController {
 	@RequestMapping(value = "/merge", method = RequestMethod.GET)
 
 	@ApiImplicitParams( {
-			@ApiImplicitParam(name = "guild", value = "公会所在数据库", defaultValue = "tm6-1", required = true, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "from", value = "准备合区 x1,x2,x3,多个一起合", defaultValue = "tm6-1", required = true, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "to", value = "目的合区 x1001", required = true, defaultValue = "tm6-1001", dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "zone", value = "合并后的新区id", required = true, defaultValue = "1", dataType = "int", paramType = "query"),
+			@ApiImplicitParam(name = "froms", value = "准备合区 1", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "to", value = "目的合区 2", required = true, dataType = "int", paramType = "query"),
+			@ApiImplicitParam(name = "prefix", value = "数据库前缀", required = true, dataType = "String", paramType = "query"),
 	})
 
-	public String merge(String guild, String from, String to, int zone) {
+	public String merge(String froms, int to, String prefix) {
 		try {
-			// 预处理，删除所有待合成的数据库中的数据表
-//			mongoTemplateConfig.dropDb(to);
-			MongoTemplate dest = mongoTemplateConfig.otherTemplate(to);
-//			dest.dropCollection("Role");
+			MongoTemplate dest = mongoTemplateConfig.otherTemplate(prefix + to);
 
+			String[] fs = froms.split(",");
+			int f1 = Integer.parseInt(fs[0]);
+			int f2 = Integer.parseInt(fs[1]);
 
-			// 全体角色的集合
-			HashMap<Long, DBObject> roles = new HashMap<>();
+			for (int from = f1; from <= f2; ++from) {
 
-			dest.getCollection("Role").find().toArray().forEach(dbo -> {
-				long uid = (Long)dbo.get("id") / 1000;
-				roles.put(uid, dbo);
-			});
-
-
-			// 本次待合并的数据库需要迁移到目的数据库的uid/1000
-			HashSet<Long> newguy = new HashSet<>();
-
-			String[] fss = from.split(",");
-			for (String fs : fss) {
-				MongoTemplate source = mongoTemplateConfig.otherTemplate(fs);
-				// 1. 检索出所有的角色信息
-				newguy.clear();
-				DBCursor cursor = source.getCollection("Role").find();
-				cursor.toArray().forEach(dbo -> {
-					long uid = (Long)dbo.get("id") / 1000;
-					int level = (Integer)dbo.get("level");
-					int exp = (Integer)dbo.get("exp");
-					int vip = (Integer)dbo.get("vip");
-					int vipexp = (Integer)dbo.get("vipexp");
-					int totaltime = (Integer) dbo.get("totaltime");
-
-					long uuid = uid * 1000 + zone;
-
-					// 如果已经存在的角色，则比较：
-					// a1: vip较大的留存
-					// a2: 等级较高的留存
-					// a3: totaltime较大的留存
-					// a4: 以上全部相同, 不要覆盖
-					DBObject old = roles.getOrDefault(uid, null);
-				    if (old != null) {
-						int old_vip = (Integer)old.get("vip");
-						int old_vipexp = (Integer)old.get("vipexp");
-						int old_level = (Integer)old.get("level");
-						int old_exp = (Integer)old.get("exp");
-						int old_totaltime = (Integer) old.get("totaltime");
-
-						boolean flag = false;
-						if (vip > old_vip || (vip == old_vip && vipexp > old_vipexp)) {
-						    flag = true;
-						} else if (level > old_level || (level == old_level && exp > old_exp)) {
-							flag = true;
-						} else if (totaltime > old_totaltime) {
-							flag = true;
-						}
-
-						if (flag) {
-							roles.put(uid, dbo);
-							newguy.add(uid);
-							// Role中更换角色id，并存入到数据库中
-							dbo.put("id", uuid);
-                            dbo.removeField("_id");
-							dest.upsert(Query.query(Criteria.where("id").is(uuid)), Update.fromDBObject(dbo), "Role");
-						}
-					} else {
-				        if (vip > 0 || vipexp > 0 || level > 20) { // 20级一下的垃圾号不要
-							// 如果没有该角色可以插入
-							roles.put(uid, dbo);
-							newguy.add(uid);
-							dbo.put("id", uuid);
-							dbo.removeField("_id");
-							dest.upsert(Query.query(Criteria.where("id").is(uuid)), Update.fromDBObject(dbo), "Role");
-						}
-					}
-				});
+				MongoTemplate source = mongoTemplateConfig.otherTemplate(prefix + from);
 
 				// 2. 对于以上分析合成的roles,只有uid/1000满足以上roles的其他表中的数据，才会合并到目的数据库中
+				String[] colls = new String[]{
+						"Role.Activity",
+						"Role.Charge",
+						"Role.DailyScene",
+						"Role.FireRaid",
+						"Role.Friends",
+						"Role.Group",
+						"Role.Heros",
+						"Role.Invading",
+						"Role.Mails",
+						"Role.Package",
+						"Role.Robs",
+						"Role.Rune",
+						"Role.Scene",
+						"Role.Sta",
+						"Role.Star",
+						"Role.Store",
+						"Role.Summon",
+						"Role.Tasks",
+						"Role.Treasure",
+						"Role.War",
+						"Role.boss"
+				};
+
+				// 找到所有在from数据库中Role表的角色，然后全部迁移到to中
+                List<DBObject> rs = source.findAll(DBObject.class, "Role");
+
+                for (DBObject rb : rs) {
+                    long a = (long)rb.get("id");
+
+					dest.remove(Query.query(Criteria.where("id").is(a)), "Role");
+					dest.upsert(Query.query(Criteria.where("id").is(a)), Update.fromDBObject(rb), "Role");
 
 
-                String[] colls = new String[]{
-                		"Role.Charge", "Role.Heros", "Role.Package", "Role.Scene", "Role.Summon", "Role.Mails", "Role.FireRaid"
-                };
-
-                for (String name : colls) {
-//                	dest.dropCollection(name);
-
-					List<DBObject> dbos = source.getCollection(name).find().toArray();
-					for (DBObject dbo : dbos) {
-						long uid = ((Long)dbo.get("id")) / 1000;
-						long uuid = uid * 1000 + zone;
-						if (newguy.contains(uid)) {
-							dbo.put("id", uuid);
-							dbo.removeField("_id");
-							dest.upsert(Query.query(Criteria.where("id").is(uuid)), Update.fromDBObject(dbo), name);
-						}
-					}
-				}
-
-
-				MongoTemplate gd = mongoTemplateConfig.otherTemplate(guild);
-				{
-					String name = "Role.Group";
-//					dest.dropCollection(name);
-					List<DBObject> dbos = source.getCollection(name).find().toArray();
-					for (DBObject dbo : dbos) {
-						long originid = ((Long)dbo.get("id"));
-						long uid = originid / 1000;
-						long gid = ((Long)dbo.get("gid"));
-						long uuid = uid * 1000 + zone;
-						if (newguy.contains(uid)) {
-							dbo.put("id", uuid);
-							dbo.removeField("_id");
-							dest.upsert(Query.query(Criteria.where("id").is(uuid)), Update.fromDBObject(dbo), name);
-
-							// 如果合并后的角色id和 原始角色id不同，则需要修改公会内角色信息
-                            if (originid != uuid) {
-								GroupBean gb = gd.findOne(Query.query(Criteria.where("id").is(gid)), GroupBean.class);
-								if (gb != null) {
-									gb.preRoles.clear();
-									GroupRole gr = gb.roles.getOrDefault(originid, null);
-									if (gr != null) {
-										// 删除原来id的角色
-										gb.roles.remove(originid);
-										// 改变角色id
-										gr.id = uuid;
-										// 增加当前id的角色
-										gb.roles.put(uuid, gr);
-										gd.save(gb);
-									}
-								}
+					for (String name : colls) {
+						log.info("准备转移角色数据表:" + name + " from:" + from + " to " + to);
+						DBObject dbo = source.findOne(Query.query(Criteria.where("id").is(a)), DBObject.class, name);
+						if (dbo != null) {
+							if (name.equalsIgnoreCase("Role.Activity")) {
+								dbo.put("lastIndex", -1);
+								dbo.put("lastCumIdx", -1);
+								dbo.put("lastDcIdx", -1);
+								dbo.put("campaignRound", -1);
+								dbo.put("dbLocalRound", -1);
 							}
-//						} else { // 如果该角色处于公会，但是又不是本次需要合并的角色，证明该角色被合并掉了，需要将公会中包含该角色的人物清除掉
-//							GroupBean gb = gd.findOne(Query.query(Criteria.where("id").is(gid)), GroupBean.class);
-//							if (gb != null) {
-//								gb.preRoles.clear();
-//								gb.roles.remove(originid);
-//								gd.save(gb);
-//							}
+
+							dest.remove(Query.query(Criteria.where("id").is(a)), name);
+							dest.upsert(Query.query(Criteria.where("id").is(a)), Update.fromDBObject(dbo), name);
 						}
 					}
 				}
-
 			}
-
-//			roles.forEach((uid, dbo) -> {
-//				dbo.put("id", uid * 1000 + zone);
-//				dest.save(dbo, "Role");
-//			});
 
 		} catch (Exception e) {
 			log.error("错误:", e);

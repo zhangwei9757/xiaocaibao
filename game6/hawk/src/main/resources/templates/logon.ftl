@@ -788,8 +788,13 @@
 
                         var num = this.servers.length
 
+                        var lasthost = ''
                         for (var i = 0; i < this.servers.length; ++i) {
                         	var host = this.servers[i].host;
+                        	if (host == lasthost) {
+                        	    continue
+                        	}
+                        	lasthost = host
                         	console.log("server:" + host);
                         	var url = "http://" + host + "/cmd/addawardmailAll?xtkn=" + this.jwt + "&title=" + this.mail.title + "&content=" + this.mail.content + "&awards=" + this.mail.awards
 
@@ -799,14 +804,14 @@
                                                 var h = response.url.indexOf('/', 8)
                                                 h = response.url.substring(0, h)
 
-                                                this.$notify.info({
-                                                	title: '成功',
-                                                	message: "邮件:" + h,
-                                                });
 
                                                 --num
                                                 if (num <= 0) {
                                                 	this.loading = false
+                                                    this.$notify.info({
+                                                        title: '完成',
+                                                        message: "群发邮件完成",
+                                                    });
                                                 }
                                             })
                                             .catch(function(response) {
@@ -822,6 +827,10 @@
                                                 --num
                                                 if (num <= 0) {
                                                 	this.loading = false
+                                                    this.$notify.info({
+                                                        title: '完成',
+                                                        message: "群发邮件完成",
+                                                    });
                                                 }
                                             })
                         }
@@ -832,9 +841,15 @@
       	flushServerAll(cmd) {
             this.loading = true;
             var num = this.servers.length
+            var lasthost = ''
 
             for (var i = 0; i < this.servers.length; ++i) {
                 var host = this.servers[i].host;
+                if (host == lasthost) {
+                    continue
+                }
+                lasthost = host
+
                 var url = "http://" + host + "/cmd/" + cmd + "?xtkn=" + this.jwt
 
                 this.$http.get(url, {emulateJSON: false})
@@ -843,14 +858,13 @@
                                     var h = response.url.indexOf('/', 8)
                                     h = response.url.substring(0, h)
 
-                                    this.$notify({
-                                        title: '成功',
-                                        message: "刷新:" + h + " 命令" + cmd,
-                                    });
-
                                     --num
                                     if (num <= 0) {
                                         this.loading = false
+                                        this.$notify({
+                                            title: '完成',
+                                            message: "刷新结束",
+                                        });
                                     }
                                 })
                                 .catch(function(response) {
@@ -865,6 +879,10 @@
                                     --num
                                     if (num <= 0) {
                                         this.loading = false
+                                        this.$notify({
+                                            title: '完成',
+                                            message: "刷新结束",
+                                        });
                                     }
                                 })
             }
